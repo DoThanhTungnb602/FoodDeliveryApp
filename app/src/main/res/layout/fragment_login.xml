@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.LoginFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/bg_primary_button"
+                android:backgroundTint="@color/primary_color"
+                android:paddingStart="110dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="110dp"
+                android:paddingBottom="20dp"
+                android:text="Đăng nhập"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLoginForgetPassword" />
+
+            <TextView
+                android:id="@+id/txtLoginForgetPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:text="Quên mật khẩu?"
+                android:textColor="@color/primary_color"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtLoginPassword"
+                app:layout_constraintTop_toBottomOf="@+id/txtLoginPassword" />
+
+            <EditText
+                android:id="@+id/txtLoginPassword"
+                android:layout_width="312dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="50dp"
+                android:ems="10"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.507"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLoginEmail" />
+
+            <EditText
+                android:id="@+id/txtLoginEmail"
+                android:layout_width="313dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="Địa chỉ Email"
+                android:textColor="@color/text_color_2"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/txtLoginEmail"
+                app:layout_constraintStart_toStartOf="@+id/txtLoginEmail" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="Mật khẩu"
+                android:textColor="@color/text_color_2"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/txtLoginPassword"
+                app:layout_constraintStart_toStartOf="@+id/txtLoginPassword" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
