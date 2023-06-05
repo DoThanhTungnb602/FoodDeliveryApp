@@ -3,7 +3,7 @@ package com.example.fooddeliveryapp.data.db.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "food")
 public class Food {
     @PrimaryKey(autoGenerate = true)
     public int id;

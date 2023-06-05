@@ -21,7 +21,7 @@
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_shop">
         <action
-            android:id="@+id/action_navigation_dashboard_to_cartFragment"
+            android:id="@+id/action_navigation_shop_to_navigation_cart"
             app:destination="@id/navigation_cart" />
     </fragment>
 
@@ -51,6 +51,10 @@
         android:id="@+id/navigation_cart"
         android:name="com.example.fooddeliveryapp.ui.cart.CartFragment"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_navigation_cart_to_navigation_shop"
+            app:destination="@id/navigation_shop" />
+    </fragment>
 
 </navigation>

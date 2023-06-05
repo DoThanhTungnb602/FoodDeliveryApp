@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+        MainActivity.showNavView();
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         recyclerView = binding.recylerViewFoodList;
@@ -45,6 +47,7 @@ public class HomeFragment extends Fragment {
 
         binding.btnGoToCart.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_navigation_cart);
+            MainActivity.hideNavView();
         });
 
         return binding.getRoot();
