@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        navView = findViewById(R.id.nav_view);
+        navView = binding.navView;
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         NavController navController = Objects.requireNonNull(navHostFragment).getNavController();

@@ -50,6 +50,14 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
+        binding.editTextSearch.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment);
+                MainActivity.hideNavView();
+                return true;
+            }
+            return false;
+        });
         return binding.getRoot();
     }
 

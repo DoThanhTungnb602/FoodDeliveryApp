@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.ui.shop;
+package com.example.fooddeliveryapp.ui.history;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,27 +13,25 @@ import androidx.navigation.Navigation;
 
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
-import com.example.fooddeliveryapp.databinding.FragmentShopBinding;
+import com.example.fooddeliveryapp.databinding.FragmentHistoryBinding;
 
 
-public class ShopFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
-    private FragmentShopBinding binding;
+    private FragmentHistoryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ShopViewModel dashboardViewModel = new ViewModelProvider(this).get(ShopViewModel.class);
+        HistoryViewModel dashboardViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
 
         MainActivity.showNavView();
 
-        binding = FragmentShopBinding.inflate(inflater, container, false);
+        binding = FragmentHistoryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        binding.button.setOnClickListener(v -> {
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_shop_to_navigation_cart);
+        binding.btnGoToCart.setOnClickListener(v -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_shop_to_foodDetailsFragment);
             MainActivity.hideNavView();
         });
+
         return root;
     }
 

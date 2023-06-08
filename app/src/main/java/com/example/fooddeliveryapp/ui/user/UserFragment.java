@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentUserBinding;
 
 public class UserFragment extends Fragment {
@@ -21,9 +23,10 @@ public class UserFragment extends Fragment {
 
         binding = FragmentUserBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        binding.btnGoToCart.setOnClickListener(v -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_user_to_navigation_cart);
+        });
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
