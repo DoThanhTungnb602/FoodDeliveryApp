@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_navigation_home_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_foodFragment"
+            app:destination="@id/foodFragment" />
     </fragment>
 
     <fragment
@@ -31,11 +34,8 @@
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_history">
         <action
-            android:id="@+id/action_navigation_shop_to_navigation_cart"
+            android:id="@+id/history_to_cart"
             app:destination="@id/navigation_cart" />
-        <action
-            android:id="@+id/action_navigation_shop_to_foodDetailsFragment"
-            app:destination="@id/foodDetailsFragment" />
     </fragment>
 
     <fragment
@@ -45,7 +45,11 @@
         tools:layout="@layout/fragment_user">
         <action
             android:id="@+id/action_navigation_user_to_navigation_cart"
-            app:destination="@id/navigation_cart" />
+            app:destination="@id/navigation_cart"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -54,7 +58,7 @@
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_navigation_auth_to_navigation_home"
+            android:id="@+id/auth_to_home"
             app:destination="@id/navigation_home"
             app:popUpTo="@id/navigation_auth"
             app:popUpToInclusive="true" />
@@ -67,11 +71,7 @@
         android:id="@+id/navigation_cart"
         android:name="com.example.fooddeliveryapp.ui.cart.CartFragment"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" >
-        <action
-            android:id="@+id/action_navigation_cart_to_navigation_shop"
-            app:destination="@id/navigation_shop" />
-    </fragment>
+        tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.fooddeliveryapp.ui.auth.ForgotPasswordFragment"
@@ -94,6 +94,15 @@
         android:id="@+id/searchFragment"
         android:name="com.example.fooddeliveryapp.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="com.example.fooddeliveryapp.ui.food.FoodFragment"
+        android:label="fragment_food"
+        tools:layout="@layout/fragment_food" />
 
 </navigation>

@@ -23,8 +23,6 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import java.util.ArrayList;
 
 public class FoodDetailsFragment extends Fragment {
-
-    private FoodDetailsViewModel mViewModel;
     private FragmentFoodDetailsBinding binding;
     private NavHostFragment navHostFragment;
     private NavController navController;

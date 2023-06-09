@@ -21,14 +21,12 @@ public class HistoryFragment extends Fragment {
     private FragmentHistoryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        HistoryViewModel dashboardViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
-
         MainActivity.showNavView();
 
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         binding.btnGoToCart.setOnClickListener(v -> {
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_shop_to_foodDetailsFragment);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.history_to_cart);
             MainActivity.hideNavView();
         });
 

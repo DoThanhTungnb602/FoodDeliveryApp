@@ -24,7 +24,6 @@ import java.util.List;
 
 public class CartFragment extends Fragment {
     private FragmentCartBinding binding;
-    private CartViewModel mViewModel;
     private RecyclerView recyclerView;
     private CartListAdapter cartListAdapter;
     private List<Cart> listCart;
@@ -33,7 +32,6 @@ public class CartFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         binding = FragmentCartBinding.inflate(inflater, container, false);
         recyclerView = binding.recyclerViewCartList;
         navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
@@ -47,16 +45,10 @@ public class CartFragment extends Fragment {
         if (cartListAdapter.getItemCount() == 0) {
             binding.recyclerViewCartList.setVisibility(View.GONE);
             binding.layoutNoCart.setVisibility(View.VISIBLE);
-            binding.btnStartOrder.setOnClickListener(v -> {
-                navController.navigate(R.id.action_navigation_cart_to_navigation_shop);
-            });
         } else {
             binding.recyclerViewCartList.setVisibility(View.VISIBLE);
             binding.layoutNoCart.setVisibility(View.GONE);
             binding.btnStartOrder.setText("Tiến hành đặt hàng");
-            binding.btnStartOrder.setOnClickListener(v -> {
-                navController.navigate(R.id.action_navigation_cart_to_navigation_shop);
-            });
         }
 
         binding.btnBack.setOnClickListener(v -> {

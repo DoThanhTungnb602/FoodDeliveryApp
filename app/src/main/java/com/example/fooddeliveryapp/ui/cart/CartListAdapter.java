@@ -33,6 +33,18 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.imgCartItem.setImageResource(R.drawable.ic_hotpot);
+        holder.btnCartItemIncrease.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(holder.txtCartItemQuantity.getText().toString());
+            quantity++;
+            holder.txtCartItemQuantity.setText(String.valueOf(quantity));
+        });
+        holder.btnCartItemDecrease.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(holder.txtCartItemQuantity.getText().toString());
+            if (quantity > 1) {
+                quantity--;
+                holder.txtCartItemQuantity.setText(String.valueOf(quantity));
+            }
+        });
     }
 
     @Override

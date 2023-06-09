@@ -74,7 +74,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView4">
 
                     <ImageButton
-                        android:id="@+id/imageButton3"
+                        android:id="@+id/btnHamburger"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginStart="30dp"
@@ -86,7 +86,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
-                        android:id="@+id/imageButton5"
+                        android:id="@+id/btnMore"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginTop="30dp"
@@ -95,22 +95,22 @@
                         android:elevation="2dp"
                         android:src="@drawable/ic_more"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton8" />
+                        app:layout_constraintTop_toBottomOf="@+id/btnHotPot" />
 
                     <ImageButton
-                        android:id="@+id/imageButton6"
+                        android:id="@+id/btnVegetable"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginTop="30dp"
                         android:background="@drawable/bg_rounded_white"
                         android:elevation="2dp"
                         android:src="@drawable/ic_fruit"
-                        app:layout_constraintEnd_toStartOf="@+id/imageButton5"
-                        app:layout_constraintStart_toEndOf="@+id/imageButton7"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton9" />
+                        app:layout_constraintEnd_toStartOf="@+id/btnMore"
+                        app:layout_constraintStart_toEndOf="@+id/btnDrink"
+                        app:layout_constraintTop_toBottomOf="@+id/btnPizza" />
 
                     <ImageButton
-                        android:id="@+id/imageButton7"
+                        android:id="@+id/btnDrink"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginStart="30dp"
@@ -119,10 +119,10 @@
                         android:elevation="2dp"
                         android:src="@drawable/ic_drink"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+                        app:layout_constraintTop_toBottomOf="@+id/btnHamburger" />
 
                     <ImageButton
-                        android:id="@+id/imageButton8"
+                        android:id="@+id/btnHotPot"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginTop="20dp"
@@ -134,15 +134,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
-                        android:id="@+id/imageButton9"
+                        android:id="@+id/btnPizza"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/bg_rounded_white"
                         android:elevation="2dp"
                         android:src="@drawable/ic_pizza"
-                        app:layout_constraintEnd_toStartOf="@+id/imageButton8"
-                        app:layout_constraintStart_toEndOf="@+id/imageButton3"
+                        app:layout_constraintEnd_toStartOf="@+id/btnHotPot"
+                        app:layout_constraintStart_toEndOf="@+id/btnHamburger"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,20 +153,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Flash Sale"
+                    android:text="Hôm nay ăn gì?"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                     app:layout_constraintStart_toEndOf="@+id/imageView6" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recylerViewFoodList"
+                    android:id="@+id/recyclerViewFoodList"
                     android:layout_width="0dp"
-                    android:layout_height="320dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="5dp"
                     android:paddingEnd="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -177,8 +177,8 @@
                     android:layout_width="30dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/ic_lightning"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_fork"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
