@@ -9,4 +9,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_shop">History</string>
     <string name="title_user">User</string>
+    <string name="history">History</string>
+    <string name="favorite">Favorite</string>
 </resources>

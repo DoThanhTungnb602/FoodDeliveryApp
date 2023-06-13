@@ -1,18 +1,15 @@
 package com.example.fooddeliveryapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.fooddeliveryapp.databinding.ActivityMainBinding;
@@ -55,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         navView.setVisibility(View.VISIBLE);
     }
 
+    public static void navigateTo(Context context, int id){
+        Navigation.findNavController((AppCompatActivity) context, R.id.nav_host_fragment_activity_main).navigate(id);
+    }
+
     @Override
     public void onBackPressed() {
         if (currentDestinationId == R.id.navigation_home) {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             this.doubleBackToExitPressedOnce = true;
             Toast.makeText(this, "Nhấn lần nữa để thoát", Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
-        } else if (currentDestinationId == R.id.navigation_shop || currentDestinationId == R.id.navigation_user) {
+        } else if (currentDestinationId == R.id.navigation_history || currentDestinationId == R.id.navigation_user) {
             Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home);
         } else {
             super.onBackPressed();

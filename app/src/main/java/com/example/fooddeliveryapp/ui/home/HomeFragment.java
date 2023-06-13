@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
+import com.example.fooddeliveryapp.ui.category.CategoryListAdapter;
 import com.example.fooddeliveryapp.ui.food.FoodListAdapter;
 
 import java.util.ArrayList;
@@ -26,22 +28,35 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewFoodList;
     private FoodListAdapter foodListAdapter;
     private List<Food> listFood;
+    private RecyclerView recyclerViewCategory;
+    private CategoryListAdapter categoryListAdapter;
+    private List<Category> listCategory;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         MainActivity.showNavView();
 
-        recyclerView = binding.recyclerViewFoodList;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewFoodList = binding.recyclerViewFoodList;
+        recyclerViewFoodList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         listFood = new ArrayList<>();
+        listCategory = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++) {
+            listCategory.add(null);
+        }
 
         foodListAdapter = new FoodListAdapter(listFood);
-        recyclerView.setAdapter(foodListAdapter);
+        recyclerViewFoodList.setAdapter(foodListAdapter);
+
+        categoryListAdapter = new CategoryListAdapter(listCategory);
+        recyclerViewCategory = binding.recyclerViewCategoryHome;
+        recyclerViewCategory.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerViewCategory.setAdapter(categoryListAdapter);
 
         binding.btnGoToCart.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_navigation_cart);
@@ -57,10 +72,11 @@ public class HomeFragment extends Fragment {
             return false;
         });
 
-        binding.btnDrink.setOnClickListener(v -> {
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_foodFragment);
+        binding.btnSeeAllCategory.setOnClickListener(v -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment);
             MainActivity.hideNavView();
         });
+
         return binding.getRoot();
     }
 

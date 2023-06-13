@@ -6,14 +6,17 @@
         android:icon="@drawable/ic_home"
         android:title="@string/title_home" />
 
-
     <item
         android:id="@+id/navigation_user"
         android:icon="@drawable/ic_user"
         android:title="@string/title_user" />
     <item
-        android:id="@+id/navigation_shop"
+        android:id="@+id/navigation_history"
         android:icon="@drawable/ic_history"
-        android:title="@string/title_shop" />
+        android:title="@string/history" />
+    <item
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/ic_heart"
+        android:title="@string/favorite" />
 
 </menu>

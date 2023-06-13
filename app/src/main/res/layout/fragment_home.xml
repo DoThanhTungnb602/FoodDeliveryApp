@@ -64,89 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout3"
-                    android:layout_width="0dp"
-                    android:layout_height="260dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.461"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-                    <ImageButton
-                        android:id="@+id/btnHamburger"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/bg_rounded_white"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_hamburger"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
-                        android:id="@+id/btnMore"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:background="@drawable/bg_rounded_white"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_more"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btnHotPot" />
-
-                    <ImageButton
-                        android:id="@+id/btnVegetable"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="30dp"
-                        android:background="@drawable/bg_rounded_white"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_fruit"
-                        app:layout_constraintEnd_toStartOf="@+id/btnMore"
-                        app:layout_constraintStart_toEndOf="@+id/btnDrink"
-                        app:layout_constraintTop_toBottomOf="@+id/btnPizza" />
-
-                    <ImageButton
-                        android:id="@+id/btnDrink"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:background="@drawable/bg_rounded_white"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_drink"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btnHamburger" />
-
-                    <ImageButton
-                        android:id="@+id/btnHotPot"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="30dp"
-                        android:background="@drawable/bg_rounded_white"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_hotpot"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
-                        android:id="@+id/btnPizza"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/bg_rounded_white"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_pizza"
-                        app:layout_constraintEnd_toStartOf="@+id/btnHotPot"
-                        app:layout_constraintStart_toEndOf="@+id/btnHamburger"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
@@ -180,7 +97,7 @@
                     android:layout_marginTop="20dp"
                     android:src="@drawable/ic_fork"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategoryHome" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -193,6 +110,49 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewCategoryHome"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnSeeAllCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="74dp"
+                        android:layout_height="wrap_content"
+                        android:text="Xem tất cả"
+                        android:textColor="@color/primary_color"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_arrow_forward"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView31"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

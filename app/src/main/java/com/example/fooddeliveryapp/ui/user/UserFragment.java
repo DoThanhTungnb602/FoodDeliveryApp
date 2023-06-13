@@ -30,6 +30,12 @@ public class UserFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
+        binding.btnUserInfor.setOnClickListener(v -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_user_to_userInformationFragment);
+            MainActivity.hideNavView();
+        });
+
+
         return root;
     }
 
