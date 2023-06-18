@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentUserBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class UserFragment extends Fragment {
 
@@ -34,7 +35,10 @@ public class UserFragment extends Fragment {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_user_to_userInformationFragment);
             MainActivity.hideNavView();
         });
-
+        binding.btnLogout.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.navigation_auth);
+        });
 
         return root;
     }
