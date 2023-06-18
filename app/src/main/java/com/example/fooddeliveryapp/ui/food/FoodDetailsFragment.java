@@ -36,10 +36,9 @@ public class FoodDetailsFragment extends Fragment {
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
 
-
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
 
-        imageList.add(new SlideModel("https://bit.ly/2YoJ77H", ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel("https://picsum.photos/200/300", ScaleTypes.CENTER_CROP));
         imageList.add(new SlideModel("https://bit.ly/2BteuF2", ScaleTypes.CENTER_CROP));
         imageList.add(new SlideModel("https://bit.ly/3fLJf72", "And people do that.", ScaleTypes.CENTER_CROP));
 

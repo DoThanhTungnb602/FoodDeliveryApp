@@ -12,7 +12,7 @@ import com.example.fooddeliveryapp.data.db.entities.User;
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user WHERE id=:id")
-    LiveData<User> getUserById(int id);
+    User getUserById(int id);
 
     @Insert
     void insertUser(User user);

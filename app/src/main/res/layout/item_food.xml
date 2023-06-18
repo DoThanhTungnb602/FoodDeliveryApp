@@ -35,11 +35,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSeachPrice"
+                app:layout_constraintTop_toBottomOf="@+id/txtPriceFoodItem"
                 app:srcCompat="@drawable/ic_star" />
 
             <TextView
-                android:id="@+id/txtSearchRating"
+                android:id="@+id/txtRatingFoodItem"
                 android:layout_width="57dp"
                 android:layout_height="18dp"
                 android:layout_marginStart="5dp"
@@ -48,10 +48,10 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageView13"
-                app:layout_constraintTop_toBottomOf="@+id/txtSeachPrice" />
+                app:layout_constraintTop_toBottomOf="@+id/txtPriceFoodItem" />
 
             <ImageView
-                android:id="@+id/imgSearchItem"
+                android:id="@+id/imgFoodItem"
                 android:layout_width="wrap_content"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
@@ -61,9 +61,9 @@
                 app:srcCompat="@drawable/default_placeholder" />
 
             <TextView
-                android:id="@+id/txtSearchTitle"
+                android:id="@+id/txtTitleFoodItem"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
@@ -76,7 +76,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
             <TextView
-                android:id="@+id/txtSeachPrice"
+                android:id="@+id/txtPriceFoodItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -85,7 +85,7 @@
                 android:textColor="@color/primary_color"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSearchTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTitleFoodItem" />
 
             <ImageView
                 android:id="@+id/imageView12"
@@ -94,11 +94,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgSearchItem"
+                app:layout_constraintTop_toBottomOf="@+id/imgFoodItem"
                 app:srcCompat="@drawable/ic_clock" />
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/txtDeliveryTimeFoodItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -107,7 +107,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/imgSearchItem" />
+                app:layout_constraintTop_toBottomOf="@+id/imgFoodItem" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

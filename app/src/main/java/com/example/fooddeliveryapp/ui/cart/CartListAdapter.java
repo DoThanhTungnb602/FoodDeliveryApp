@@ -11,14 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddeliveryapp.R;
-import com.example.fooddeliveryapp.data.db.entities.Cart;
+import com.example.fooddeliveryapp.data.db.entities.CartTable;
 
 import java.util.List;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
-    List<Cart> listCart;
+    List<CartTable> listCart;
 
-    public CartListAdapter(List<Cart> listCart) {
+    public CartListAdapter(List<CartTable> listCart) {
         this.listCart = listCart;
     }
 

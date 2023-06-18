@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
 import com.example.fooddeliveryapp.ui.category.CategoryListAdapter;
 import com.example.fooddeliveryapp.ui.food.FoodListAdapter;
@@ -34,16 +36,23 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerViewCategory;
     private CategoryListAdapter categoryListAdapter;
     private List<Category> listCategory;
+    private AppDatabase database;
+    private FoodRepository foodRepository;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        database = AppDatabase.getDatabase(getContext());
+        foodRepository = new FoodRepository(database);
 
         MainActivity.showNavView();
 
         recyclerViewFoodList = binding.recyclerViewFoodList;
         recyclerViewFoodList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        listFood = new ArrayList<>();
+        listFood = foodRepository.getAllFood();
+        // TODO: Add data to listFood
+
+
         listCategory = new ArrayList<>();
 
         for (int i = 0; i < 6; i++) {
