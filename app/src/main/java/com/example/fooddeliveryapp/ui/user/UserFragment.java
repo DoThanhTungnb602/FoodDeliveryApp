@@ -11,8 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.entities.User;
+import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import com.example.fooddeliveryapp.databinding.FragmentUserBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,14 +24,25 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserFragment extends Fragment {
 
     private FragmentUserBinding binding;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser userFirebase = FirebaseAuth.getInstance().getCurrentUser();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        AppDatabase database = AppDatabase.getDatabase(requireActivity());
+        UserRepository userRepository = new UserRepository(database);
         binding = FragmentUserBinding.inflate(inflater, container, false);
-
         MainActivity.showNavView();
-        String email = user.getEmail();
-        binding.textView16.setText(email);
+
+        String email = userFirebase.getEmail();
+        binding.txtEmailUser.setText(email);
+        User user = userRepository.getUserByEmail(email);
+        binding.txtName.setText(user.name);
+        binding.txtAdressUser.setText(user.deliveryAddress);
+        if (user.image==null){
+            binding.imageView8.setImageResource(R.mipmap.img_thien_dep_trai_foreground);
+        }else {
+            Glide.with(binding.imageView8.getContext()).load("https://loremflickr.com/g/320/240/paris").into(binding.imageView8);
+
+        }
         View root = binding.getRoot();
         binding.btnGoToCart.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_user_to_navigation_cart);

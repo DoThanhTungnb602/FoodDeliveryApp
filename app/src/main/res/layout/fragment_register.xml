@@ -25,11 +25,11 @@
                 android:text="Nhập lại mật khẩu"
                 android:textColor="@color/text_color_2"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/editTextText7"
-                app:layout_constraintStart_toStartOf="@+id/editTextText7" />
+                app:layout_constraintBottom_toTopOf="@+id/edtConfirmPassword"
+                app:layout_constraintStart_toStartOf="@+id/edtConfirmPassword" />
 
             <EditText
-                android:id="@+id/editTextText8"
+                android:id="@+id/edtFullname"
                 android:layout_width="313dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
@@ -48,8 +48,8 @@
                 android:text="Tên người dùng"
                 android:textColor="@color/text_color_2"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/editTextText8"
-                app:layout_constraintStart_toStartOf="@+id/editTextText8" />
+                app:layout_constraintBottom_toTopOf="@+id/edtFullname"
+                app:layout_constraintStart_toStartOf="@+id/edtFullname" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonRegister"
@@ -68,10 +68,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText7" />
+                app:layout_constraintTop_toBottomOf="@+id/edtConfirmPassword" />
 
             <EditText
-                android:id="@+id/editTextText7"
+                android:id="@+id/edtConfirmPassword"
                 android:layout_width="313dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="50dp"
@@ -81,10 +81,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText5" />
+                app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
 
             <EditText
-                android:id="@+id/editTextText6"
+                android:id="@+id/edtEmail"
                 android:layout_width="312dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="50dp"
@@ -95,7 +95,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.526"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText8" />
+                app:layout_constraintTop_toBottomOf="@+id/edtFullname" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -104,11 +104,11 @@
                 android:text="Địa chỉ Email"
                 android:textColor="@color/text_color_2"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/editTextText6"
-                app:layout_constraintStart_toStartOf="@+id/editTextText6" />
+                app:layout_constraintBottom_toTopOf="@+id/edtEmail"
+                app:layout_constraintStart_toStartOf="@+id/edtEmail" />
 
             <EditText
-                android:id="@+id/editTextText5"
+                android:id="@+id/edtPassword"
                 android:layout_width="313dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="50dp"
@@ -118,7 +118,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText6" />
+                app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -127,8 +127,8 @@
                 android:text="Mật khẩu"
                 android:textColor="@color/text_color_2"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/editTextText5"
-                app:layout_constraintStart_toStartOf="@+id/editTextText5" />
+                app:layout_constraintBottom_toTopOf="@+id/edtPassword"
+                app:layout_constraintStart_toStartOf="@+id/edtPassword" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

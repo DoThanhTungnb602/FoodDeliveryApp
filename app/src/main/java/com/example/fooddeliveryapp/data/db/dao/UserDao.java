@@ -30,4 +30,7 @@ public interface UserDao {
 
     @Query("DELETE FROM user")
     void deleteAllUser();
+
+    @Query("SELECT * FROM user WHERE email=:email")
+    User getUserByEmail(String email);
 }

@@ -66,4 +66,7 @@ public class UserRepository {
     public void deleteAllUser() {
         userDao.deleteAllUser();
     }
+    public User getUserByEmail(String email){
+        return userDao.getUserByEmail(email);
+    }
 }

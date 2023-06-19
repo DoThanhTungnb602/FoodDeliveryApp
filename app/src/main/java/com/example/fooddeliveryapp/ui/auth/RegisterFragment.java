@@ -14,6 +14,9 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.entities.User;
+import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import com.example.fooddeliveryapp.databinding.FragmentRegisterBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,9 +36,10 @@ public class RegisterFragment extends Fragment {
     }
 
     void createAccount() {
-        String email = binding.editTextText6.getText().toString();
-        String password = binding.editTextText5.getText().toString();
-        String confirmPassword = binding.editTextText7.getText().toString();
+        String email = binding.edtEmail.getText().toString();
+        String password = binding.edtPassword.getText().toString();
+        String confirmPassword = binding.edtConfirmPassword.getText().toString();
+
 
         boolean isValidate = validateData(email,password,confirmPassword);
         if(!isValidate){
@@ -45,11 +49,16 @@ public class RegisterFragment extends Fragment {
     }
     void createAccountInFirebase(String email, String password){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String userFullname = binding.edtFullname.getText().toString();
+        AppDatabase database = AppDatabase.getDatabase(requireActivity());
+        UserRepository userRepository = new UserRepository(database);
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(
                 (Activity) getContext(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            User newUser = new User(userFullname,email,password);
+                            userRepository.insertUser(newUser);
                             firebaseAuth.getCurrentUser().sendEmailVerification();
                             Toast.makeText(getActivity(), "Register successfully, please check email to verify", Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(binding.getRoot()).navigate(R.id.navigation_auth);
@@ -62,15 +71,15 @@ public class RegisterFragment extends Fragment {
     }
     boolean validateData(String email,String password, String confirmPassword){
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.editTextText6.setError("Email is Invalid");
+            binding.edtEmail.setError("Email is Invalid");
             return false;
         };
         if(password.length()<6){
-            binding.editTextText5.setError("Password length is Invalid");
+            binding.edtPassword.setError("Password length is Invalid");
             return false;
         }
         if(!password.equals(confirmPassword)){
-            binding.editTextText7.setError("Password not match");
+            binding.edtConfirmPassword.setError("Password not match");
             return false;
         }
         return true;
