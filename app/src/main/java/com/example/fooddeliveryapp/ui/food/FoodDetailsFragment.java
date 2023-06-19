@@ -14,37 +14,88 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.db.entities.FoodImage;
+import com.example.fooddeliveryapp.data.db.entities.Restaurant;
+import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.FragmentFoodDetailsBinding;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class FoodDetailsFragment extends Fragment {
     private FragmentFoodDetailsBinding binding;
     private NavHostFragment navHostFragment;
     private NavController navController;
+    private FoodRepository foodRepository;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        MainActivity.hideNavView();
         binding = FragmentFoodDetailsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
         navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
 
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
+        Food food = foodRepository.getFoodById(getArguments().getInt("food_id"));
 
-        imageList.add(new SlideModel("https://picsum.photos/200/300", ScaleTypes.CENTER_CROP));
-        imageList.add(new SlideModel("https://bit.ly/2BteuF2", ScaleTypes.CENTER_CROP));
-        imageList.add(new SlideModel("https://bit.ly/3fLJf72", "And people do that.", ScaleTypes.CENTER_CROP));
+        List<FoodImage> ListImage = food.getFoodImages();
+        for(int i=0; i<ListImage.size(); i++){
+            imageList.add(new SlideModel(ListImage.get(i).imageUrl, ScaleTypes.CENTER_INSIDE));
+        }
 
         ImageSlider imageSlider = binding.imageSlider;
         imageSlider.setImageList(imageList);
+
+
+        // Hiển thị tên món ăn
+        TextView txtFoodDetailsTitle = binding.txtFoodDetailsTitle;
+        txtFoodDetailsTitle.setText(food.name);
+
+        // Hiển thị đánh giá
+        TextView txtFoodDetailRating = binding.txtFoodDetailRating;
+        txtFoodDetailRating.setText(String.valueOf(food.averageRating));
+
+        // Hiển thị giá đồ ăn
+        TextView txtFoodDetailsPrice = binding.txtFoodDetailsPrice;
+        txtFoodDetailsPrice.setText(String.valueOf(currencyFormat.format(food.price)));
+
+        // Tính thời gian giao tới
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, foodRepository.getFoodById(getArguments().getInt("food_id")).deliveryTime);
+        DateFormat currentTime = new SimpleDateFormat("HH:mm");
+        TextView txtFoodDetailsSuccess = binding.txtFoodDetailsSuccess;
+        txtFoodDetailsSuccess.setText("Dự kiến giao lúc " + currentTime.format(cal.getTime()));
+
+        // Hiển thị khoảng thời gian giao đến
+        TextView txtFoodDetailsDeliveryInfo = binding.txtFoodDetailsDeliveryInfo;
+        txtFoodDetailsDeliveryInfo.setText(String.valueOf(foodRepository.getFoodById(getArguments().getInt("food_id")).deliveryTime) + " phút");
+
+        // Hiển thị địa chỉ cửa hàng
+        TextView txtFoodDetailsStoreInfo = binding.txtFoodDetailsStoreInfo;
+        txtFoodDetailsStoreInfo.setText(foodRepository.getRestaurant(food).name);
 
         binding.btnGoToCart2.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart));
         binding.btnBack.setOnClickListener(v -> navController.popBackStack());

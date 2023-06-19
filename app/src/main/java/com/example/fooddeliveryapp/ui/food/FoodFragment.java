@@ -48,7 +48,11 @@ public class FoodFragment extends Fragment {
 
         foodRepository = new FoodRepository(database);
         assert getArguments() != null;
-        recommendedFoodList = foodRepository.getFoodByCategoryName(getArguments().getString("categoryName"));
+
+        List<Food> foodList = foodRepository.getFoodByCategoryName(getArguments().getString("categoryName"));
+        recommendedFoodList = foodList;
+        bestSellerFoodList = foodList;
+        highRatingFoodList = foodList;
 
         foodViewPagerAdapter = new FoodViewPagerAdapter(getChildFragmentManager(), getLifecycle(), recommendedFoodList, bestSellerFoodList, highRatingFoodList);
         binding.viewPagerFoodList.setAdapter(foodViewPagerAdapter);

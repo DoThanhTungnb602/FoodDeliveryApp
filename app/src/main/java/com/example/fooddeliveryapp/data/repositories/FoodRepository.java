@@ -57,6 +57,15 @@ public class FoodRepository {
         return listFood;
     }
 
+    public List<Food> getListFoodWithLimit(int limit) {
+        List<Food> listFoodWithLimit = foodDao.getListFoodWithLimit(limit);
+        for (Food food : listFoodWithLimit) {
+            List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+            food.setFoodImages(foodImages);
+        }
+        return listFoodWithLimit;
+    }
+
     /**
      * Lấy đối tượng cửa hàng theo món ăn.
      *
@@ -75,18 +84,24 @@ public class FoodRepository {
      */
     public Food getFoodById(int id) {
         Food food = foodDao.getFoodById(id);
-        food.setFoodImages(foodImageDao.getFoodImagesByFoodID(food.getId()));
-        return foodDao.getFoodById(id);
+        List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+        food.setFoodImages(foodImages);
+        return food;
     }
 
     /**
      * Lấy danh sách các món ăn theo category.
      *
-     * @param categoryId là id của category.
+     * @param categoryName là name của category.
      * @return danh sách các món ăn theo category.
      */
     public List<Food> getFoodByCategoryName(String categoryName) {
-        return foodDao.getFoodByCategoryName(categoryName);
+        List<Food> foodByCategoryName = foodDao.getFoodByCategoryName(categoryName);
+        for (Food food : foodByCategoryName) {
+            List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+            food.setFoodImages(foodImages);
+        }
+        return foodByCategoryName;
     }
 
     /**
@@ -161,5 +176,13 @@ public class FoodRepository {
 
     public void insertAllFoods(List<Food> foods) {
         foodDao.insertAllFoods(foods);
+    }
+    public List<Food> searchFood(String name){
+        List<Food> listFoodByName = foodDao.searchFood(name);
+        for (Food food : listFoodByName) {
+            List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+            food.setFoodImages(foodImages);
+        }
+        return listFoodByName;
     }
 }
