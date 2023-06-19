@@ -8,15 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddeliveryapp.R;
-import com.example.fooddeliveryapp.data.db.entities.Cart;
+import com.example.fooddeliveryapp.data.db.entities.CartTable;
 import com.example.fooddeliveryapp.databinding.FragmentCartBinding;
 
 import java.util.List;
@@ -26,7 +24,7 @@ public class CartFragment extends Fragment {
     private FragmentCartBinding binding;
     private RecyclerView recyclerView;
     private CartListAdapter cartListAdapter;
-    private List<Cart> listCart;
+    private List<CartTable> listCart;
     private NavController navController;
     private NavHostFragment navHostFragment;
 
