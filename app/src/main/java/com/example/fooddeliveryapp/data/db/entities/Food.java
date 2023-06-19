@@ -15,7 +15,7 @@ public class Food {
     public int price;
     public boolean availability;
     public int deliveryTime;
-    public String categoryId;
+    public String categoryName;
     public float averageRating;
     public int restaurantId;
 
@@ -26,14 +26,14 @@ public class Food {
     public List<FoodImage> foodImages;
 
     @Ignore
-    public Food(int id, String name, String description, int price, boolean availability, int deliveryTime, String categoryId, float averageRating, int restaurantId, List<FoodImage> foodImages) {
+    public Food(int id, String name, String description, int price, boolean availability, int deliveryTime, String categoryName, float averageRating, int restaurantId, List<FoodImage> foodImages) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.availability = availability;
         this.deliveryTime = deliveryTime;
-        this.categoryId = categoryId;
+        this.categoryName = categoryName;
         this.averageRating = averageRating;
         this.restaurantId = restaurantId;
         this.foodImages = foodImages;
@@ -87,12 +87,12 @@ public class Food {
         this.deliveryTime = deliveryTime;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public float getAverageRating() {

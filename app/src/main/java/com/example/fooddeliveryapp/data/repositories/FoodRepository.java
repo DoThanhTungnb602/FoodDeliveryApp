@@ -85,8 +85,8 @@ public class FoodRepository {
      * @param categoryId là id của category.
      * @return danh sách các món ăn theo category.
      */
-    public List<Food> getFoodByCategoryId(int categoryId) {
-        return foodDao.getFoodByCategoryId(categoryId);
+    public List<Food> getFoodByCategoryName(String categoryName) {
+        return foodDao.getFoodByCategoryName(categoryName);
     }
 
     /**
