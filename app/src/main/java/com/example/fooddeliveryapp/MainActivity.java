@@ -1,12 +1,9 @@
 package com.example.fooddeliveryapp;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,7 +22,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private AppDatabase database;
-    private MockData mockData;
     private ActivityMainBinding binding;
     private static BottomNavigationView navView;
     private int currentDestinationId;
@@ -55,22 +51,11 @@ public class MainActivity extends AppCompatActivity {
             currentDestinationId = destination.getId();
         });
 
-//        generateDummyData();
-//        FakeData fakeData = new FakeData();
-//        for (int i = 0; i < 40; i++) {
-//            fakeData.getFoodFromServer(this).thenAccept(data -> {
-//                foodRepository.insertFood(data);
-////                this.runOnUiThread(() -> {
-////                    Toast.makeText(this, "Insert food successfully", Toast.LENGTH_SHORT).show();
-////                });
-//            });
-//        }
+        FakeData fakeData = new FakeData();
+//        fakeData.resetData(this);
+//        fakeData.fetchDataFromServerToDatabase(this);
     }
 
-    private void generateDummyData() {
-        mockData = new MockData();
-        mockData.generateData(database);
-    }
 
     public static void hideNavView() {
         navView.setVisibility(View.GONE);

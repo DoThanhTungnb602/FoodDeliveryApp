@@ -1,6 +1,5 @@
 package com.example.fooddeliveryapp.data.db.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -19,8 +18,8 @@ public interface FoodDao {
     @Query("SELECT * FROM food WHERE id=:id")
     Food getFoodById(int id);
 
-    @Query("SELECT * FROM food WHERE categoryId=:categoryId")
-    List<Food> getFoodByCategoryId(int categoryId);
+    @Query("SELECT * FROM food WHERE categoryName=:categoryName")
+    List<Food> getFoodByCategoryName(String categoryName);
 
     @Insert
     void insertFood(Food food);

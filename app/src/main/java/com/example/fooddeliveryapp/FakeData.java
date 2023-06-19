@@ -3,76 +3,66 @@ package com.example.fooddeliveryapp;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 
 import com.example.fooddeliveryapp.data.db.AppDatabase;
-import com.example.fooddeliveryapp.data.db.dao.FoodImageDao;
+import com.example.fooddeliveryapp.data.db.dao.RestaurantDao;
+import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
-import com.example.fooddeliveryapp.data.db.entities.FoodImage;
+import com.example.fooddeliveryapp.data.db.entities.Restaurant;
+import com.example.fooddeliveryapp.data.db.entities.User;
+import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
+import com.example.fooddeliveryapp.data.repositories.FoodRepository;
+import com.example.fooddeliveryapp.data.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class FakeData {
-    AppDatabase db;
-    FoodImageDao foodImageDao;
-    String randomFoodUrl = "https://www.themealdb.com/api/json/v1/1/random.php";
 
-    public CompletableFuture<Food> getFoodFromServer(Context Context) {
-        db = AppDatabase.getDatabase(Context);
-        OkHttpClient client = new OkHttpClient();
-        CompletableFuture<Food> future = new CompletableFuture<>();
-        Request request = new Request.Builder().url(randomFoodUrl).build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull okhttp3.Call call, @NonNull java.io.IOException e) {
-                future.completeExceptionally(e);
-            }
-
-            @Override
-            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws java.io.IOException {
-                try {
-                    assert response.body() != null;
-                    String json = response.body().string();
-                    JSONObject jsonObject = new JSONObject(json);
-                    JSONArray jsonArray = jsonObject.getJSONArray("meals");
-
-                    int foodID = Integer.parseInt(jsonArray.getJSONObject(0).getString("idMeal"));
-                    String foodName = jsonArray.getJSONObject(0).getString("strMeal");
-                    String foodDescription = jsonArray.getJSONObject(0).getString("strInstructions");
-                    int foodPrice = (int) ((Math.random() * 50) + 2) * 10000;
-                    boolean foodAvailability = true;
-                    int foodDeliveryTime = (int) ((Math.random() * 30) + 10);
-                    String foodCategory = jsonArray.getJSONObject(0).getString("strCategory");
-                    float foodAverageRating = (float) Math.round(((Math.random() * 5) + 2) * 10) / 10;
-                    int foodRestaurantId = (int) ((Math.random() * 5) + 1);
-                    String foodImageUrl = jsonArray.getJSONObject(0).getString("strMealThumb");
-                    List<FoodImage> foodImages = new ArrayList<>();
-                    foodImageDao = db.foodImageDao();
-                    foodImages.add(new FoodImage(foodImageUrl, foodID));
-                    foodImages.add(new FoodImage(foodImageUrl, foodID));
-                    foodImages.add(new FoodImage(foodImageUrl, foodID));
-                    foodImageDao.insertAll(foodImages);
-                    List<FoodImage> foodImagesFromDB = foodImageDao.getAllFoodImages();
-                    Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodAvailability, foodDeliveryTime, foodCategory, foodAverageRating, foodRestaurantId, foodImages);
-                    future.complete(food);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        return future;
+    public List<Restaurant> getRestaurant() {
+        List<Restaurant> restaurants = new ArrayList<>();
+        restaurants.add(new Restaurant("KFC", "12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, Hồ Chí Minh"));
+        restaurants.add(new Restaurant("Pizza Hut", "175 Định Công, Phường Định Công, Quận Hoàng Mai, Hà Nội"));
+        restaurants.add(new Restaurant("Burger King", "Tầng 1, TTTM Vincom Center, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, Hồ Chí Minh"));
+        restaurants.add(new Restaurant("Lotteria", "20 Tây Sơn, Quận Đống Đa, Hà Nội"));
+        restaurants.add(new Restaurant("Jollibee", "Tầng 1, TTTM Vincom Center, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, Hồ Chí Minh"));
+        return restaurants;
     }
 
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+        users.add(new User("Đỗ Thanh Tùng", "Dothanhtungnb602@gmail.com", "Tung2001"));
+        return users;
+    }
+
+    public void fetchDataFromServerToDatabase(Context context) {
+        AppDatabase database = AppDatabase.getDatabase(context);
+        FoodRepository foodRepository = new FoodRepository(database);
+        CategoryRepository categoryRepository = new CategoryRepository(database);
+        RestaurantDao restaurantDao = database.restaurantDao();
+        UserRepository userRepository = new UserRepository(database);
+        List<Food> foods = foodRepository.getAllFood();
+        if (foods.size() == 0) {
+            for (int i = 0; i < 20; i++) {
+                foodRepository.getFoodFromServer().thenAccept(foodRepository::insertFood);
+            }
+            categoryRepository.getCategoryFromServer().thenAccept(data -> {
+            });
+            restaurantDao.insertAll(getRestaurant());
+            userRepository.insertUsers(getUsers());
+        }
+    }
+
+    public void resetData(Context context) {
+        AppDatabase database = AppDatabase.getDatabase(context);
+        FoodRepository foodRepository = new FoodRepository(database);
+        CategoryRepository categoryRepository = new CategoryRepository(database);
+        RestaurantDao restaurantDao = database.restaurantDao();
+        UserRepository userRepository = new UserRepository(database);
+        foodRepository.deleteAllFood();
+        categoryRepository.deleteAllCategory();
+        restaurantDao.deleteAll();
+        userRepository.deleteAllUser();
+    }
 }

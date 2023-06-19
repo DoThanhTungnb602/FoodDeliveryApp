@@ -19,6 +19,7 @@ import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
 import com.example.fooddeliveryapp.ui.category.CategoryListAdapter;
@@ -38,11 +39,13 @@ public class HomeFragment extends Fragment {
     private List<Category> listCategory;
     private AppDatabase database;
     private FoodRepository foodRepository;
+    private CategoryRepository categoryRepository;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         database = AppDatabase.getDatabase(getContext());
         foodRepository = new FoodRepository(database);
+        categoryRepository = new CategoryRepository(database);
 
         MainActivity.showNavView();
 
@@ -53,11 +56,8 @@ public class HomeFragment extends Fragment {
         // TODO: Add data to listFood
 
 
-        listCategory = new ArrayList<>();
+        listCategory = categoryRepository.getAllCategory();
 
-        for (int i = 0; i < 6; i++) {
-            listCategory.add(null);
-        }
 
         foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList.setAdapter(foodListAdapter);
