@@ -31,10 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class FakeData {
-    AppDatabase database;
-    FoodImageDao foodImageDao;
-    String randomFoodUrl = "https://www.themealdb.com/api/json/v1/1/random.php";
-    String categoryUrl = "https://www.themealdb.com/api/json/v1/1/categories.php";
 
     public List<Restaurant> getRestaurant() {
         List<Restaurant> restaurants = new ArrayList<>();
