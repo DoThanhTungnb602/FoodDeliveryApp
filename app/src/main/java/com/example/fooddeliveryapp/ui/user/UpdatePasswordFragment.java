@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -66,6 +67,7 @@ public class UpdatePasswordFragment extends Fragment {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
                                 Toast.makeText(getActivity(),"Change password successfully",Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(binding.getRoot()).navigate(R.id.navigation_user);
                             }else {
                                 Toast.makeText(getActivity(),task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                             }

@@ -15,16 +15,19 @@ import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentUserBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class UserFragment extends Fragment {
 
     private FragmentUserBinding binding;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUserBinding.inflate(inflater, container, false);
 
         MainActivity.showNavView();
-
+        String email = user.getEmail();
+        binding.textView16.setText(email);
         View root = binding.getRoot();
         binding.btnGoToCart.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_user_to_navigation_cart);

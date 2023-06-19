@@ -18,7 +18,6 @@ public class PaymentMethodFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPaymentMethodBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 }
