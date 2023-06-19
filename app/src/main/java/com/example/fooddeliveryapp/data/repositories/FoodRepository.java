@@ -162,4 +162,7 @@ public class FoodRepository {
     public void insertAllFoods(List<Food> foods) {
         foodDao.insertAllFoods(foods);
     }
+    public List<Food> searchFood(String name){
+        return foodDao.searchFood(name);
+    }
 }

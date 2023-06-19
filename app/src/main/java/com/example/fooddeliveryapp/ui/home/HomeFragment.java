@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
         listFood = foodRepository.getAllFood();
         // TODO: Add data to listFood
 
+        categoryRepository = new CategoryRepository(database);
         listCategory = categoryRepository.getAllCategory();
 
         foodListAdapter = new FoodListAdapter(listFood);
@@ -107,8 +108,10 @@ public class HomeFragment extends Fragment {
             }
         });
         binding.editTextSearch.setOnKeyListener((v, keyCode, event) -> {
+            Bundle args = new Bundle();
+            args.putString("name", "%" + key_search + "%");
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment, args);
                 MainActivity.hideNavView();
                 return true;
             }
@@ -116,10 +119,8 @@ public class HomeFragment extends Fragment {
         });
 
         binding.btnSeeAllCategory.setOnClickListener(v -> {
-            Bundle args = new Bundle();
-            args.putString("name", key_search);
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment,
-                    args);
+
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment);
             MainActivity.hideNavView();
         });
 

@@ -43,13 +43,6 @@ public class FoodDetailsFragment extends Fragment {
         binding = FragmentFoodDetailsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
-//        Bundle args = getArguments();
-//        int foodId = 0;
-//        if (args != null) {
-//            foodId = args.getInt("foodId");
-//            // Use the foodId as needed
-//        }
-//        System.out.print(foodId);
         navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
