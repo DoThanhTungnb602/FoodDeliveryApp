@@ -11,6 +11,8 @@ import java.util.List;
 
 @Dao
 public interface FoodImageDao {
+    @Query("SELECT * FROM food_image")
+    List<FoodImage> getAllFoodImages();
     @Query("SELECT * FROM food_image WHERE foodId=:foodId")
     List<FoodImage> getFoodImagesByFoodID(int foodId);
 

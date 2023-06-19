@@ -11,21 +11,16 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.fooddeliveryapp.data.db.AppDatabase;
-import com.example.fooddeliveryapp.data.db.entities.Category;
-import com.example.fooddeliveryapp.data.db.entities.Restaurant;
-import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static BottomNavigationView navView;
     private int currentDestinationId;
+    FoodRepository foodRepository;
     private boolean doubleBackToExitPressedOnce = false;
     public static final int currentUserID = 1;
 
@@ -43,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         database = AppDatabase.getDatabase(this);
+        foodRepository = new FoodRepository(database);
 
         currentDestinationId = R.id.navigation_home;
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -58,7 +55,16 @@ public class MainActivity extends AppCompatActivity {
             currentDestinationId = destination.getId();
         });
 
-        generateDummyData();
+//        generateDummyData();
+//        FakeData fakeData = new FakeData();
+//        for (int i = 0; i < 40; i++) {
+//            fakeData.getFoodFromServer(this).thenAccept(data -> {
+//                foodRepository.insertFood(data);
+////                this.runOnUiThread(() -> {
+////                    Toast.makeText(this, "Insert food successfully", Toast.LENGTH_SHORT).show();
+////                });
+//            });
+//        }
     }
 
     private void generateDummyData() {

@@ -36,7 +36,8 @@ public class FoodRepository {
      */
     public List<Food> getAllFood() {
         for (Food food : listFood) {
-            food.setFoodImages(foodImageDao.getFoodImagesByFoodID(food.getId()));
+            List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+            food.setFoodImages(foodImages);
         }
         return listFood;
     }
@@ -76,8 +77,7 @@ public class FoodRepository {
      * @param restaurantId  là id của nhà hàng.
      * @param foodImages    là danh sách các hình ảnh của món ăn.
      */
-    public void insertFood(String name, String description, double price, boolean availability, int deliveryTime, int categoryId, float averageRating, int restaurantId, List<FoodImage> foodImages) {
-        Food food = new Food(name, description, price, availability, deliveryTime, categoryId, averageRating, restaurantId, foodImages);
+    public void insertFood(Food food) {
         foodDao.insertFood(food);
     }
 
