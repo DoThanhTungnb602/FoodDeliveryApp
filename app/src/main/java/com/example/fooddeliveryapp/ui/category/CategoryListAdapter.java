@@ -44,10 +44,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             Navigation.findNavController(v).navigate(R.id.foodFragment, null, navOptions);
         });
 
-//        holder.txtCategoryItem.setText(categoryList.get(position).name);
-//        Glide.with(holder.imgCategoryItem.getContext())
-//                .load(categoryList.get(position).image)
-//                .into(holder.imgCategoryItem);
+        holder.txtCategoryItem.setText(categoryList.get(position).name);
+        Glide.with(holder.imgCategoryItem.getContext())
+                .load(categoryList.get(position).image)
+                .into(holder.imgCategoryItem);
     }
 
     @Override

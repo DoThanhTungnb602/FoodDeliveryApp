@@ -3,15 +3,11 @@ package com.example.fooddeliveryapp;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 
 import com.example.fooddeliveryapp.data.db.AppDatabase;
-import com.example.fooddeliveryapp.data.db.dao.FoodImageDao;
 import com.example.fooddeliveryapp.data.db.dao.RestaurantDao;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
-import com.example.fooddeliveryapp.data.db.entities.FoodImage;
 import com.example.fooddeliveryapp.data.db.entities.Restaurant;
 import com.example.fooddeliveryapp.data.db.entities.User;
 import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
@@ -21,14 +17,6 @@ import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class FakeData {
 
@@ -55,12 +43,12 @@ public class FakeData {
         RestaurantDao restaurantDao = database.restaurantDao();
         UserRepository userRepository = new UserRepository(database);
         List<Food> foods = foodRepository.getAllFood();
-        List<Category> categories = new ArrayList<>();
         if (foods.size() == 0) {
             for (int i = 0; i < 20; i++) {
                 foodRepository.getFoodFromServer().thenAccept(foodRepository::insertFood);
             }
-            categoryRepository.getCategoryFromServer().thenAccept(categoryRepository::insertAllCategories);
+            categoryRepository.getCategoryFromServer().thenAccept(data -> {
+            });
             restaurantDao.insertAll(getRestaurant());
             userRepository.insertUsers(getUsers());
         }

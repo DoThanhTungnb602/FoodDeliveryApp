@@ -92,11 +92,11 @@ public class CategoryRepository {
                     JSONArray jsonArray = jsonObject.getJSONArray("categories");
                     List<Category> categories = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        int categoryID = Integer.parseInt(jsonArray.getJSONObject(i).getString("idCategory"));
                         String categoryName = jsonArray.getJSONObject(i).getString("strCategory");
                         String categoryImageUrl = jsonArray.getJSONObject(i).getString("strCategoryThumb");
-                        Category category = new Category(categoryID, categoryName, categoryImageUrl);
+                        Category category = new Category(categoryName, categoryImageUrl);
                         categories.add(category);
+                        categoryDao.insertCategory(category);
                     }
                     future.complete(categories);
                 } catch (JSONException e) {
