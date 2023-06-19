@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.Category;
+import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
 import com.example.fooddeliveryapp.databinding.FragmentCategoryBinding;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.List;
 
 
 public class CategoryFragment extends Fragment {
+    AppDatabase database;
     private FragmentCategoryBinding binding;
     private NavController navController;
     private NavHostFragment navHostFragment;
@@ -29,6 +32,7 @@ public class CategoryFragment extends Fragment {
     private GridLayoutManager gridLayoutManager;
     private List<Category> categoryList;
     private CategoryListAdapter categoryAdapter;
+    private CategoryRepository categoryRepository;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,11 +40,10 @@ public class CategoryFragment extends Fragment {
         navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
+        database = AppDatabase.getDatabase(requireActivity());
+        categoryRepository = new CategoryRepository(database);
 
-        categoryList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            categoryList.add(null);
-        }
+        categoryList = categoryRepository.getAllCategory();
 
         recyclerView = binding.recyclerViewCategoryList;
         gridLayoutManager = new GridLayoutManager(getContext(), 3);

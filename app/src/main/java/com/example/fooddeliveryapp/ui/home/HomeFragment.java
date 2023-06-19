@@ -49,19 +49,13 @@ public class HomeFragment extends Fragment {
 
         MainActivity.showNavView();
 
+        listFood = foodRepository.getListFoodWithLimit(10);
+        foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList = binding.recyclerViewFoodList;
         recyclerViewFoodList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        listFood = foodRepository.getAllFood();
-        // TODO: Add data to listFood
-
-
-        listCategory = categoryRepository.getAllCategory();
-
-
-        foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList.setAdapter(foodListAdapter);
 
+        listCategory = categoryRepository.getListCategoryWithLimit(6);
         categoryListAdapter = new CategoryListAdapter(listCategory);
         recyclerViewCategory = binding.recyclerViewCategoryHome;
         recyclerViewCategory.setLayoutManager(new GridLayoutManager(getContext(), 3));

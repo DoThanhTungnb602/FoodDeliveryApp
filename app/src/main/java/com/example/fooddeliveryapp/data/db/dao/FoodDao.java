@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.fooddeliveryapp.data.db.entities.Food;
@@ -35,4 +36,8 @@ public interface FoodDao {
 
     @Insert
     void insertAllFoods(List<Food> foods);
+
+    @Transaction
+    @Query("SELECT * FROM food LIMIT :limit")
+    List<Food> getListFoodWithLimit(int limit);
 }

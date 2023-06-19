@@ -47,6 +47,10 @@ public class CategoryRepository {
         return listCategory;
     }
 
+    public List<Category> getListCategoryWithLimit(int limit) {
+        return categoryDao.getListCategoryWithLimit(limit);
+    }
+
     /**
      * Lấy danh sách các loại món ăn theo tên.
      *
