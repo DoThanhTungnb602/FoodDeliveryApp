@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.ui.food;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,14 @@ import com.bumptech.glide.Glide;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
 
     List<Food> foodList;
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
     public FoodListAdapter(List<Food> foodList) {
         this.foodList = foodList;
@@ -34,6 +38,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.ViewHolder holder, int position) {
         holder.cardView.setOnClickListener(v -> {
@@ -41,11 +46,17 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, null, navOptions);
         });
 
-        Glide.with(holder.imgFoodItem.getContext()).load(foodList.get(position).getFoodImages().get(0).imageUrl).into(holder.imgFoodItem);
-        holder.txtDeliveryTimeFoodItem.setText(String.valueOf(foodList.get(position).getDeliveryTime()));
-        holder.txtTitleFoodItem.setText(foodList.get(position).getName());
-        holder.txtPriceFoodItem.setText(String.valueOf(foodList.get(position).getPrice()));
-        holder.txtRatingFoodItem.setText(String.valueOf(foodList.get(position).getAverageRating()));
+        String imageUrl = foodList.get(position).getFoodImages().get(0).imageUrl;
+        String deliveryTime = foodList.get(position).getDeliveryTime() + " phút";
+        String name = foodList.get(position).getName();
+        String price = currencyFormat.format(foodList.get(position).getPrice());
+        String rating = String.valueOf(foodList.get(position).getAverageRating());
+
+        Glide.with(holder.imgFoodItem.getContext()).load(imageUrl).into(holder.imgFoodItem);
+        holder.txtDeliveryTimeFoodItem.setText(deliveryTime);
+        holder.txtTitleFoodItem.setText(name);
+        holder.txtPriceFoodItem.setText(price);
+        holder.txtRatingFoodItem.setText(rating);
     }
 
     @Override

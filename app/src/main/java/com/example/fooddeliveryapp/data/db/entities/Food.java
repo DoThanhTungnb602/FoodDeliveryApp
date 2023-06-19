@@ -1,27 +1,21 @@
 package com.example.fooddeliveryapp.data.db.entities;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
 
-@Entity(tableName = "food"
-//        foreignKeys = {
-//                @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "categoryId", onDelete = ForeignKey.CASCADE),
-//                @ForeignKey(entity = Restaurant.class, parentColumns = "id", childColumns = "restaurantId", onDelete = ForeignKey.CASCADE)
-//        }
-)
+@Entity(tableName = "food")
 public class Food {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     public int id;
     public String name;
     public String description;
-    public double price;
+    public int price;
     public boolean availability;
     public int deliveryTime;
-    public int categoryId;
+    public String categoryId;
     public float averageRating;
     public int restaurantId;
 
@@ -32,7 +26,8 @@ public class Food {
     public List<FoodImage> foodImages;
 
     @Ignore
-    public Food(String name, String description, double price, boolean availability, int deliveryTime, int categoryId, float averageRating, int restaurantId, List<FoodImage> foodImages) {
+    public Food(int id, String name, String description, int price, boolean availability, int deliveryTime, String categoryId, float averageRating, int restaurantId, List<FoodImage> foodImages) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -68,11 +63,11 @@ public class Food {
         this.description = description;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -92,11 +87,11 @@ public class Food {
         this.deliveryTime = deliveryTime;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 

@@ -10,6 +10,8 @@ import com.example.fooddeliveryapp.data.db.entities.Restaurant;
 import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,16 +109,16 @@ public class MockData {
         foodImages.add(new FoodImage("https://bit.ly/3fLJf72", 10));
 
 
-        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages1));
-        foods.add(new Food("Nước tăng lực", "Nước tăng lực có gas", 12000, true, 15, 2, 4.2f, 1, foodImages2));
-        foods.add(new Food("Cà phê", "Cà phê đen", 15000, true, 20, 3, 4.5f, 1, foodImages3));
-        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages4));
-        foods.add(new Food("Nước tăng lực", "Nước tăng lực có gas", 12000, true, 15, 2, 4.2f, 1, foodImages5));
-        foods.add(new Food("Cà phê", "Cà phê đen", 15000, true, 20, 3, 4.5f, 1, foodImages6));
-        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages7));
-        foods.add(new Food("Nước tăng lực", "Nước tăng lực có gas", 12000, true, 15, 2, 4.2f, 1, foodImages8));
-        foods.add(new Food("Cà phê", "Cà phê đen", 15000, true, 20, 3, 4.5f, 1, foodImages9));
-        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages10));
+//        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages1));
+//        foods.add(new Food("Nước tăng lực", "Nước tăng lực có gas", 12000, true, 15, 2, 4.2f, 1, foodImages2));
+//        foods.add(new Food("Cà phê", "Cà phê đen", 15000, true, 20, 3, 4.5f, 1, foodImages3));
+//        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages4));
+//        foods.add(new Food("Nước tăng lực", "Nước tăng lực có gas", 12000, true, 15, 2, 4.2f, 1, foodImages5));
+//        foods.add(new Food("Cà phê", "Cà phê đen", 15000, true, 20, 3, 4.5f, 1, foodImages6));
+//        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages7));
+//        foods.add(new Food("Nước tăng lực", "Nước tăng lực có gas", 12000, true, 15, 2, 4.2f, 1, foodImages8));
+//        foods.add(new Food("Cà phê", "Cà phê đen", 15000, true, 20, 3, 4.5f, 1, foodImages9));
+//        foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages10));
 
         categories.add(new Category("Đồ ăn", "https://bit.ly/2YoJ77H"));
         categories.add(new Category("Đồ uống", "https://bit.ly/2BteuF2"));
@@ -133,10 +135,10 @@ public class MockData {
         restaurantDao = database.restaurantDao();
         foodImageDao = database.foodImageDao();
 
-//        foodImageDao.deleteAll();
-//        foodRepository.deleteAllFood();
-//        categoryRepository.deleteAllCategory();
-//        restaurantDao.deleteAll();
+        foodImageDao.deleteAll();
+        foodRepository.deleteAllFood();
+        categoryRepository.deleteAllCategory();
+        restaurantDao.deleteAll();
 
 //        restaurantDao.insertAll(restaurants);
 //        categoryRepository.insertAllCategories(categories);
