@@ -108,6 +108,9 @@
         <action
             android:id="@+id/action_foodDetailsFragment_to_navigation_cart"
             app:destination="@id/navigation_cart" />
+        <argument
+            android:name="food_id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

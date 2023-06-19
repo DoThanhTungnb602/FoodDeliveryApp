@@ -37,6 +37,9 @@ public interface FoodDao {
     @Insert
     void insertAllFoods(List<Food> foods);
 
+    @Query("SELECT * FROM food WHERE name LIKE :name")
+    List<Food> searchFood(String name);
+
     @Transaction
     @Query("SELECT * FROM food LIMIT :limit")
     List<Food> getListFoodWithLimit(int limit);

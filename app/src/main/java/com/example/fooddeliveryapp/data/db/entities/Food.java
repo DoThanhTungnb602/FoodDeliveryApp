@@ -118,4 +118,5 @@ public class Food {
     public void setFoodImages(List<FoodImage> foodImages) {
         this.foodImages = foodImages;
     }
+
 }
