@@ -9,6 +9,8 @@ import androidx.room.Update;
 
 import com.example.fooddeliveryapp.data.db.entities.User;
 
+import java.util.List;
+
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user WHERE id=:id")
@@ -22,4 +24,10 @@ public interface UserDao {
 
     @Delete
     void deleteUser(User user);
+
+    @Insert
+    void insertUsers(List<User> users);
+
+    @Query("DELETE FROM user")
+    void deleteAllUser();
 }

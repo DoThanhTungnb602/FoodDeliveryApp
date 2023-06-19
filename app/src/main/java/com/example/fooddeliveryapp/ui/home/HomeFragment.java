@@ -21,13 +21,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.dao.FoodDao;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
 import com.example.fooddeliveryapp.ui.category.CategoryListAdapter;
@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
     private List<Category> listCategory;
     private AppDatabase database;
     private FoodRepository foodRepository;
+    private CategoryRepository categoryRepository;
     private List<String> foods;
     private FoodDao foodDao;
     private EditText autoSearch;
@@ -58,21 +59,18 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         database = AppDatabase.getDatabase(getContext());
         foodRepository = new FoodRepository(database);
+
         MainActivity.showNavView();
 
         recyclerViewFoodList = binding.recyclerViewFoodList;
-        recyclerViewFoodList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewFoodList
+                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         listFood = new ArrayList<>();
         listFood = foodRepository.getAllFood();
         // TODO: Add data to listFood
 
-
-        listCategory = new ArrayList<>();
-
-        for (int i = 0; i < 6; i++) {
-            listCategory.add(null);
-        }
+        listCategory = categoryRepository.getAllCategory();
 
         foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList.setAdapter(foodListAdapter);
@@ -87,7 +85,6 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
-
         this.foodDao = database.foodDao();
         lv = binding.listitem;
         autoSearch = binding.editTextSearch;
@@ -100,8 +97,9 @@ public class HomeFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 key_search = String.valueOf(s);
                 System.out.println(key_search);
-//                adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, foods);
-//                lv.setAdapter(adapter);
+                // adapter = new ArrayAdapter<>(getContext(),
+                // android.R.layout.simple_list_item_1, foods);
+                // lv.setAdapter(adapter);
             }
 
             @Override
@@ -120,7 +118,8 @@ public class HomeFragment extends Fragment {
         binding.btnSeeAllCategory.setOnClickListener(v -> {
             Bundle args = new Bundle();
             args.putString("name", key_search);
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment,args);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment,
+                    args);
             MainActivity.hideNavView();
         });
 

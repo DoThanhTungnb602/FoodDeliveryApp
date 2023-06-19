@@ -4,6 +4,8 @@ import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.dao.UserDao;
 import com.example.fooddeliveryapp.data.db.entities.User;
 
+import java.util.List;
+
 public class UserRepository {
     AppDatabase database;
 
@@ -55,5 +57,13 @@ public class UserRepository {
      */
     public void deleteUser(User user) {
         userDao.deleteUser(user);
+    }
+
+    public void insertUsers(List<User> users) {
+        userDao.insertUsers(users);
+    }
+
+    public void deleteAllUser() {
+        userDao.deleteAllUser();
     }
 }
