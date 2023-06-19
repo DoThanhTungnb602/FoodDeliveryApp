@@ -55,16 +55,16 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="50dp"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.507"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/txtLoginEmail" />
 
             <EditText
-                android:id="@+id/txtForgotPassword"
+                android:id="@+id/txtLoginEmail"
                 android:layout_width="313dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
@@ -84,8 +84,8 @@
                 android:text="Địa chỉ Email"
                 android:textColor="@color/text_color_2"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/txtForgotPassword"
-                app:layout_constraintStart_toStartOf="@+id/txtForgotPassword" />
+                app:layout_constraintBottom_toTopOf="@+id/txtLoginEmail"
+                app:layout_constraintStart_toStartOf="@+id/txtLoginEmail" />
 
             <TextView
                 android:id="@+id/textView"

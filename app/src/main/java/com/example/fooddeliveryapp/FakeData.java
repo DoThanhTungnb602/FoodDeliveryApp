@@ -35,7 +35,6 @@ public class FakeData {
         users.add(new User("Đỗ Thanh Tùng", "Dothanhtungnb602@gmail.com", "Tung2001"));
         return users;
     }
-
     public void fetchDataFromServerToDatabase(Context context) {
         AppDatabase database = AppDatabase.getDatabase(context);
         FoodRepository foodRepository = new FoodRepository(database);
