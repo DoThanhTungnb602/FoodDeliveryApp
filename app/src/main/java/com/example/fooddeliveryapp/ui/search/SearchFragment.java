@@ -49,6 +49,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         searchListAdapter = new FoodListAdapter(searchedFoodList);
         recyclerView.setAdapter(searchListAdapter);
+        binding.NumberOfResult.setText("Tìm được " + String.valueOf(searchedFoodList.size()) + " kết quả");
 
         if(searchListAdapter.getItemCount() == 0){
             binding.layoutItemFound.setVisibility(View.GONE);

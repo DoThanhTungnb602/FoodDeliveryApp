@@ -84,8 +84,9 @@ public class FoodRepository {
      */
     public Food getFoodById(int id) {
         Food food = foodDao.getFoodById(id);
-        food.setFoodImages(foodImageDao.getFoodImagesByFoodID(food.getId()));
-        return foodDao.getFoodById(id);
+        List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+        food.setFoodImages(foodImages);
+        return food;
     }
 
     /**
@@ -177,6 +178,11 @@ public class FoodRepository {
         foodDao.insertAllFoods(foods);
     }
     public List<Food> searchFood(String name){
-        return foodDao.searchFood(name);
+        List<Food> listFoodByName = foodDao.searchFood(name);
+        for (Food food : listFoodByName) {
+            List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+            food.setFoodImages(foodImages);
+        }
+        return listFoodByName;
     }
 }
