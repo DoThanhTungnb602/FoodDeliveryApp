@@ -55,6 +55,7 @@ public class SearchFragment extends Fragment {
         });
 
 
+        
         return binding.getRoot();
     }
 

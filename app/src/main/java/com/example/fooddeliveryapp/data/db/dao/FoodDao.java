@@ -38,5 +38,5 @@ public interface FoodDao {
     void insertAllFoods(List<Food> foods);
 
     @Query("SELECT name FROM food WHERE name LIKE :name")
-    void searchFood(String name);
+    List<String> searchFood(String name);
 }

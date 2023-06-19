@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +54,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             Bundle args = new Bundle();
             args.putInt("food_id", foodList.get(position).getId());
             Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, args, navOptions);
-
         });
 
         String imageUrl = foodList.get(position).getFoodImages().get(0).imageUrl;

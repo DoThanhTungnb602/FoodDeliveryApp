@@ -7,6 +7,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,13 +47,17 @@ public class HomeFragment extends Fragment {
     private List<Category> listCategory;
     private AppDatabase database;
     private FoodRepository foodRepository;
+    private List<String> foods;
     private FoodDao foodDao;
+    private EditText autoSearch;
+    private ListView lv;
+    private ArrayAdapter<String> adapter;
+    private String key_search;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         database = AppDatabase.getDatabase(getContext());
         foodRepository = new FoodRepository(database);
-
         MainActivity.showNavView();
 
         recyclerViewFoodList = binding.recyclerViewFoodList;
@@ -65,7 +74,6 @@ public class HomeFragment extends Fragment {
             listCategory.add(null);
         }
 
-//        Toast.makeText(getContext(), listFood.get(0).getFoodImages().size(), Toast.LENGTH_SHORT).show();
         foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList.setAdapter(foodListAdapter);
 
@@ -79,20 +87,25 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
+
+        this.foodDao = database.foodDao();
+        lv = binding.listitem;
+        autoSearch = binding.editTextSearch;
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                key_search = String.valueOf(s);
+                System.out.println(key_search);
+//                adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, foods);
+//                lv.setAdapter(adapter);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                search(s.toString());
             }
         });
         binding.editTextSearch.setOnKeyListener((v, keyCode, event) -> {
@@ -105,7 +118,9 @@ public class HomeFragment extends Fragment {
         });
 
         binding.btnSeeAllCategory.setOnClickListener(v -> {
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment);
+            Bundle args = new Bundle();
+            args.putString("name", key_search);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment,args);
             MainActivity.hideNavView();
         });
 
@@ -116,9 +131,5 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-    public void search(String text){
-        this.foodDao = database.foodDao();
-        foodDao.searchFood("%" + text + "%");
     }
 }
