@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
         recyclerViewFoodList = binding.recyclerViewFoodList;
         recyclerViewFoodList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        listFood = new ArrayList<>();
         listFood = foodRepository.getAllFood();
         // TODO: Add data to listFood
 
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment {
             listCategory.add(null);
         }
 
+//        Toast.makeText(getContext(), listFood.get(0).getFoodImages().size(), Toast.LENGTH_SHORT).show();
         foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList.setAdapter(foodListAdapter);
 

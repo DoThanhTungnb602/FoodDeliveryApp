@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.ui.food;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -40,8 +42,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             NavOptions navOptions = new NavOptions.Builder().setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim).setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim).setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim).setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim).build();
             Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, null, navOptions);
         });
-
-        Glide.with(holder.imgFoodItem.getContext()).load(foodList.get(position).getFoodImages().get(0).imageUrl).into(holder.imgFoodItem);
+System.out.print("this is food delivery!");
+        String id = String.valueOf(foodList.get(position).getId());
+        System.out.println(id);
+//        Glide.with(holder.imgFoodItem.getContext()).load(image).fitCenter().into(holder.imgFoodItem);
         holder.txtDeliveryTimeFoodItem.setText(String.valueOf(foodList.get(position).getDeliveryTime()));
         holder.txtTitleFoodItem.setText(foodList.get(position).getName());
         holder.txtPriceFoodItem.setText(String.valueOf(foodList.get(position).getPrice()));
@@ -50,7 +54,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return foodList.size();
+        if(this.foodList == null){
+            return 0;
+        }
+        return this.foodList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -26,12 +26,12 @@ public class MockData {
 
     public MockData() {
         List<FoodImage> foodImages1 = new ArrayList<>();
-        foodImages1.add(new FoodImage("https://bit.ly/2YoJ77H", 1));
-        foodImages1.add(new FoodImage("https://bit.ly/2BteuF2", 1));
-        foodImages1.add(new FoodImage("https://bit.ly/3fLJf72", 1));
-        foodImages.add(new FoodImage("https://bit.ly/2YoJ77H", 1));
-        foodImages.add(new FoodImage("https://bit.ly/2BteuF2", 1));
-        foodImages.add(new FoodImage("https://bit.ly/3fLJf72", 1));
+        foodImages1.add(new FoodImage("https://loremflickr.com/200/200/food", 1));
+        foodImages1.add(new FoodImage("https://loremflickr.com/200/200/food", 1));
+        foodImages1.add(new FoodImage("https://loremflickr.com/200/200/food", 1));
+        foodImages.add(new FoodImage("https://loremflickr.com/200/200/food", 1));
+        foodImages.add(new FoodImage("https://loremflickr.com/200/200/food", 1));
+        foodImages.add(new FoodImage("https://loremflickr.com/200/200/food", 1));
 
         List<FoodImage> foodImages2 = new ArrayList<>();
         foodImages2.add(new FoodImage("https://bit.ly/2YoJ77H", 2));
@@ -118,9 +118,9 @@ public class MockData {
         foods.add(new Food("Cà phê", "Cà phê đen", 15000, true, 20, 3, 4.5f, 1, foodImages9));
         foods.add(new Food("Bánh mì", "Bánh mì thịt nướng", 20000, true, 10, 1, 4, 1, foodImages10));
 
-        categories.add(new Category("Đồ ăn", "https://bit.ly/2YoJ77H"));
-        categories.add(new Category("Đồ uống", "https://bit.ly/2BteuF2"));
-        categories.add(new Category("Đồ ăn", "https://bit.ly/3fLJf72"));
+        categories.add(new Category("Đồ ăn", "https://loremflickr.com/320/240/food"));
+        categories.add(new Category("Đồ uống", "https://loremflickr.com/200/240/drink"));
+        categories.add(new Category("Đồ ăn", "https://loremflickr.com/200/240/food"));
 
         restaurants.add(new Restaurant("Quán ăn 1", "123 Lê Lợi, P. Bến Thành, Q.1, TP. HCM"));
         restaurants.add(new Restaurant("Quán ăn 2", "123 Lê Lợi, P. Bến Thành, Q.1, TP. HCM"));
@@ -133,8 +133,8 @@ public class MockData {
         restaurantDao = database.restaurantDao();
         foodImageDao = database.foodImageDao();
 
-//        foodImageDao.deleteAll();
-//        foodRepository.deleteAllFood();
+        foodImageDao.deleteAll();
+        foodRepository.deleteAllFood();
 //        categoryRepository.deleteAllCategory();
 //        restaurantDao.deleteAll();
 
