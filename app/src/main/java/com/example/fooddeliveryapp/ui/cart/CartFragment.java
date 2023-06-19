@@ -36,6 +36,7 @@ public class CartFragment extends Fragment {
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
 
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         cartListAdapter = new CartListAdapter(listCart);
         recyclerView.setAdapter(cartListAdapter);

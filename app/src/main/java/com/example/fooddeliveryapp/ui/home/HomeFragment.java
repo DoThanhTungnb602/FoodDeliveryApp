@@ -116,8 +116,7 @@ public class HomeFragment extends Fragment {
             Bundle args = new Bundle();
             args.putString("name", "%" + key_search + "%");
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment,
-                        args);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment, args);
                 MainActivity.hideNavView();
                 return true;
             }
