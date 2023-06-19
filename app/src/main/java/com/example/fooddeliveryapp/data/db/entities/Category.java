@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "categories")
 public class Category {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     public int id;
     public String name;
     public String image;
 
-    public Category(String name, String image) {
+    public Category(int id, String name, String image) {
         this.name = name;
         this.image = image;
     }
