@@ -1,6 +1,7 @@
 package com.example.fooddeliveryapp.ui.food;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,11 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                     .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
                     .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
                     .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim).build();
-            Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, null, navOptions);
+
+            Bundle args = new Bundle();
+            args.putInt("food_id", foodList.get(position).getId());
+            Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, args, navOptions);
+
         });
 
         String imageUrl = foodList.get(position).getFoodImages().get(0).imageUrl;
@@ -57,7 +62,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         String price = currencyFormat.format(foodList.get(position).getPrice());
         String rating = String.valueOf(foodList.get(position).getAverageRating());
 
-        Glide.with(holder.imgFoodItem.getContext()).load(imageUrl).into(holder.imgFoodItem);
+        Glide.with(holder.imgFoodItem.getContext()).load(imageUrl).fitCenter().into(holder.imgFoodItem);
         holder.txtDeliveryTimeFoodItem.setText(deliveryTime);
         holder.txtTitleFoodItem.setText(name);
         holder.txtPriceFoodItem.setText(price);

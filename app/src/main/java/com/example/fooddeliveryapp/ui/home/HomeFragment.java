@@ -1,6 +1,8 @@
 package com.example.fooddeliveryapp.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.dao.FoodDao;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
@@ -39,6 +42,7 @@ public class HomeFragment extends Fragment {
     private List<Category> listCategory;
     private AppDatabase database;
     private FoodRepository foodRepository;
+    private FoodDao foodDao;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -75,6 +79,22 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
+        binding.editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                search(s.toString());
+            }
+        });
         binding.editTextSearch.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment);
@@ -96,5 +116,9 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    public void search(String text){
+        this.foodDao = database.foodDao();
+        foodDao.searchFood("%" + text + "%");
     }
 }
