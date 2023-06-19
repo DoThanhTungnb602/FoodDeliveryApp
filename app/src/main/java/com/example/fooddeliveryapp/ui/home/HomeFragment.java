@@ -62,6 +62,8 @@ public class HomeFragment extends Fragment {
 
         MainActivity.showNavView();
 
+        listFood = foodRepository.getListFoodWithLimit(10);
+        foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList = binding.recyclerViewFoodList;
         recyclerViewFoodList
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -74,8 +76,11 @@ public class HomeFragment extends Fragment {
         listCategory = categoryRepository.getAllCategory();
 
         foodListAdapter = new FoodListAdapter(listFood);
+        recyclerViewFoodList
+                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFoodList.setAdapter(foodListAdapter);
 
+        listCategory = categoryRepository.getListCategoryWithLimit(6);
         categoryListAdapter = new CategoryListAdapter(listCategory);
         recyclerViewCategory = binding.recyclerViewCategoryHome;
         recyclerViewCategory.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -111,7 +116,8 @@ public class HomeFragment extends Fragment {
             Bundle args = new Bundle();
             args.putString("name", "%" + key_search + "%");
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment, args);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment,
+                        args);
                 MainActivity.hideNavView();
                 return true;
             }

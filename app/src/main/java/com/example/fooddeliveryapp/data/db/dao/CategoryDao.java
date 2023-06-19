@@ -37,4 +37,8 @@ public interface CategoryDao {
 
     @Insert
     void insertAllCategories(List<Category> categories);
+
+    @Transaction
+    @Query("SELECT * FROM categories LIMIT :limit")
+    List<Category> getListCategoryWithLimit(int limit);
 }

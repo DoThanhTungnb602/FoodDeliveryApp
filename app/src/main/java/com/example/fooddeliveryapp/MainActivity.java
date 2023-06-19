@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         FakeData fakeData = new FakeData();
 //        fakeData.resetData(this);
-//        fakeData.fetchDataFromServerToDatabase(this);
+        fakeData.fetchDataFromServerToDatabase(this);
     }
 
 

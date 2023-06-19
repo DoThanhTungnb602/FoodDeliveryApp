@@ -57,6 +57,15 @@ public class FoodRepository {
         return listFood;
     }
 
+    public List<Food> getListFoodWithLimit(int limit) {
+        List<Food> listFoodWithLimit = foodDao.getListFoodWithLimit(limit);
+        for (Food food : listFoodWithLimit) {
+            List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+            food.setFoodImages(foodImages);
+        }
+        return listFoodWithLimit;
+    }
+
     /**
      * Lấy đối tượng cửa hàng theo món ăn.
      *
@@ -82,11 +91,16 @@ public class FoodRepository {
     /**
      * Lấy danh sách các món ăn theo category.
      *
-     * @param categoryId là id của category.
+     * @param categoryName là name của category.
      * @return danh sách các món ăn theo category.
      */
     public List<Food> getFoodByCategoryName(String categoryName) {
-        return foodDao.getFoodByCategoryName(categoryName);
+        List<Food> foodByCategoryName = foodDao.getFoodByCategoryName(categoryName);
+        for (Food food : foodByCategoryName) {
+            List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
+            food.setFoodImages(foodImages);
+        }
+        return foodByCategoryName;
     }
 
     /**
