@@ -12,7 +12,7 @@ import java.util.List;
 public class CartRepository {
     AppDatabase database;
     CartDao cartDao;
-    private final LiveData<List<Cart>> cart;
+    private final List<Cart> cart;
 
     /**
      * Khởi tạo đối tượng CartRepository.
@@ -30,7 +30,7 @@ public class CartRepository {
      *
      * @return danh sách các món ăn trong giỏ hàng.
      */
-    public LiveData<List<Cart>> getAllCart() {
+    public List<Cart> getAllCart() {
         return cart;
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface CartDao {
     @Query("SELECT * FROM cart WHERE userId=:userId")
-    LiveData<List<Cart>> getAllCartByUserID(int userId);
+    List<Cart> getAllCartByUserID(int userId);
 
     @Insert
     void insertCart(Cart cart);

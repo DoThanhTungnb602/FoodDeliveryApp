@@ -18,8 +18,10 @@ import com.example.fooddeliveryapp.data.repositories.CartRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.data.db.entities.Cart;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
     List<Food> listfood;
@@ -46,6 +48,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         holder.imgCartItem.setImageResource(R.drawable.ic_hotpot);
         holder.btnCartItemIncrease.setOnClickListener(v -> {
             cart = listCart.get(position);
@@ -67,11 +70,13 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
                 cartFragment.updatePrice();
             }else{
                 holder.cartRepository.deleteCart(cart);
+                listCart.remove(cart);
+                notifyDataSetChanged();
             }
         });
         Food food = holder.foodRepository.getFoodById(listCart.get(position).getFoodId());
         holder.txtCartItemTitle.setText(food.name);
-        holder.txtCartItemPrice.setText(String.valueOf(food.price));
+        holder.txtCartItemPrice.setText(String.valueOf(numberFormat.format(food.price)));
         holder.txtCartItemQuantity.setText(String.valueOf(listCart.get(position).getQuantity()));
     }
 

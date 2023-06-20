@@ -48,7 +48,6 @@ public class HomeFragment extends Fragment {
     private AppDatabase database;
     private FoodRepository foodRepository;
     private CategoryRepository categoryRepository;
-    private FoodDao foodDao;
     private EditText autoSearch;
     private ListView lv;
     private ArrayAdapter<String> adapter;
@@ -79,7 +78,6 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
-        this.foodDao = database.foodDao();
         lv = binding.listitem;
         autoSearch = binding.editTextSearch;
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -91,9 +89,9 @@ public class HomeFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 key_search = String.valueOf(s);
                 System.out.println(key_search);
-                // adapter = new ArrayAdapter<>(getContext(),
-                // android.R.layout.simple_list_item_1, foods);
-                // lv.setAdapter(adapter);
+//                 adapter = new ArrayAdapter<>(getContext(),
+//                 android.R.layout.simple_list_item_1, foods);
+//                 lv.setAdapter(adapter);
             }
 
             @Override

@@ -25,14 +25,16 @@ import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.data.db.entities.Cart;
 import com.example.fooddeliveryapp.databinding.FragmentCartBinding;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartFragment extends Fragment {
     private FragmentCartBinding binding;
     private RecyclerView recyclerView;
     private CartListAdapter cartListAdapter;
-    private LiveData<List<Cart>> listCart;
+    private List<Cart> listCart;
     private NavController navController;
     private NavHostFragment navHostFragment;
     private AppDatabase database;
@@ -58,10 +60,8 @@ public class CartFragment extends Fragment {
 
         listCart = cartRepository.getAllCart();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        cartListAdapter = new CartListAdapter(listCart.getValue(), this);
+        cartListAdapter = new CartListAdapter(listCart, this);
         recyclerView.setAdapter(cartListAdapter);
-        final Observer<List<Cart>> observer = cartListAdapter::setListCart;
-        listCart.observe(this.getActivity(), observer);
 
         if (cartListAdapter.getItemCount() == 0) {
             binding.recyclerViewCartList.setVisibility(View.GONE);
@@ -92,16 +92,17 @@ public class CartFragment extends Fragment {
 
 
     public void updatePrice(){
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         int Sum = 0;
         int quantity = 0;
         int price = 0;
-//        for(Cart cart : listCart.getValue()){
-//            quantity = cart.getQuantity();
-//            price = foodRepository.getFoodById(cart.getFoodId()).price;
-//            Sum += quantity*price;
-//            System.out.println("Quantity : " + quantity + "\nPrice: " + price + "\nSum: " + Sum);
-//        }
-//        binding.txtTotal.setText(String.valueOf(Sum + Sum*0.1));
+        for(Cart cart : listCart){
+            quantity = cart.getQuantity();
+            price = foodRepository.getFoodById(cart.getFoodId()).price;
+            Sum += quantity*price;
+            System.out.println("Quantity : " + quantity + "\nPrice: " + price + "\nSum: " + Sum);
+        }
+        binding.txtTotal.setText(String.valueOf(numberFormat.format(Sum + Sum*0.1)));
 
     }
 }
