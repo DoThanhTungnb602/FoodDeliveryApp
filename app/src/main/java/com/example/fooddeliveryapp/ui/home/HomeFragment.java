@@ -48,7 +48,6 @@ public class HomeFragment extends Fragment {
     private AppDatabase database;
     private FoodRepository foodRepository;
     private CategoryRepository categoryRepository;
-    private List<String> foods;
     private FoodDao foodDao;
     private EditText autoSearch;
     private ListView lv;

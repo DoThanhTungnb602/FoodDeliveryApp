@@ -20,6 +20,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.db.entities.FoodImage;
 import com.example.fooddeliveryapp.data.repositories.CartRepository;
@@ -41,6 +42,8 @@ public class FoodDetailsFragment extends Fragment {
     private NavController navController;
     private FoodRepository foodRepository;
     private CartRepository cartRepository;
+    private Cart cart;
+    private List<Cart> listCart;
 
 
     @Override
@@ -56,6 +59,7 @@ public class FoodDetailsFragment extends Fragment {
         //Tạo các list
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
         cartRepository = new CartRepository(AppDatabase.getDatabase(requireActivity()));
+        listCart = new ArrayList<>();
 
         // Tạo slide trong food detail
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
@@ -104,9 +108,13 @@ public class FoodDetailsFragment extends Fragment {
 
         binding.btnAddToCart.setOnClickListener(v -> {
 //            Implement add to cart
-//            int id = MainActivity.currentUserID;
-//            CartTable cartTable = new CartTable(id,food.id,2);
-//            List<CartTable> cart = cartRepository.insertCart();
+            if(cartRepository.isExist(food.id)==0) {
+                cartRepository.insertCart(food.id, 1);
+            }else {
+                cart = cartRepository.getCartByFoodId(food.id);
+                cart.setQuantity(cart.getQuantity() + 1);
+                cartRepository.updateCart(cart);
+            }
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart);
         });
 
