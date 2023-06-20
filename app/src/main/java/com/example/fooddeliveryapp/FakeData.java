@@ -5,9 +5,11 @@ import android.content.Context;
 
 
 import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.dao.PaymentMethodDao;
 import com.example.fooddeliveryapp.data.db.dao.RestaurantDao;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.db.entities.PaymentMethod;
 import com.example.fooddeliveryapp.data.db.entities.Restaurant;
 import com.example.fooddeliveryapp.data.db.entities.User;
 import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
@@ -32,15 +34,17 @@ public class FakeData {
 
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User("Đỗ Thanh Tùng", "Dothanhtungnb602@gmail.com", "Tung2001"));
+        users.add(new User("Nguyễn Đức Thiện", "thien14112002@gmail.com", "123456"));
         return users;
     }
+
     public void fetchDataFromServerToDatabase(Context context) {
         AppDatabase database = AppDatabase.getDatabase(context);
         FoodRepository foodRepository = new FoodRepository(database);
         CategoryRepository categoryRepository = new CategoryRepository(database);
         RestaurantDao restaurantDao = database.restaurantDao();
         UserRepository userRepository = new UserRepository(database);
+        PaymentMethodDao paymentMethodDao = database.paymentMethodDao();
         List<Food> foods = foodRepository.getAllFood();
         if (foods.size() == 0) {
             for (int i = 0; i < 20; i++) {
@@ -50,6 +54,7 @@ public class FakeData {
             });
             restaurantDao.insertAll(getRestaurant());
             userRepository.insertUsers(getUsers());
+            paymentMethodDao.insertPaymentMethod(new PaymentMethod(MainActivity.currentUserID, "Payment on delivery"));
         }
     }
 

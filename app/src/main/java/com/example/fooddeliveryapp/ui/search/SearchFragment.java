@@ -43,7 +43,6 @@ public class SearchFragment extends Fragment {
         navController = navHostFragment.getNavController();
 
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
-        System.out.println(getArguments().getString("name"));
         searchedFoodList = foodRepository.searchFood(getArguments().getString("name"));
         recyclerView = binding.recylerViewSearchList;
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));

@@ -48,8 +48,6 @@ public class HomeFragment extends Fragment {
     private AppDatabase database;
     private FoodRepository foodRepository;
     private CategoryRepository categoryRepository;
-    private List<String> foods;
-    private FoodDao foodDao;
     private EditText autoSearch;
     private ListView lv;
     private ArrayAdapter<String> adapter;
@@ -59,25 +57,14 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         database = AppDatabase.getDatabase(getContext());
         foodRepository = new FoodRepository(database);
+        categoryRepository = new CategoryRepository(database);
 
         MainActivity.showNavView();
 
         listFood = foodRepository.getListFoodWithLimit(10);
         foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList = binding.recyclerViewFoodList;
-        recyclerViewFoodList
-                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        listFood = new ArrayList<>();
-        listFood = foodRepository.getAllFood();
-        // TODO: Add data to listFood
-
-        categoryRepository = new CategoryRepository(database);
-        listCategory = categoryRepository.getAllCategory();
-
-        foodListAdapter = new FoodListAdapter(listFood);
-        recyclerViewFoodList
-                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewFoodList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFoodList.setAdapter(foodListAdapter);
 
         listCategory = categoryRepository.getListCategoryWithLimit(6);
@@ -91,7 +78,6 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
-        this.foodDao = database.foodDao();
         lv = binding.listitem;
         autoSearch = binding.editTextSearch;
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -103,9 +89,9 @@ public class HomeFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 key_search = String.valueOf(s);
                 System.out.println(key_search);
-                // adapter = new ArrayAdapter<>(getContext(),
-                // android.R.layout.simple_list_item_1, foods);
-                // lv.setAdapter(adapter);
+//                 adapter = new ArrayAdapter<>(getContext(),
+//                 android.R.layout.simple_list_item_1, foods);
+//                 lv.setAdapter(adapter);
             }
 
             @Override
@@ -116,8 +102,7 @@ public class HomeFragment extends Fragment {
             Bundle args = new Bundle();
             args.putString("name", "%" + key_search + "%");
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment,
-                        args);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment, args);
                 MainActivity.hideNavView();
                 return true;
             }
@@ -125,7 +110,6 @@ public class HomeFragment extends Fragment {
         });
 
         binding.btnSeeAllCategory.setOnClickListener(v -> {
-
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment);
             MainActivity.hideNavView();
         });

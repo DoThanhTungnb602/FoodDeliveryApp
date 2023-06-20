@@ -1,10 +1,11 @@
-package com.example.fooddeliveryapp.ui.home;
+package com.example.fooddeliveryapp.ui.search;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class searchListAdapter extends BaseAdapter {
         return null;
     }
     public static class ViewHolder{
+        ImageView imageView;
         EditText eidtText;
     }
 }

@@ -7,21 +7,28 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.fooddeliveryapp.data.db.entities.CartTable;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
 
 import java.util.List;
 
 @Dao
 public interface CartDao {
-    @Query("SELECT * FROM cart_table WHERE userId=:userId")
-    LiveData<List<CartTable>> getAllCartByUserID(int userId);
+    @Query("SELECT * FROM cart WHERE userId=:userId")
+    List<Cart> getAllCartByUserID(int userId);
 
     @Insert
-    void insertCart(CartTable cart);
+    void insertCart(Cart cart);
 
     @Update
-    void updateCart(CartTable cart);
+    void updateCart(Cart cart);
 
     @Delete
-    void deleteCart(CartTable cart);
+    void deleteCart(Cart cart);
+
+    @Query("SELECT COUNT(foodId) FROM cart WHERE foodId = :foodId")
+    int isExist(int foodId);
+
+    @Query("SELECT * FROM cart WHERE foodId = :foodId")
+    Cart getCartByFoodId(int foodId);
+
 }

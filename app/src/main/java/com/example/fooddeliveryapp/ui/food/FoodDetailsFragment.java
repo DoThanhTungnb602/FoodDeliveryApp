@@ -27,6 +27,10 @@ import com.example.fooddeliveryapp.data.db.entities.FoodImage;
 import com.example.fooddeliveryapp.data.db.entities.Restaurant;
 import com.example.fooddeliveryapp.data.db.entities.User;
 import com.example.fooddeliveryapp.data.repositories.FavoriteRepository;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
+import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.db.entities.FoodImage;
+import com.example.fooddeliveryapp.data.repositories.CartRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import com.example.fooddeliveryapp.databinding.FragmentFoodDetailsBinding;
@@ -34,14 +38,11 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,6 +51,9 @@ public class FoodDetailsFragment extends Fragment {
     private NavHostFragment navHostFragment;
     private NavController navController;
     private FoodRepository foodRepository;
+    private CartRepository cartRepository;
+    private Cart cart;
+    private List<Cart> listCart;
 
 
     @Override
@@ -66,21 +70,23 @@ public class FoodDetailsFragment extends Fragment {
 
         binding = FragmentFoodDetailsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
         navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
 
+        //Tạo các list
+        foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
+        cartRepository = new CartRepository(AppDatabase.getDatabase(requireActivity()));
+        listCart = new ArrayList<>();
+
+        // Tạo slide trong food detail
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
         Food food = foodRepository.getFoodById(getArguments().getInt("food_id"));
-
         List<FoodImage> ListImage = food.getFoodImages();
         for(int i=0; i<ListImage.size(); i++){
             imageList.add(new SlideModel(ListImage.get(i).imageUrl, ScaleTypes.CENTER_INSIDE));
         }
-
         ImageSlider imageSlider = binding.imageSlider;
         imageSlider.setImageList(imageList);
 
@@ -92,6 +98,10 @@ public class FoodDetailsFragment extends Fragment {
         // Hiển thị đánh giá
         TextView txtFoodDetailRating = binding.txtFoodDetailRating;
         txtFoodDetailRating.setText(String.valueOf(food.averageRating));
+
+
+        // Tạo formart cho tiền
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
         // Hiển thị giá đồ ăn
         TextView txtFoodDetailsPrice = binding.txtFoodDetailsPrice;
@@ -117,6 +127,13 @@ public class FoodDetailsFragment extends Fragment {
 
         binding.btnAddToCart.setOnClickListener(v -> {
 //            Implement add to cart
+            if(cartRepository.isExist(food.id)==0) {
+                cartRepository.insertCart(food.id, 1);
+            }else {
+                cart = cartRepository.getCartByFoodId(food.id);
+                cart.setQuantity(cart.getQuantity() + 1);
+                cartRepository.updateCart(cart);
+            }
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart);
         });
         binding.toggleButton.setOnClickListener(v->{

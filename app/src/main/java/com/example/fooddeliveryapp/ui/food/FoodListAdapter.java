@@ -22,12 +22,14 @@ import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.ui.home.HomeFragment;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
 
     List<Food> foodList;
+    ArrayList<Integer> foodIds;
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
     public FoodListAdapter(List<Food> foodList) {

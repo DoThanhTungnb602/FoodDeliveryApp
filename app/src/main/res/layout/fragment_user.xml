@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txtFoodFragmentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thiết lập tài khoản"
@@ -55,7 +55,7 @@
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnSeeAllCategory"
+                android:id="@+id/btnUpdatePaymentMethod"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_marginTop="35dp"
@@ -238,14 +238,14 @@
                     app:layout_constraintVertical_bias="0.571">
 
                     <RadioButton
-                        android:id="@+id/radioButton10"
+                        android:id="@+id/btnPaymentBank"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="25dp" />
 
                     <RadioButton
-                        android:id="@+id/radioButton8"
+                        android:id="@+id/btnPaymentOnDelivery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
