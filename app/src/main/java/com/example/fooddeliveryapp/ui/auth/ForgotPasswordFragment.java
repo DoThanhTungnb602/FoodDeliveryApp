@@ -1,18 +1,25 @@
 package com.example.fooddeliveryapp.ui.auth;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.databinding.FragmentForgotPasswordBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordFragment extends Fragment {
     private FragmentForgotPasswordBinding binding;
@@ -21,71 +28,41 @@ public class ForgotPasswordFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentForgotPasswordBinding.inflate(inflater, container, false);
         binding.btnBackToLogin.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigate(R.id.action_forgotPasswordFragment_to_navigation_auth));
-        binding.txtConfirmPassword.setVisibility(View.GONE);
         binding.btnForgotPassword.setOnClickListener(v -> {
-            if (validateEmail()) showSendOTP();
+            if (validateEmail()) resetpassword();
         });
         return binding.getRoot();
     }
-
-    private void showSendOTP() {
-        binding.txtForgotPassword.setText("");
-        binding.txtForgotPassword.setHint("Mã OTP");
-        binding.txtConfirmPassword.setVisibility(View.GONE);
-        binding.btnForgotPassword.setText("Xác nhận");
-        binding.btnForgotPassword.setOnClickListener(v -> {
-            if (validateOTP()) showChangePassword();
-        });
+    void resetpassword() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String emailaddress = binding.txtLoginEmail.getText().toString();
+        auth.sendPasswordResetEmail(emailaddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                            Toast.makeText(getActivity(), "Check Your Email", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(binding.getRoot()).navigate(R.id.navigation_auth);
+                        } else {
+                            Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
-    private void showChangePassword() {
-        binding.txtForgotPassword.setHint("Mật khẩu mới");
-        binding.txtConfirmPassword.setVisibility(View.VISIBLE);
-        binding.btnForgotPassword.setText("Đổi mật khẩu");
-        binding.btnForgotPassword.setOnClickListener(v -> {
-            if (validatePassword() && changePassword())
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_forgotPasswordFragment_to_navigation_auth);
-        });
-    }
 
-    private boolean validateOTP() {
-        // Implement this function
-        return true;
-    }
-
-    private boolean validatePassword() {
-        String password = binding.txtForgotPassword.getText().toString().trim();
-        String confirmPassword = binding.txtConfirmPassword.getText().toString().trim();
-        if (password.isEmpty()) {
-            binding.txtForgotPassword.setError("Không được để trống");
-            return false;
-        } else if (password.length() < 6) {
-            binding.txtForgotPassword.setError("Mật khẩu phải có ít nhất 6 ký tự");
-            return false;
-        } else if (!password.equals(confirmPassword)) {
-            binding.txtConfirmPassword.setError("Mật khẩu không trùng khớp");
-            return false;
-        } else {
-            binding.txtForgotPassword.setError(null);
-            return true;
-        }
-    }
-
-    private boolean changePassword() {
-        // Implement this function
-        return true;
-    }
 
     private boolean validateEmail() {
-        String email = binding.txtForgotPassword.getText().toString().trim();
+        String email = binding.txtLoginEmail.getText().toString().trim();
         if (email.isEmpty()) {
-            binding.txtForgotPassword.setError("Không được để trống");
+            binding.txtLoginEmail.setError("Không được để trống");
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.txtForgotPassword.setError("Email không hợp lệ");
+            binding.txtLoginEmail.setError("Email không hợp lệ");
             return false;
         } else {
-            binding.txtForgotPassword.setError(null);
+            binding.txtLoginEmail.setError(null);
             return true;
         }
     }

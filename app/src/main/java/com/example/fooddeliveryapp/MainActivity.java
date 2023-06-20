@@ -81,8 +81,14 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
         } else if (currentDestinationId == R.id.navigation_history || currentDestinationId == R.id.navigation_user) {
             Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home);
-        } else {
+
+        }else if(currentDestinationId ==R.id.navigation_auth) {
+            this.finish();
+            return;
+        }
+        else {
             super.onBackPressed();
+
         }
     }
 }

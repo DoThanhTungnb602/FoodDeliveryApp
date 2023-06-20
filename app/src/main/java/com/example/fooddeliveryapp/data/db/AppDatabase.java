@@ -16,7 +16,7 @@ import com.example.fooddeliveryapp.data.db.dao.OrderDetailsDao;
 import com.example.fooddeliveryapp.data.db.dao.PaymentMethodDao;
 import com.example.fooddeliveryapp.data.db.dao.RestaurantDao;
 import com.example.fooddeliveryapp.data.db.dao.UserDao;
-import com.example.fooddeliveryapp.data.db.entities.CartTable;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Favorite;
 import com.example.fooddeliveryapp.data.db.entities.Food;
@@ -28,7 +28,7 @@ import com.example.fooddeliveryapp.data.db.entities.Restaurant;
 import com.example.fooddeliveryapp.data.db.entities.User;
 
 @Database(entities = {
-        CartTable.class,
+        Cart.class,
         Category.class,
         Favorite.class,
         Food.class,

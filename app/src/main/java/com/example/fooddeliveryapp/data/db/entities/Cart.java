@@ -3,18 +3,13 @@ package com.example.fooddeliveryapp.data.db.entities;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
-@Entity(tableName = "cart_table",
-        primaryKeys = {"userId", "foodId"},
-        foreignKeys = {
-                @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId", onDelete = ForeignKey.CASCADE),
-                @ForeignKey(entity = Food.class, parentColumns = "id", childColumns = "foodId", onDelete = ForeignKey.CASCADE)
-        })
-public class CartTable {
+@Entity(tableName = "cart", primaryKeys = {"userId", "foodId"})
+public class Cart {
     public int userId;
     public int foodId;
     public int quantity;
 
-    public CartTable(int userId, int foodId, int quantity) {
+    public Cart(int userId, int foodId, int quantity) {
         this.userId = userId;
         this.foodId = foodId;
         this.quantity = quantity;

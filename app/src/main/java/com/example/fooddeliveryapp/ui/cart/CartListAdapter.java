@@ -15,17 +15,18 @@ import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.CartTable;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
 
 import java.util.List;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
     List<CartTable> listCart;
     List<Food> listfood;
+    List<Cart> listCart;
 
-    public CartListAdapter(List<CartTable> listCart) {
+    public CartListAdapter(List<Cart> listCart) {
         this.listCart = listCart;
     }
-
 
     @NonNull
     @Override
@@ -56,7 +57,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        if(this.listCart == null){
+        if (this.listCart == null) {
             return 0;
         }
         return this.listCart.size();

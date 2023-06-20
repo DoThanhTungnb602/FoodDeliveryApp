@@ -50,6 +50,7 @@ public class FoodFragment extends Fragment {
         assert getArguments() != null;
 
         List<Food> foodList = foodRepository.getFoodByCategoryName(getArguments().getString("categoryName"));
+        binding.txtFoodFragmentTitle.setText(getArguments().getString("categoryName"));
         recommendedFoodList = foodList;
         bestSellerFoodList = foodList;
         highRatingFoodList = foodList;
