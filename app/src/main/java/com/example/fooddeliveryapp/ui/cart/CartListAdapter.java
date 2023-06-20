@@ -11,12 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.CartTable;
+import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 
 import java.util.List;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
     List<CartTable> listCart;
+    List<Food> listfood;
 
     public CartListAdapter(List<CartTable> listCart) {
         this.listCart = listCart;
@@ -45,11 +49,17 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
                 holder.txtCartItemQuantity.setText(String.valueOf(quantity));
             }
         });
+        System.out.print("food id from CartListAdapter: " + listCart.get(position).getFoodId());
+        Food food = holder.foodRepository.getFoodById(listCart.get(position).getFoodId());
+        holder.txtCartItemTitle.setText(food.name);
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        if(this.listCart == null){
+            return 0;
+        }
+        return this.listCart.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,9 +69,11 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         TextView txtCartItemQuantity;
         Button btnCartItemIncrease;
         Button btnCartItemDecrease;
+        FoodRepository foodRepository;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            foodRepository = new FoodRepository(AppDatabase.getDatabase(itemView.getContext()));
             imgCartItem = itemView.findViewById(R.id.imgCartItem);
             txtCartItemTitle = itemView.findViewById(R.id.txtCartItemTitle);
             txtCartItemPrice = itemView.findViewById(R.id.txtCartItemPrice);

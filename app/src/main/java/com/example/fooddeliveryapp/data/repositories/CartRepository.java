@@ -52,4 +52,8 @@ public class CartRepository {
     public void deleteCart(CartTable cart) {
         cartDao.deleteCart(cart);
     }
+
+    public int isExist(int foodId){return cartDao.isExist(foodId);}
+
+    public CartTable getCartByFoodId(int foodId){return cartDao.getCartByFoodId(foodId);}
 }

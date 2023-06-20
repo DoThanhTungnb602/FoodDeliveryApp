@@ -48,7 +48,6 @@ public class HomeFragment extends Fragment {
     private AppDatabase database;
     private FoodRepository foodRepository;
     private CategoryRepository categoryRepository;
-    private List<String> foods;
     private FoodDao foodDao;
     private EditText autoSearch;
     private ListView lv;
@@ -124,7 +123,6 @@ public class HomeFragment extends Fragment {
         });
 
         binding.btnSeeAllCategory.setOnClickListener(v -> {
-
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment);
             MainActivity.hideNavView();
         });

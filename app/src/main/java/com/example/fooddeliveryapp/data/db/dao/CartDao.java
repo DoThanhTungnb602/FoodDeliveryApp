@@ -24,4 +24,10 @@ public interface CartDao {
 
     @Delete
     void deleteCart(CartTable cart);
+
+    @Query("SELECT COUNT(foodId) FROM cart_table WHERE foodId = :foodId")
+    int isExist(int foodId);
+
+    @Query("SELECT * FROM cart_table WHERE foodId = :foodId")
+    CartTable getCartByFoodId(int foodId);
 }

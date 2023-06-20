@@ -22,12 +22,14 @@ import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.ui.home.HomeFragment;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
 
     List<Food> foodList;
+    ArrayList<Integer> foodIds;
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
     public FoodListAdapter(List<Food> foodList) {
@@ -51,8 +53,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                     .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
                     .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim).build();
 
+            foodIds.add(foodList.get(position).getId());
             Bundle args = new Bundle();
-            args.putInt("food_id", foodList.get(position).getId());
+//            args.putInt("food_id", foodList.get(position).getId());
+            args.putIntegerArrayList("foodIds", foodIds);
             Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, args, navOptions);
         });
 

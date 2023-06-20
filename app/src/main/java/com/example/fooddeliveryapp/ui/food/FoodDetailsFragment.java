@@ -47,6 +47,8 @@ public class FoodDetailsFragment extends Fragment {
     private NavController navController;
     private FoodRepository foodRepository;
     private CartRepository cartRepository;
+    private CartTable cart;
+    private List<CartTable> listCart;
 
 
     @Override
@@ -110,10 +112,19 @@ public class FoodDetailsFragment extends Fragment {
 
         binding.btnAddToCart.setOnClickListener(v -> {
 //            Implement add to cart
-//            int id = MainActivity.currentUserID;
-//            CartTable cartTable = new CartTable(id,food.id,2);
-//            List<CartTable> cart = cartRepository.insertCart();
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart);
+            if(cartRepository.isExist(food.id)==0) {
+                cartRepository.insertCart(food.id, 0);
+                cart = cartRepository.getCartByFoodId(food.id);
+                listCart.add(cart);
+            }else {
+                cart = cartRepository.getCartByFoodId(food.id);
+                cart.setQuantity(cart.getQuantity() + 1);
+                cartRepository.updateCart(cartRepository.getCartByFoodId(food.id));
+            }
+            Bundle args = new Bundle();
+//            args.putIntegerArrayList();
+            args.putInt("food_id", food.id);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart, args);
         });
 
         return root;
