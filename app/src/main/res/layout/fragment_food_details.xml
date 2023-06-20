@@ -130,17 +130,18 @@
 
         <ToggleButton
             android:id="@+id/toggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOn=""
-            android:textOff=""
-            android:onClick="onCustomToggleClick"
+            android:layout_width="49dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/toggle_selector"
-            android:layout_marginTop="8dp"
+            android:onClick="onCustomToggleClick"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.794"
+            app:layout_constraintHorizontal_bias="0.927"
             app:layout_constraintStart_toEndOf="@+id/txtFoodDetailsPrice"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+            app:layout_constraintTop_toBottomOf="@+id/txtFoodDetailRating" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
