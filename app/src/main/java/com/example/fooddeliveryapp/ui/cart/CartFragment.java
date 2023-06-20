@@ -102,7 +102,7 @@ public class CartFragment extends Fragment {
             Sum += quantity*price;
             System.out.println("Quantity : " + quantity + "\nPrice: " + price + "\nSum: " + Sum);
         }
-        binding.txtTotal.setText(String.valueOf(numberFormat.format(Sum + Sum*0.1)));
+        binding.txtTotal.setText(numberFormat.format(Sum + Sum*0.1));
 
     }
 }

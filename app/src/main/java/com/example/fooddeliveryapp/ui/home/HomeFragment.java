@@ -32,6 +32,7 @@ import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.FragmentHomeBinding;
 import com.example.fooddeliveryapp.ui.category.CategoryListAdapter;
 import com.example.fooddeliveryapp.ui.food.FoodListAdapter;
+import com.example.fooddeliveryapp.ui.search.SearchListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +49,10 @@ public class HomeFragment extends Fragment {
     private AppDatabase database;
     private FoodRepository foodRepository;
     private CategoryRepository categoryRepository;
-    private EditText autoSearch;
-    private ListView lv;
-    private ArrayAdapter<String> adapter;
+    private RecyclerView recyclerViewSearch;
+    private SearchListAdapter adapterSearch;
     private String key_search;
+    private List<Food> listFoodSearch;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -78,8 +79,6 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
-        lv = binding.listitem;
-        autoSearch = binding.editTextSearch;
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,9 +88,14 @@ public class HomeFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 key_search = String.valueOf(s);
                 System.out.println(key_search);
-//                 adapter = new ArrayAdapter<>(getContext(),
-//                 android.R.layout.simple_list_item_1, foods);
-//                 lv.setAdapter(adapter);
+                listFoodSearch = foodRepository.searchFood("%" + key_search + "%");
+                for(int i=0; i<listFoodSearch.size(); i++){
+                    System.out.println(listFoodSearch.get(i).getName());
+                }
+                adapterSearch = new SearchListAdapter(listFoodSearch);
+                recyclerViewSearch = binding.listitem;
+                recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                recyclerViewSearch.setAdapter(adapterSearch);
             }
 
             @Override

@@ -71,6 +71,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             }else{
                 holder.cartRepository.deleteCart(cart);
                 listCart.remove(cart);
+                cartFragment.updatePrice();
                 notifyDataSetChanged();
             }
         });
