@@ -53,10 +53,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                     .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
                     .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim).build();
 
-            foodIds.add(foodList.get(position).getId());
             Bundle args = new Bundle();
-//            args.putInt("food_id", foodList.get(position).getId());
-            args.putIntegerArrayList("foodIds", foodIds);
+            args.putInt("food_id", foodList.get(position).getId());
             Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, args, navOptions);
         });
 

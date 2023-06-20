@@ -5,10 +5,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
-import com.example.fooddeliveryapp.data.db.entities.CartTable;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.repositories.CartRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
@@ -30,13 +32,12 @@ public class CartFragment extends Fragment {
     private FragmentCartBinding binding;
     private RecyclerView recyclerView;
     private CartListAdapter cartListAdapter;
-    private static List<CartTable> listCart;
-    private List<Cart> listCart;
+    private LiveData<List<Cart>> listCart;
     private NavController navController;
     private NavHostFragment navHostFragment;
     private AppDatabase database;
-    private CartTable cart;
-    private KeyEvent event;
+    private FoodRepository foodRepository;
+    private CartRepository cartRepository;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,36 +49,19 @@ public class CartFragment extends Fragment {
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
         database = AppDatabase.getDatabase(requireActivity());
-        listCart = new ArrayList<>();
-
-        // Cart là giỏ hàng
-
-        System.out.print(listCart.size());
 
         // thêm các list
-        CartRepository cartRepository = new CartRepository(database);
-        FoodRepository foodRepository = new FoodRepository(database);
+        cartRepository = new CartRepository(database);
+        foodRepository = new FoodRepository(database);
 
-        // Xử lý thêm vào giỏ hàng
-        Food food = foodRepository.getFoodById(getArguments().getInt("food_id"));
-        System.out.println(food.id);
+        // observe
 
-        if (cartRepository.isExist(food.id) == 0) {
-            cartRepository.insertCart(food.id, 0);
-            cart = cartRepository.getCartByFoodId(food.id);
-            listCart.add(cart);
-            System.out.println("Size of ListCart: " + listCart.size());
-            System.out.println("food id from CartFragment: " + cart.foodId);
-            System.out.println("quantity from CartFragment: " + cart.quantity);
-        } else {
-            cart = cartRepository.getCartByFoodId(food.id);
-            cart.setQuantity(cart.getQuantity() + 1);
-            cartRepository.updateCart(cartRepository.getCartByFoodId(food.id));
-        }
-
+        listCart = cartRepository.getAllCart();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        cartListAdapter = new CartListAdapter(listCart);
+        cartListAdapter = new CartListAdapter(listCart.getValue(), this);
         recyclerView.setAdapter(cartListAdapter);
+        final Observer<List<Cart>> observer = cartListAdapter::setListCart;
+        listCart.observe(this.getActivity(), observer);
 
         if (cartListAdapter.getItemCount() == 0) {
             binding.recyclerViewCartList.setVisibility(View.GONE);
@@ -96,6 +80,7 @@ public class CartFragment extends Fragment {
             navController.navigate(R.id.action_navigation_cart_to_checkoutFragment);
         });
 
+        updatePrice();
         return binding.getRoot();
     }
 
@@ -103,5 +88,20 @@ public class CartFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+
+    public void updatePrice(){
+        int Sum = 0;
+        int quantity = 0;
+        int price = 0;
+//        for(Cart cart : listCart.getValue()){
+//            quantity = cart.getQuantity();
+//            price = foodRepository.getFoodById(cart.getFoodId()).price;
+//            Sum += quantity*price;
+//            System.out.println("Quantity : " + quantity + "\nPrice: " + price + "\nSum: " + Sum);
+//        }
+//        binding.txtTotal.setText(String.valueOf(Sum + Sum*0.1));
+
     }
 }

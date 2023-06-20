@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface CartDao {
     @Query("SELECT * FROM cart WHERE userId=:userId")
-    List<Cart> getAllCartByUserID(int userId);
+    LiveData<List<Cart>> getAllCartByUserID(int userId);
 
     @Insert
     void insertCart(Cart cart);
@@ -23,13 +23,12 @@ public interface CartDao {
     void updateCart(Cart cart);
 
     @Delete
-    void deleteCart(CartTable cart);
+    void deleteCart(Cart cart);
 
-    @Query("SELECT COUNT(foodId) FROM cart_table WHERE foodId = :foodId")
+    @Query("SELECT COUNT(foodId) FROM cart WHERE foodId = :foodId")
     int isExist(int foodId);
 
-    @Query("SELECT * FROM cart_table WHERE foodId = :foodId")
-    CartTable getCartByFoodId(int foodId);
+    @Query("SELECT * FROM cart WHERE foodId = :foodId")
+    Cart getCartByFoodId(int foodId);
 
-    void deleteCart(Cart cart);
 }

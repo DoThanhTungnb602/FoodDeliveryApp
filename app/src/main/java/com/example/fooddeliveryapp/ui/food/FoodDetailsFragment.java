@@ -20,6 +20,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.db.entities.FoodImage;
 import com.example.fooddeliveryapp.data.repositories.CartRepository;
@@ -41,8 +42,8 @@ public class FoodDetailsFragment extends Fragment {
     private NavController navController;
     private FoodRepository foodRepository;
     private CartRepository cartRepository;
-    private CartTable cart;
-    private List<CartTable> listCart;
+    private Cart cart;
+    private List<Cart> listCart;
 
 
     @Override
@@ -58,6 +59,7 @@ public class FoodDetailsFragment extends Fragment {
         //Tạo các list
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
         cartRepository = new CartRepository(AppDatabase.getDatabase(requireActivity()));
+        listCart = new ArrayList<>();
 
         // Tạo slide trong food detail
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
@@ -107,18 +109,13 @@ public class FoodDetailsFragment extends Fragment {
         binding.btnAddToCart.setOnClickListener(v -> {
 //            Implement add to cart
             if(cartRepository.isExist(food.id)==0) {
-                cartRepository.insertCart(food.id, 0);
-                cart = cartRepository.getCartByFoodId(food.id);
-                listCart.add(cart);
+                cartRepository.insertCart(food.id, 1);
             }else {
                 cart = cartRepository.getCartByFoodId(food.id);
                 cart.setQuantity(cart.getQuantity() + 1);
-                cartRepository.updateCart(cartRepository.getCartByFoodId(food.id));
+                cartRepository.updateCart(cart);
             }
-            Bundle args = new Bundle();
-//            args.putIntegerArrayList();
-            args.putInt("food_id", food.id);
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart, args);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart);
         });
 
         return root;
