@@ -40,13 +40,13 @@ public class UserFragment extends Fragment {
         String email = userFirebase.getEmail();
         binding.txtEmailUser.setText(email);
         User user = userRepository.getUserByEmail(email);
+        System.out.println(userRepository.getUserByEmail(email).name);
         binding.txtName.setText(user.name);
         binding.txtAdressUser.setText(user.deliveryAddress);
         if (user.image == null) {
             binding.imageView8.setImageResource(R.mipmap.img_thien_dep_trai_foreground);
         } else {
             Glide.with(binding.imageView8.getContext()).load("https://loremflickr.com/g/320/240/paris").into(binding.imageView8);
-
         }
         View root = binding.getRoot();
         binding.btnGoToCart.setOnClickListener(v -> {

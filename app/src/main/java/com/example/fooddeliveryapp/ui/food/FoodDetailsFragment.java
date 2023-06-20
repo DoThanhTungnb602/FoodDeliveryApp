@@ -52,6 +52,7 @@ public class FoodDetailsFragment extends Fragment {
     private NavController navController;
     private FoodRepository foodRepository;
     private CartRepository cartRepository;
+    private FavoriteRepository favoriteRepository;
     private Cart cart;
     private List<Cart> listCart;
 
@@ -78,7 +79,10 @@ public class FoodDetailsFragment extends Fragment {
         //Tạo các list
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
         cartRepository = new CartRepository(AppDatabase.getDatabase(requireActivity()));
-        listCart = new ArrayList<>();
+        favoriteRepository = new FavoriteRepository(AppDatabase.getDatabase(requireActivity()));
+//        List<Favorite> favoriteList = favoriteRepository.getFavoriteList();
+//        favoriteList
+//        listCart = new ArrayList<>();
 
         // Tạo slide trong food detail
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
@@ -136,12 +140,17 @@ public class FoodDetailsFragment extends Fragment {
             }
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart);
         });
+        Favorite favorite = new Favorite(food.id, MainActivity.currentUserID);
+        if(favoriteRepository.isExist(food.id)!=0){
+            binding.toggleButton.setChecked(true);
+        }
         binding.toggleButton.setOnClickListener(v->{
-            FavoriteRepository favoriteRepository = new FavoriteRepository(database);
+
             if(binding.toggleButton.isChecked()){
-                favoriteRepository.insertFavorite(food.id);
+                favoriteRepository.insertFavorite(favorite);
+//                System.out.println(favoriteRepository.getFavoriteList().get(0).foodId);
             }else {
-                //Chưa làm được chức năng bỏ thích
+                favoriteRepository.deleteFavorite(favorite);
             }
         });
         return root;

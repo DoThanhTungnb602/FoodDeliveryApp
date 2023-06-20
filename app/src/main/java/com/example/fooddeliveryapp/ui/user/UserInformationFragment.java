@@ -44,9 +44,6 @@ public class UserInformationFragment extends Fragment {
         binding.edtAdress.setText(user.deliveryAddress);
         binding.edtName.setText(user.name);
         // Inflate the layout for this fragment
-
-
-
         binding.btnBack.setOnClickListener(v -> navController.popBackStack());
         if (user.image==null){
             binding.imgAvatar.setImageResource(R.mipmap.img_thien_dep_trai_foreground);
