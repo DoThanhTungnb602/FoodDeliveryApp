@@ -1,6 +1,5 @@
 package com.example.fooddeliveryapp.ui.home;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,10 +7,10 @@ import android.widget.EditText;
 
 import java.util.List;
 
-public class searchListAdapter extends BaseAdapter {
+public class SearchListAdapter extends BaseAdapter {
     private List<String> nameFoods;
 
-    public searchListAdapter(List<String> nameFoods) {
+    public SearchListAdapter(List<String> nameFoods) {
         this.nameFoods = nameFoods;
     }
 

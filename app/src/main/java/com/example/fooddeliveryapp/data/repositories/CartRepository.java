@@ -52,4 +52,8 @@ public class CartRepository {
     public void deleteCart(Cart cart) {
         cartDao.deleteCart(cart);
     }
+
+    public void deleteAllCart() {
+        cartDao.deleteAllCart();
+    }
 }

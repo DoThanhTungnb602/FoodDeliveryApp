@@ -74,6 +74,12 @@ public class UserFragment extends Fragment {
             binding.btnPaymentBank.setChecked(true);
         }
 
+        // set up payment method
+
+        if (paymentMethod.getBankName() == null) {
+            binding.btnPaymentBank.setEnabled(false);
+        }
+
         binding.btnPaymentOnDelivery.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 binding.btnPaymentBank.setChecked(false);
