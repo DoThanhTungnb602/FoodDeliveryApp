@@ -59,25 +59,14 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         database = AppDatabase.getDatabase(getContext());
         foodRepository = new FoodRepository(database);
+        categoryRepository = new CategoryRepository(database);
 
         MainActivity.showNavView();
 
         listFood = foodRepository.getListFoodWithLimit(10);
         foodListAdapter = new FoodListAdapter(listFood);
         recyclerViewFoodList = binding.recyclerViewFoodList;
-        recyclerViewFoodList
-                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        listFood = new ArrayList<>();
-        listFood = foodRepository.getAllFood();
-        // TODO: Add data to listFood
-
-        categoryRepository = new CategoryRepository(database);
-        listCategory = categoryRepository.getAllCategory();
-
-        foodListAdapter = new FoodListAdapter(listFood);
-        recyclerViewFoodList
-                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewFoodList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFoodList.setAdapter(foodListAdapter);
 
         listCategory = categoryRepository.getListCategoryWithLimit(6);
@@ -124,7 +113,6 @@ public class HomeFragment extends Fragment {
         });
 
         binding.btnSeeAllCategory.setOnClickListener(v -> {
-
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_categoryFragment);
             MainActivity.hideNavView();
         });

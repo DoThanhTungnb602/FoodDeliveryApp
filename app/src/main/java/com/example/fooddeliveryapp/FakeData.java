@@ -5,9 +5,11 @@ import android.content.Context;
 
 
 import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.dao.PaymentMethodDao;
 import com.example.fooddeliveryapp.data.db.dao.RestaurantDao;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.db.entities.PaymentMethod;
 import com.example.fooddeliveryapp.data.db.entities.Restaurant;
 import com.example.fooddeliveryapp.data.db.entities.User;
 import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
@@ -42,6 +44,7 @@ public class FakeData {
         CategoryRepository categoryRepository = new CategoryRepository(database);
         RestaurantDao restaurantDao = database.restaurantDao();
         UserRepository userRepository = new UserRepository(database);
+        PaymentMethodDao paymentMethodDao = database.paymentMethodDao();
         List<Food> foods = foodRepository.getAllFood();
         if (foods.size() == 0) {
             for (int i = 0; i < 20; i++) {
@@ -51,6 +54,7 @@ public class FakeData {
             });
             restaurantDao.insertAll(getRestaurant());
             userRepository.insertUsers(getUsers());
+            paymentMethodDao.insertPaymentMethod(new PaymentMethod(MainActivity.currentUserID, "Payment on delivery"));
         }
     }
 

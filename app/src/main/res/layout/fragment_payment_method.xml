@@ -8,7 +8,7 @@
     tools:context=".ui.user.PaymentMethodFragment">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogin2"
+        android:id="@+id/btnUpdatePaymentMethodConfirm"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:paddingTop="20dp"
         android:paddingEnd="110dp"
         android:paddingBottom="20dp"
-        android:text="Thêm tài khoản"
+        android:text="Cập nhật thông tin"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout15">
 
         <EditText
-            android:id="@+id/editTextText4"
+            android:id="@+id/txtBankOwnerName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -83,7 +83,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
         <EditText
-            android:id="@+id/editTextText10"
+            android:id="@+id/txtBankAccountNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -94,7 +94,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
         <EditText
-            android:id="@+id/editTextText11"
+            android:id="@+id/txtBankName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -105,7 +105,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView42" />
 
         <EditText
-            android:id="@+id/editTextText12"
+            android:id="@+id/txtBankCCCD"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -122,7 +122,7 @@
             android:layout_marginTop="20dp"
             android:text="Họ và tên"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/editTextText4"
+            app:layout_constraintStart_toStartOf="@+id/txtBankOwnerName"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -132,8 +132,8 @@
             android:layout_marginTop="20dp"
             android:text="CCCD"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/editTextText12"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+            app:layout_constraintStart_toStartOf="@+id/txtBankCCCD"
+            app:layout_constraintTop_toBottomOf="@+id/txtBankOwnerName" />
 
         <TextView
             android:id="@+id/textView42"
@@ -142,8 +142,8 @@
             android:layout_marginTop="20dp"
             android:text="Tên ngân hàng"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/editTextText11"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText12" />
+            app:layout_constraintStart_toStartOf="@+id/txtBankName"
+            app:layout_constraintTop_toBottomOf="@+id/txtBankCCCD" />
 
         <TextView
             android:id="@+id/textView43"
@@ -152,8 +152,8 @@
             android:layout_marginTop="20dp"
             android:text="Số thẻ"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/editTextText10"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText11" />
+            app:layout_constraintStart_toStartOf="@+id/txtBankAccountNumber"
+            app:layout_constraintTop_toBottomOf="@+id/txtBankName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -192,29 +192,29 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/txtCardBankName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
-                android:text="Ngân hàng: Viettin Bank"
+                android:text="Ngân hàng: Chưa rõ"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageView15"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView39"
+                android:id="@+id/txtCardBankAccountNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="14dp"
-                android:text="Số tài khoản: 1234567890"
+                android:text="Số tài khoản: Chưa rõ"
                 android:textColor="@color/primary_color"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageView15"
-                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                app:layout_constraintTop_toBottomOf="@+id/txtCardBankName" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

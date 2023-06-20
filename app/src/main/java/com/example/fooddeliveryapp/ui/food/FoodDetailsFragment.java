@@ -20,24 +20,18 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
-import com.example.fooddeliveryapp.data.db.entities.CartTable;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.db.entities.FoodImage;
-import com.example.fooddeliveryapp.data.db.entities.Restaurant;
 import com.example.fooddeliveryapp.data.repositories.CartRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
-import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import com.example.fooddeliveryapp.databinding.FragmentFoodDetailsBinding;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 

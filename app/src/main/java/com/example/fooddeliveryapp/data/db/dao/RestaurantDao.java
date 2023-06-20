@@ -30,4 +30,7 @@ public interface RestaurantDao {
 
     @Query("DELETE FROM restaurants")
     void deleteAll();
+
+    @Query("SELECT * FROM restaurants")
+    List<Restaurant> getAll();
 }

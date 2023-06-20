@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddeliveryapp.R;
-import com.example.fooddeliveryapp.data.db.entities.CartTable;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
 import com.example.fooddeliveryapp.databinding.FragmentCartBinding;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class CartFragment extends Fragment {
     private FragmentCartBinding binding;
     private RecyclerView recyclerView;
     private CartListAdapter cartListAdapter;
-    private List<CartTable> listCart;
+    private List<Cart> listCart;
     private NavController navController;
     private NavHostFragment navHostFragment;
 
@@ -52,6 +52,10 @@ public class CartFragment extends Fragment {
 
         binding.btnBack.setOnClickListener(v -> {
             navController.popBackStack();
+        });
+
+        binding.btnStartOrder.setOnClickListener(v -> {
+            navController.navigate(R.id.action_navigation_cart_to_checkoutFragment);
         });
 
         return binding.getRoot();
