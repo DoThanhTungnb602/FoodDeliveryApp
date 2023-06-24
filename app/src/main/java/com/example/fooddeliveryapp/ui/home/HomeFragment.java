@@ -79,6 +79,7 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
+
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -86,14 +87,13 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean flag = true;
                 key_search = String.valueOf(s);
-                System.out.println(key_search);
                 listFoodSearch = foodRepository.searchFood("%" + key_search + "%");
-                for(int i=0; i<listFoodSearch.size(); i++){
-                    System.out.println(listFoodSearch.get(i).getName());
+                if(key_search.isEmpty()){
+                    listFoodSearch = new ArrayList<>();
                 }
                 adapterSearch = new SearchListAdapter(listFoodSearch);
-                System.out.println(adapterSearch.getItemCount());
                 recyclerViewSearch = binding.recyclerViewSearch;
                 recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                 recyclerViewSearch.setAdapter(adapterSearch);

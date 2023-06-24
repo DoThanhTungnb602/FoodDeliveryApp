@@ -1,6 +1,7 @@
 package com.example.fooddeliveryapp.ui.search;
 
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +25,6 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     List<Food> foodList;
 
     public SearchListAdapter(List<Food> foodList) {
-        System.out.println("Hello world");
         this.foodList = foodList;
     }
 
@@ -36,9 +38,19 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull SearchListAdapter.ViewHolder holder, int position) {
         String imageUrl = foodList.get(position).getFoodImages().get(0).imageUrl;
-        System.out.println(imageUrl);
         holder.txtNameFood.setText(foodList.get(position).getName());
         Glide.with(holder.Foodimg.getContext()).load(imageUrl).fitCenter().into(holder.Foodimg);
+        holder.cardView.setOnClickListener(v -> {
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
+                    .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
+                    .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
+                    .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim).build();
+
+            Bundle args = new Bundle();
+            args.putInt("food_id", foodList.get(position).getId());
+            Navigation.findNavController(v).navigate(R.id.foodDetailsFragment, args, navOptions);
+        });
     }
 
     @Override
@@ -49,11 +61,12 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameFood;
         ImageView Foodimg;
-
+        CardView cardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNameFood = itemView.findViewById(R.id.txtNameFood);
             Foodimg = itemView.findViewById(R.id.Foodimg);
+            cardView = itemView.findViewById(R.id.cardViewSearch);
         }
     }
 }
