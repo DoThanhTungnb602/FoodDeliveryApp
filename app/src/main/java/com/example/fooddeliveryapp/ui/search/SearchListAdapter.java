@@ -22,6 +22,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     List<Food> foodList;
 
     public SearchListAdapter(List<Food> foodList) {
+        System.out.println("Hello world");
         this.foodList = foodList;
     }
 
@@ -34,15 +35,15 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull SearchListAdapter.ViewHolder holder, int position) {
-        System.out.println("Name from adapter: " + foodList.get(position).getName());
         String imageUrl = foodList.get(position).getFoodImages().get(0).imageUrl;
+        System.out.println(imageUrl);
         holder.txtNameFood.setText(foodList.get(position).getName());
         Glide.with(holder.Foodimg.getContext()).load(imageUrl).fitCenter().into(holder.Foodimg);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return foodList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -93,7 +93,8 @@ public class HomeFragment extends Fragment {
                     System.out.println(listFoodSearch.get(i).getName());
                 }
                 adapterSearch = new SearchListAdapter(listFoodSearch);
-                recyclerViewSearch = binding.listitem;
+                System.out.println(adapterSearch.getItemCount());
+                recyclerViewSearch = binding.recyclerViewSearch;
                 recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                 recyclerViewSearch.setAdapter(adapterSearch);
             }
