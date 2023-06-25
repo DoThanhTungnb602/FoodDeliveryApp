@@ -56,12 +56,12 @@ public class CartFragment extends Fragment {
         cartRepository = new CartRepository(database);
         foodRepository = new FoodRepository(database);
 
-        // observe
 
         listCart = cartRepository.getAllCart();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         cartListAdapter = new CartListAdapter(listCart, this);
         recyclerView.setAdapter(cartListAdapter);
+        System.out.println(cartListAdapter.getItemCount());
 
         if (cartListAdapter.getItemCount() == 0) {
             binding.recyclerViewCartList.setVisibility(View.GONE);
@@ -102,6 +102,5 @@ public class CartFragment extends Fragment {
             Sum += quantity*price;
         }
         binding.txtTotal.setText(numberFormat.format(Sum + Sum*0.1));
-
     }
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -107,16 +108,16 @@ public class FoodDetailsFragment extends Fragment {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
         // Hiển thị giá đồ ăn
-        binding.txtFoodDetailsPrice.setText(String.valueOf(currencyFormat.format(food.price)));
+        binding.txtFoodDetailsPrice.setText(currencyFormat.format(food.price));
 
         // Tính thời gian giao tới
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, foodRepository.getFoodById(getArguments().getInt("food_id")).deliveryTime);
+        cal.add(Calendar.MINUTE, food.deliveryTime);
         DateFormat currentTime = new SimpleDateFormat("HH:mm");
         binding.txtFoodDetailsSuccess.setText("Dự kiến giao lúc " + currentTime.format(cal.getTime()));
 
         // Hiển thị khoảng thời gian giao đến
-        binding.txtFoodDetailsDeliveryInfo.setText(String.valueOf(foodRepository.getFoodById(getArguments().getInt("food_id")).deliveryTime) + " phút");
+        binding.txtFoodDetailsDeliveryInfo.setText(food.deliveryTime + " phút");
 
         // Hiển thị địa chỉ cửa hàng
         binding.txtFoodDetailsStoreInfo.setText(foodRepository.getRestaurant(food).name);
@@ -133,7 +134,7 @@ public class FoodDetailsFragment extends Fragment {
                 cart.setQuantity(cart.getQuantity() + 1);
                 cartRepository.updateCart(cart);
             }
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart);
+            Toast.makeText(this.getContext(), "You added " + food.name + "into your cart successfully!", Toast.LENGTH_SHORT).show();
         });
         Favorite favorite = new Favorite(food.id, MainActivity.currentUserID);
         if(favoriteRepository.isExist(food.id)!=0){
