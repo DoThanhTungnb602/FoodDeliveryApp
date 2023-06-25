@@ -52,8 +52,6 @@ public class UserInformationFragment extends Fragment {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        StorageReference storageRef = storage.getReference().child("images/myImage.jpg");
         binding = FragmentUserInformationBinding.inflate(inflater, container, false);
         navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         assert navHostFragment != null;
@@ -125,7 +123,6 @@ public class UserInformationFragment extends Fragment {
                             Glide.with(binding.imgAvatar.getContext()).load(imageUrl).into(binding.imgAvatar);
                             user.setImage(imageUrl);
                             userRepository.updateUser(user);
-
                         }
                     });
                 }
