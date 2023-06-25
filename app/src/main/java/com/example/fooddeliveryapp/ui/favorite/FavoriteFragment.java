@@ -43,6 +43,7 @@ public class FavoriteFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        MainActivity.showNavView();
         // Inflate the layout for this fragment
         binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         favoriteRepository = new FavoriteRepository(AppDatabase.getDatabase(requireActivity()));
@@ -60,7 +61,6 @@ public class FavoriteFragment extends Fragment {
         if (favoriteList.size() == 0) {
             binding.layoutNoFavorite.setVisibility(View.VISIBLE);
             binding.layoutExistFavorite.setVisibility(View.GONE);
-            MainActivity.showNavView();
         } else {
             for (int i=0;i< favoriteList.size();i++){
                 Food food;

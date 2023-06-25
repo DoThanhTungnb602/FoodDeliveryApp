@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnStartOrder"
+            android:id="@+id/btnCheckout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnStartOrder"
+            app:layout_constraintBottom_toTopOf="@+id/btnCheckout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,14 +139,14 @@
                     app:layout_constraintVertical_bias="1.0">
 
                     <RadioButton
-                        android:id="@+id/btnPaymentBank"
+                        android:id="@+id/btnCheckoutPaymentBank"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="25dp" />
 
                     <RadioButton
-                        android:id="@+id/btnPaymentOnDelivery"
+                        android:id="@+id/btnCheckoutPaymentOnDelivery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
@@ -183,18 +183,18 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/textView28"
+                android:id="@+id/txtCheckoutTax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="8dp"
                 android:text="100.000 đ"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView29"
+                app:layout_constraintBottom_toTopOf="@+id/txtCheckoutTotalPrice"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/txtCheckoutTotalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -207,19 +207,20 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/textView12"
-                android:layout_width="275dp"
-                android:layout_height="0dp"
+                android:id="@+id/txtCheckoutAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Địa chỉ giao hàng: Số nhà 12, Ninh Sơn, Ninh Bình, thành phố Ninh Bình"
+                android:text="Địa chỉ giao hàng: Chưa rõ"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/btnCheckoutChangeAddress"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/btnCheckoutChangeAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -269,10 +270,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCheckoutList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="-30dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

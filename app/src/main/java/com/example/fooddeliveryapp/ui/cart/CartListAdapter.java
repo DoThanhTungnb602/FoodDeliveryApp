@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.Food;
@@ -71,12 +72,15 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             }else{
                 holder.cartRepository.deleteCart(cart);
                 listCart.remove(cart);
+                cartFragment.updatePrice();
                 notifyDataSetChanged();
             }
         });
         Food food = holder.foodRepository.getFoodById(listCart.get(position).getFoodId());
+        String imageUrl = food.getFoodImages().get(0).imageUrl;
+        Glide.with(holder.imgCartItem.getContext()).load(imageUrl).fitCenter().into(holder.imgCartItem);
         holder.txtCartItemTitle.setText(food.name);
-        holder.txtCartItemPrice.setText(String.valueOf(numberFormat.format(food.price)));
+        holder.txtCartItemPrice.setText(numberFormat.format(food.price));
         holder.txtCartItemQuantity.setText(String.valueOf(listCart.get(position).getQuantity()));
     }
 

@@ -100,9 +100,8 @@ public class CartFragment extends Fragment {
             quantity = cart.getQuantity();
             price = foodRepository.getFoodById(cart.getFoodId()).price;
             Sum += quantity*price;
-            System.out.println("Quantity : " + quantity + "\nPrice: " + price + "\nSum: " + Sum);
         }
-        binding.txtTotal.setText(String.valueOf(numberFormat.format(Sum + Sum*0.1)));
+        binding.txtTotal.setText(numberFormat.format(Sum + Sum*0.1));
 
     }
 }

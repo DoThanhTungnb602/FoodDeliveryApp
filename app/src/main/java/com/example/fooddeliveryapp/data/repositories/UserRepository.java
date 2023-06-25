@@ -44,6 +44,10 @@ public class UserRepository {
         return userDao.getUserById(id);
     }
 
+    public User getCurrentUser() {
+        return userDao.getUserById(MainActivity.currentUserID);
+    }
+
     /**
      * Thêm user.
      *
