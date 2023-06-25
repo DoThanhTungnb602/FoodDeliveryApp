@@ -73,35 +73,29 @@ public class FoodDetailsFragment extends Fragment {
 
 
         // Hiển thị tên món ăn
-        TextView txtFoodDetailsTitle = binding.txtFoodDetailsTitle;
-        txtFoodDetailsTitle.setText(food.name);
+        binding.txtFoodDetailsTitle.setText(food.name);
 
         // Hiển thị đánh giá
-        TextView txtFoodDetailRating = binding.txtFoodDetailRating;
-        txtFoodDetailRating.setText(String.valueOf(food.averageRating));
+        binding.txtFoodDetailRating.setText(String.valueOf(food.averageRating));
 
 
         // Tạo formart cho tiền
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
         // Hiển thị giá đồ ăn
-        TextView txtFoodDetailsPrice = binding.txtFoodDetailsPrice;
-        txtFoodDetailsPrice.setText(String.valueOf(currencyFormat.format(food.price)));
+        binding.txtFoodDetailsPrice.setText(String.valueOf(currencyFormat.format(food.price)));
 
         // Tính thời gian giao tới
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE, foodRepository.getFoodById(getArguments().getInt("food_id")).deliveryTime);
         DateFormat currentTime = new SimpleDateFormat("HH:mm");
-        TextView txtFoodDetailsSuccess = binding.txtFoodDetailsSuccess;
-        txtFoodDetailsSuccess.setText("Dự kiến giao lúc " + currentTime.format(cal.getTime()));
+        binding.txtFoodDetailsSuccess.setText("Dự kiến giao lúc " + currentTime.format(cal.getTime()));
 
         // Hiển thị khoảng thời gian giao đến
-        TextView txtFoodDetailsDeliveryInfo = binding.txtFoodDetailsDeliveryInfo;
-        txtFoodDetailsDeliveryInfo.setText(String.valueOf(foodRepository.getFoodById(getArguments().getInt("food_id")).deliveryTime) + " phút");
+        binding.txtFoodDetailsDeliveryInfo.setText(String.valueOf(foodRepository.getFoodById(getArguments().getInt("food_id")).deliveryTime) + " phút");
 
         // Hiển thị địa chỉ cửa hàng
-        TextView txtFoodDetailsStoreInfo = binding.txtFoodDetailsStoreInfo;
-        txtFoodDetailsStoreInfo.setText(foodRepository.getRestaurant(food).name);
+        binding.txtFoodDetailsStoreInfo.setText(foodRepository.getRestaurant(food).name);
 
         binding.btnGoToCart2.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigate(R.id.action_foodDetailsFragment_to_navigation_cart));
         binding.btnBack.setOnClickListener(v -> navController.popBackStack());

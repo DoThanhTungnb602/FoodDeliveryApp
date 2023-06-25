@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.Food;
@@ -18,8 +19,10 @@ import com.example.fooddeliveryapp.data.repositories.CartRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.data.db.entities.Cart;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
     List<Food> listfood;
@@ -46,6 +49,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         holder.imgCartItem.setImageResource(R.drawable.ic_hotpot);
         holder.btnCartItemIncrease.setOnClickListener(v -> {
             cart = listCart.get(position);
@@ -67,11 +71,16 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
                 cartFragment.updatePrice();
             }else{
                 holder.cartRepository.deleteCart(cart);
+                listCart.remove(cart);
+                cartFragment.updatePrice();
+                notifyDataSetChanged();
             }
         });
         Food food = holder.foodRepository.getFoodById(listCart.get(position).getFoodId());
+        String imageUrl = food.getFoodImages().get(0).imageUrl;
+        Glide.with(holder.imgCartItem.getContext()).load(imageUrl).fitCenter().into(holder.imgCartItem);
         holder.txtCartItemTitle.setText(food.name);
-        holder.txtCartItemPrice.setText(String.valueOf(food.price));
+        holder.txtCartItemPrice.setText(numberFormat.format(food.price));
         holder.txtCartItemQuantity.setText(String.valueOf(listCart.get(position).getQuantity()));
     }
 
