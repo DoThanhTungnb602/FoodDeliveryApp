@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.ui.search;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,8 +34,8 @@ public class SearchFragment extends Fragment {
     private FoodListAdapter searchListAdapter;
     private List<Food> searchedFoodList;
     private FoodRepository foodRepository;
-    private FoodDao foodDao;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
@@ -43,6 +44,7 @@ public class SearchFragment extends Fragment {
         navController = navHostFragment.getNavController();
 
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
+        assert getArguments() != null;
         searchedFoodList = foodRepository.searchFood(getArguments().getString("name"));
         recyclerView = binding.recylerViewSearchList;
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
@@ -50,10 +52,10 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(searchListAdapter);
         binding.NumberOfResult.setText("Tìm được " + String.valueOf(searchedFoodList.size()) + " kết quả");
 
-        if(searchListAdapter.getItemCount() == 0){
+        if (searchListAdapter.getItemCount() == 0) {
             binding.layoutItemFound.setVisibility(View.GONE);
             binding.layoutNoItemFound.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             binding.layoutItemFound.setVisibility(View.VISIBLE);
             binding.layoutNoItemFound.setVisibility(View.GONE);
         }
