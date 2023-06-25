@@ -47,6 +47,7 @@ public class CheckoutFragment extends Fragment {
     NavController navController;
     NavHostFragment navHostFragment;
     List<Cart> cartList;
+    User user;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -70,7 +71,7 @@ public class CheckoutFragment extends Fragment {
 
         // Set up total price
         int totalPrice = 0;
-        User user = userRepository.getCurrentUser();
+        user = userRepository.getCurrentUser();
         PaymentMethod paymentMethod = userRepository.getPaymentMethod();
         for (Cart cart : cartList) {
             Food food = foodRepository.getFoodById(cart.getFoodId());
@@ -115,10 +116,15 @@ public class CheckoutFragment extends Fragment {
 
         int finalTotalPrice = totalPrice;
         binding.btnCheckout.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
-            cartRepository.deleteAllCart();
-            orderRepository.insertOrder("Đang xử lý", finalTotalPrice, cartList);
-            navController.navigate(R.id.navigation_home);
+            if (user.getDeliveryAddress() == null) {
+                Toast.makeText(getContext(), "Vui lòng cập nhật địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+                cartRepository.deleteAllCart();
+                orderRepository.insertOrder("Đang xử lý", finalTotalPrice, cartList);
+                navController.navigate(R.id.navigation_home);
+            }
         });
 
 

@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.ui.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,12 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
-import com.example.fooddeliveryapp.data.db.dao.FoodDao;
 import com.example.fooddeliveryapp.data.db.entities.Category;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.repositories.CategoryRepository;
@@ -39,7 +34,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private static FragmentHomeBinding binding;
     private RecyclerView recyclerViewFoodList;
     private FoodListAdapter foodListAdapter;
     private List<Food> listFood;
@@ -53,6 +48,7 @@ public class HomeFragment extends Fragment {
     private SearchListAdapter adapterSearch;
     private String key_search;
     private List<Food> listFoodSearch;
+    public static boolean isSearching = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -61,6 +57,8 @@ public class HomeFragment extends Fragment {
         categoryRepository = new CategoryRepository(database);
 
         MainActivity.showNavView();
+
+        binding.modal.setVisibility(View.GONE);
 
         listFood = foodRepository.getListFoodWithLimit(10);
         foodListAdapter = new FoodListAdapter(listFood);
@@ -79,6 +77,20 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
+        binding.editTextSearch.setOnClickListener(v -> {
+            HomeFragment.openSearch();
+            if (!binding.editTextSearch.getText().toString().isEmpty()) {
+                binding.recyclerViewSearch.setVisibility(View.VISIBLE);
+            } else {
+                binding.recyclerViewSearch.setVisibility(View.GONE);
+            }
+        });
+        binding.modalOutside.setOnClickListener(v -> {
+            HomeFragment.closeSearch();
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        });
+
 
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,13 +102,16 @@ public class HomeFragment extends Fragment {
                 boolean flag = true;
                 key_search = String.valueOf(s);
                 listFoodSearch = foodRepository.searchFood("%" + key_search + "%");
-                if(key_search.isEmpty()){
+                if (key_search.isEmpty()) {
                     listFoodSearch = new ArrayList<>();
+                    binding.recyclerViewSearch.setVisibility(View.GONE);
+                } else {
+                    binding.recyclerViewSearch.setVisibility(View.VISIBLE);
+                    adapterSearch = new SearchListAdapter(listFoodSearch);
+                    recyclerViewSearch = binding.recyclerViewSearch;
+                    recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                    recyclerViewSearch.setAdapter(adapterSearch);
                 }
-                adapterSearch = new SearchListAdapter(listFoodSearch);
-                recyclerViewSearch = binding.recyclerViewSearch;
-                recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                recyclerViewSearch.setAdapter(adapterSearch);
             }
 
             @Override
@@ -126,5 +141,28 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public static void openSearch() {
+        binding.modal.setVisibility(View.VISIBLE);
+        enableDisableViewGroup(binding.content, false);
+        isSearching = true;
+    }
+
+    public static void closeSearch() {
+        binding.modal.setVisibility(View.GONE);
+        enableDisableViewGroup(binding.content, true);
+        isSearching = false;
+    }
+
+    public static void enableDisableViewGroup(ViewGroup viewGroup, boolean enabled) {
+        int childCount = viewGroup.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View view = viewGroup.getChildAt(i);
+            view.setEnabled(enabled);
+            if (view instanceof ViewGroup) {
+                enableDisableViewGroup((ViewGroup) view, enabled);
+            }
+        }
     }
 }
