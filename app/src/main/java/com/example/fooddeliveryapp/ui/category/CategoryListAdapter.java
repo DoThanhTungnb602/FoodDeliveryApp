@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.ui.category;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,19 +36,21 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.categoryItem.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putString("categoryName", categoryList.get(position).getName());
             NavOptions navOptions = new NavOptions.Builder()
                     .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
                     .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
                     .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
                     .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
                     .build();
-            Navigation.findNavController(v).navigate(R.id.foodFragment, null, navOptions);
+            Navigation.findNavController(v).navigate(R.id.foodFragment, args, navOptions);
         });
 
-//        holder.txtCategoryItem.setText(categoryList.get(position).name);
-//        Glide.with(holder.imgCategoryItem.getContext())
-//                .load(categoryList.get(position).image)
-//                .into(holder.imgCategoryItem);
+        holder.txtCategoryItem.setText(categoryList.get(position).name);
+        Glide.with(holder.imgCategoryItem.getContext())
+                .load(categoryList.get(position).image)
+                .into(holder.imgCategoryItem);
     }
 
     @Override

@@ -1,33 +1,46 @@
 package com.example.fooddeliveryapp.data.db.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
+import androidx.room.Update;
 
 import com.example.fooddeliveryapp.data.db.entities.Food;
-import com.example.fooddeliveryapp.data.db.entities.FoodImage;
 
 import java.util.List;
 
 @Dao
 public interface FoodDao {
     @Query("SELECT * FROM food")
-    LiveData<List<Food>> getAllFoods();
+    List<Food> getAllFoods();
 
     @Query("SELECT * FROM food WHERE id=:id")
-    LiveData<Food> getFoodById(int id);
+    Food getFoodById(int id);
 
-    @Query("SELECT * FROM food WHERE categoryId=:categoryId")
-    LiveData<List<Food>> getFoodByCategoryId(int categoryId);
+    @Query("SELECT * FROM food WHERE categoryName=:categoryName")
+    List<Food> getFoodByCategoryName(String categoryName);
 
     @Insert
     void insertFood(Food food);
+
+    @Update
+    void updateFood(Food food);
 
     @Delete
     void deleteFood(Food food);
 
     @Query("DELETE FROM food")
     void deleteAllFoods();
+
+    @Insert
+    void insertAllFoods(List<Food> foods);
+
+    @Query("SELECT * FROM food WHERE name LIKE :name")
+    List<Food> searchFood(String name);
+
+    @Transaction
+    @Query("SELECT * FROM food LIMIT :limit")
+    List<Food> getListFoodWithLimit(int limit);
 }

@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.fooddeliveryapp.data.db.entities.Category;
@@ -14,14 +15,15 @@ import java.util.List;
 @Dao
 public interface CategoryDao {
     @Query("SELECT * FROM categories")
-    LiveData<List<Category>> getAllCategories();
+    List<Category> getAllCategories();
 
     @Query("SELECT * FROM categories WHERE name LIKE :name")
-    LiveData<List<Category>> getCategoryByName(String name);
+    List<Category> getCategoryByName(String name);
 
     @Query("SELECT * FROM categories WHERE id=:id")
-    LiveData<Category> getCategoryById(int id);
+    Category getCategoryById(int id);
 
+    @Update
     void updateCategory(Category category);
 
     @Insert
@@ -32,4 +34,11 @@ public interface CategoryDao {
 
     @Query("DELETE FROM categories")
     void deleteAllCategories();
+
+    @Insert
+    void insertAllCategories(List<Category> categories);
+
+    @Transaction
+    @Query("SELECT * FROM categories LIMIT :limit")
+    List<Category> getListCategoryWithLimit(int limit);
 }

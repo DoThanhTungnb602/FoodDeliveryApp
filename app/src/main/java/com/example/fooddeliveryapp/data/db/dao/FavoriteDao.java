@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface FavoriteDao {
     @Query("SELECT * FROM favorites WHERE userId=:userId")
-    LiveData<List<Favorite>> getFavoriteByUserId(int userId);
+    LiveData<List<Favorite>> getFavoriteListByUserID(int userId);
 
     @Insert
     void insertFavorite(Favorite favorite);

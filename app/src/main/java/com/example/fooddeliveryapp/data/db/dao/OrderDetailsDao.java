@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface OrderDetailsDao {
     @Query("SELECT * FROM order_details WHERE orderId=:orderId")
-    LiveData<List<OrderDetails>> getOrderDetailsByOrderId(int orderId);
+    List<OrderDetails> getOrderDetailsByOrderId(int orderId);
 
     @Insert
     void insertOrderDetails(OrderDetails orderDetails);

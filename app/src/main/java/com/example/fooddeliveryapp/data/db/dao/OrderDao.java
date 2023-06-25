@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface OrderDao {
     @Query("SELECT * FROM orders WHERE userId=:userId")
-    LiveData<List<Order>> getOrderByUserId(int userId);
+    List<Order> getOrderListByUserID(int userId);
 
     @Insert
     void insertOrder(Order order);
@@ -24,4 +24,7 @@ public interface OrderDao {
 
     @Delete
     void deleteOrder(Order order);
+
+    @Query("SELECT * FROM orders WHERE orderDate=:date")
+    Order getOrderByDate(String date);
 }

@@ -15,7 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.dao.FoodDao;
 import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.FragmentSearchBinding;
 import com.example.fooddeliveryapp.ui.food.FoodListAdapter;
 
@@ -29,6 +32,8 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private FoodListAdapter searchListAdapter;
     private List<Food> searchedFoodList;
+    private FoodRepository foodRepository;
+    private FoodDao foodDao;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,10 +42,13 @@ public class SearchFragment extends Fragment {
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
 
+        foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
+        searchedFoodList = foodRepository.searchFood(getArguments().getString("name"));
         recyclerView = binding.recylerViewSearchList;
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         searchListAdapter = new FoodListAdapter(searchedFoodList);
         recyclerView.setAdapter(searchListAdapter);
+        binding.NumberOfResult.setText("Tìm được " + String.valueOf(searchedFoodList.size()) + " kết quả");
 
         if(searchListAdapter.getItemCount() == 0){
             binding.layoutItemFound.setVisibility(View.GONE);
@@ -53,8 +61,6 @@ public class SearchFragment extends Fragment {
         binding.btnBack.setOnClickListener(v -> {
             navController.navigate(R.id.action_searchFragment_to_navigation_home);
         });
-
-
         return binding.getRoot();
     }
 

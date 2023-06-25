@@ -8,11 +8,12 @@
     tools:context=".ui.user.UserInformationFragment">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnStartOrder2"
+        android:id="@+id/btnUpdateUserInfor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:background="@drawable/bg_primary_button"
+        android:enabled="true"
         android:paddingStart="80dp"
         android:paddingTop="20dp"
         android:paddingEnd="80dp"
@@ -20,6 +21,7 @@
         android:text="Cập nhật thông tin"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -33,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txtFoodFragmentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thông tin cá nhân"
@@ -123,7 +125,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <EditText
-            android:id="@+id/editTextText9"
+            android:id="@+id/edtAdress"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="30dp"
@@ -149,11 +151,11 @@
             android:layout_marginTop="20dp"
             android:text="Địa chỉ"
             android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="@+id/editTextText9"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+            app:layout_constraintStart_toStartOf="@+id/edtAdress"
+            app:layout_constraintTop_toBottomOf="@+id/edtName" />
 
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/edtName"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="30dp"
@@ -179,8 +181,8 @@
             android:layout_marginTop="20dp"
             android:text="Họ tên"
             android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="@+id/editTextText2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+            app:layout_constraintStart_toStartOf="@+id/edtName"
+            app:layout_constraintTop_toBottomOf="@+id/edtUserEmail" />
 
         <TextView
             android:id="@+id/textView32"
@@ -190,11 +192,11 @@
             android:layout_marginTop="30dp"
             android:text="Email"
             android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="@+id/editTextText"
+            app:layout_constraintStart_toStartOf="@+id/edtUserEmail"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/edtUserEmail"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="30dp"
@@ -221,11 +223,11 @@
             android:textColor="@color/primary_color"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/editTextText9"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText9" />
+            app:layout_constraintEnd_toEndOf="@+id/edtAdress"
+            app:layout_constraintTop_toBottomOf="@+id/edtAdress" />
 
         <TextView
-            android:id="@+id/textView38"
+            android:id="@+id/txtChangeInfor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
@@ -233,8 +235,8 @@
             android:text="Thay đổi"
             android:textColor="@color/primary_color"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/editTextText9"
-            app:layout_constraintEnd_toEndOf="@+id/editTextText9" />
+            app:layout_constraintBottom_toTopOf="@+id/edtAdress"
+            app:layout_constraintEnd_toEndOf="@+id/edtAdress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

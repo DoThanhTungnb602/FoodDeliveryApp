@@ -9,4 +9,9 @@ public class Restaurant {
     public int id;
     public String name;
     public String address;
+
+    public Restaurant(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 }

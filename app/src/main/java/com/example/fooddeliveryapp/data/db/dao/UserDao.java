@@ -9,10 +9,12 @@ import androidx.room.Update;
 
 import com.example.fooddeliveryapp.data.db.entities.User;
 
+import java.util.List;
+
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user WHERE id=:id")
-    LiveData<User> getUserById(int id);
+    User getUserById(int id);
 
     @Insert
     void insertUser(User user);
@@ -22,4 +24,13 @@ public interface UserDao {
 
     @Delete
     void deleteUser(User user);
+
+    @Insert
+    void insertUsers(List<User> users);
+
+    @Query("DELETE FROM user")
+    void deleteAllUser();
+
+    @Query("SELECT * FROM user WHERE email=:email")
+    User getUserByEmail(String email);
 }

@@ -12,7 +12,7 @@ import com.example.fooddeliveryapp.data.db.entities.PaymentMethod;
 @Dao
 public interface PaymentMethodDao {
     @Query("SELECT * FROM payment_method WHERE userId=:userId")
-    LiveData<PaymentMethod> getPaymentMethodByUserId(int userId);
+    PaymentMethod getPaymentMethodByUserId(int userId);
 
     @Insert
     void insertPaymentMethod(PaymentMethod paymentMethod);
