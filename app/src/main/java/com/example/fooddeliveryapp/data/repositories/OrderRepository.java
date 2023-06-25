@@ -17,6 +17,8 @@ import com.example.fooddeliveryapp.data.db.entities.PaymentMethod;
 import com.example.fooddeliveryapp.data.db.entities.User;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -70,9 +72,9 @@ public class OrderRepository {
      * @param totalCost là tổng giá trị của đơn hàng.
      */
     public void insertOrder(String status, int totalCost, List<Cart> cartList) {
-        String pattern = "yyyy-MM-dd HH:mm:ss";
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(pattern);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = currentDateTime.format(formatter);
         User user = userDao.getUserById(MainActivity.currentUserID);
         PaymentMethod paymentMethod = paymentMethodDao.getPaymentMethodByUserId(MainActivity.currentUserID);
         Order order = new Order(date, totalCost, status, user.getDeliveryAddress(), paymentMethod.getMethodType(), MainActivity.currentUserID);

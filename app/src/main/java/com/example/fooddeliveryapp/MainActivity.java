@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
 import com.example.fooddeliveryapp.databinding.ActivityMainBinding;
+import com.example.fooddeliveryapp.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
@@ -71,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (HomeFragment.isSearching) {
+            HomeFragment.closeSearch();
+            return;
+        }
         if (currentDestinationId == R.id.navigation_home) {
             if (doubleBackToExitPressedOnce) {
                 this.finish();
@@ -82,11 +87,10 @@ public class MainActivity extends AppCompatActivity {
         } else if (currentDestinationId == R.id.navigation_history || currentDestinationId == R.id.navigation_user) {
             Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home);
 
-        }else if(currentDestinationId ==R.id.navigation_auth) {
+        } else if (currentDestinationId == R.id.navigation_auth) {
             this.finish();
             return;
-        }
-        else {
+        } else {
             super.onBackPressed();
 
         }
