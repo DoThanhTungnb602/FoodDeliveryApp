@@ -86,6 +86,7 @@ public class FoodDetailsFragment extends Fragment {
 
         // Tạo slide trong food detail
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
+        assert getArguments() != null;
         Food food = foodRepository.getFoodById(getArguments().getInt("food_id"));
         List<FoodImage> ListImage = food.getFoodImages();
         for(int i=0; i<ListImage.size(); i++){
@@ -141,9 +142,11 @@ public class FoodDetailsFragment extends Fragment {
         binding.toggleButton.setOnClickListener(v->{
 
             if(binding.toggleButton.isChecked()){
+                Toast.makeText(getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
                 favoriteRepository.insertFavorite(favorite);
 //                System.out.println(favoriteRepository.getFavoriteList().get(0).foodId);
             }else {
+                Toast.makeText(getContext(), "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
                 favoriteRepository.deleteFavorite(favorite);
             }
         });
