@@ -44,9 +44,9 @@ public class UserFragment extends Fragment {
         binding.txtName.setText(user.name);
         binding.txtAdressUser.setText(user.deliveryAddress);
         if (user.image == null) {
-            binding.imageView8.setImageResource(R.mipmap.img_thien_dep_trai_foreground);
+            binding.imageView8.setImageResource(R.drawable.ic_user);
         } else {
-            Glide.with(binding.imageView8.getContext()).load("https://loremflickr.com/g/320/240/paris").into(binding.imageView8);
+            Glide.with(binding.imageView8.getContext()).load(user.image).into(binding.imageView8);
         }
         View root = binding.getRoot();
         binding.btnGoToCart.setOnClickListener(v -> {
