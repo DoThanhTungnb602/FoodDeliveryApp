@@ -13,11 +13,14 @@ import androidx.navigation.Navigation;
 
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
+import com.example.fooddeliveryapp.data.db.entities.User;
+import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import com.example.fooddeliveryapp.databinding.FragmentLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginFragment extends Fragment {
@@ -53,6 +56,10 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+//                            UserRepository userRepository = new UserRepository(database);
+//                            FirebaseUser userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+//                            String email = userFirebase.getEmail();
+//                            User user = userRepository.getUserByEmail(email);
                             Navigation.findNavController(binding.getRoot()).navigate(R.id.auth_to_home);
                             MainActivity.showNavView();
                         }else {

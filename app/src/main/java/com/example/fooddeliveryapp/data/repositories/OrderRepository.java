@@ -8,10 +8,18 @@ import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.dao.OrderDao;
 import com.example.fooddeliveryapp.data.db.dao.OrderDetailsDao;
+import com.example.fooddeliveryapp.data.db.dao.PaymentMethodDao;
+import com.example.fooddeliveryapp.data.db.dao.UserDao;
+import com.example.fooddeliveryapp.data.db.entities.Cart;
 import com.example.fooddeliveryapp.data.db.entities.Order;
 import com.example.fooddeliveryapp.data.db.entities.OrderDetails;
+import com.example.fooddeliveryapp.data.db.entities.PaymentMethod;
+import com.example.fooddeliveryapp.data.db.entities.User;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,7 +28,9 @@ public class OrderRepository {
 
     OrderDao orderDao;
     OrderDetailsDao orderDetailsDao;
-    private final LiveData<List<Order>> listOrder;
+    PaymentMethodDao paymentMethodDao;
+    UserDao userDao;
+    private final List<Order> listOrder;
 
     /**
      * Khởi tạo đối tượng OrderRepository.
@@ -31,6 +41,8 @@ public class OrderRepository {
         this.database = database;
         this.orderDao = database.orderDao();
         this.orderDetailsDao = database.orderDetailsDao();
+        this.userDao = database.userDao();
+        this.paymentMethodDao = database.paymentMethodDao();
         this.listOrder = orderDao.getOrderListByUserID(MainActivity.currentUserID);
     }
 
@@ -39,7 +51,7 @@ public class OrderRepository {
      *
      * @return danh sách các đơn hàng.
      */
-    public LiveData<List<Order>> getOrderList() {
+    public List<Order> getOrderList() {
         return listOrder;
     }
 
@@ -59,12 +71,19 @@ public class OrderRepository {
      * @param status    là trạng thái của đơn hàng.
      * @param totalCost là tổng giá trị của đơn hàng.
      */
-    public void insertOrder(String status, int totalCost) {
-        String pattern = "yyyy-MM-dd HH:mm:ss";
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(pattern);
-        Order order = new Order(date, totalCost, status, MainActivity.currentUserID);
+    public void insertOrder(String status, int totalCost, List<Cart> cartList) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = currentDateTime.format(formatter);
+        User user = userDao.getUserById(MainActivity.currentUserID);
+        PaymentMethod paymentMethod = paymentMethodDao.getPaymentMethodByUserId(MainActivity.currentUserID);
+        Order order = new Order(date, totalCost, status, user.getDeliveryAddress(), paymentMethod.getMethodType(), MainActivity.currentUserID);
         orderDao.insertOrder(order);
+        Order ordered = orderDao.getOrderByDate(date);
+        for (int i = 0; i < cartList.size(); i++) {
+            OrderDetails orderDetails = new OrderDetails(ordered.getId(), cartList.get(i).getFoodId(), cartList.get(i).getQuantity());
+            orderDetailsDao.insertOrderDetails(orderDetails);
+        }
     }
 
     public void updateOrder(Order order) {

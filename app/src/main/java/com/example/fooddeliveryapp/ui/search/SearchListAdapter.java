@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.entities.Food;
-import com.example.fooddeliveryapp.ui.food.FoodListAdapter;
 
 import java.util.List;
 
@@ -39,8 +38,8 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     public void onBindViewHolder(@NonNull SearchListAdapter.ViewHolder holder, int position) {
         String imageUrl = foodList.get(position).getFoodImages().get(0).imageUrl;
         holder.txtNameFood.setText(foodList.get(position).getName());
-        Glide.with(holder.Foodimg.getContext()).load(imageUrl).fitCenter().into(holder.Foodimg);
-        holder.cardView.setOnClickListener(v -> {
+        Glide.with(holder.imgFood.getContext()).load(imageUrl).fitCenter().into(holder.imgFood);
+        holder.searchItem.setOnClickListener(v -> {
             NavOptions navOptions = new NavOptions.Builder()
                     .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
                     .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
@@ -60,13 +59,14 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtNameFood;
-        ImageView Foodimg;
-        CardView cardView;
+        ImageView imgFood;
+        ConstraintLayout searchItem;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtNameFood = itemView.findViewById(R.id.txtNameFood);
-            Foodimg = itemView.findViewById(R.id.Foodimg);
-            cardView = itemView.findViewById(R.id.cardViewSearch);
+            txtNameFood = itemView.findViewById(R.id.txtFoodNameSearchItem);
+            imgFood = itemView.findViewById(R.id.imgFoodSearchItem);
+            searchItem = itemView.findViewById(R.id.searchItem);
         }
     }
 }

@@ -4,13 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
@@ -40,13 +37,13 @@ public class UserFragment extends Fragment {
         String email = userFirebase.getEmail();
         binding.txtEmailUser.setText(email);
         User user = userRepository.getUserByEmail(email);
+        System.out.println(userRepository.getUserByEmail(email).name);
         binding.txtName.setText(user.name);
         binding.txtAdressUser.setText(user.deliveryAddress);
         if (user.image == null) {
             binding.imageView8.setImageResource(R.mipmap.img_thien_dep_trai_foreground);
         } else {
             Glide.with(binding.imageView8.getContext()).load("https://loremflickr.com/g/320/240/paris").into(binding.imageView8);
-
         }
         View root = binding.getRoot();
         binding.btnGoToCart.setOnClickListener(v -> {
@@ -72,6 +69,12 @@ public class UserFragment extends Fragment {
             binding.btnPaymentOnDelivery.setChecked(true);
         } else {
             binding.btnPaymentBank.setChecked(true);
+        }
+
+        // set up payment method
+
+        if (paymentMethod.getBankName() == null) {
+            binding.btnPaymentBank.setEnabled(false);
         }
 
         binding.btnPaymentOnDelivery.setOnCheckedChangeListener((buttonView, isChecked) -> {

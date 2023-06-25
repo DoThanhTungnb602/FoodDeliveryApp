@@ -14,7 +14,7 @@ public class FavoriteRepository {
 
     FavoriteDao favoriteDao;
 
-    private final LiveData<List<Favorite>> listFavorite;
+    private final List<Favorite> listFavorite;
 
     /**
      * Khởi tạo đối tượng FavoriteRepository.
@@ -32,21 +32,24 @@ public class FavoriteRepository {
      *
      * @return danh sách các món ăn yêu thích.
      */
-    public LiveData<List<Favorite>> getFavoriteList() {
+    public List<Favorite> getFavoriteList() {
         return listFavorite;
     }
+
 
     /**
      * Thêm một món ăn vào danh sách yêu thích.
      *
      * @param foodId là id của món ăn.
      */
-    public void insertFavorite(int foodId) {
-        Favorite favorite = new Favorite(MainActivity.currentUserID, foodId);
+    public void insertFavorite(Favorite favorite) {
         favoriteDao.insertFavorite(favorite);
+        System.out.println(favorite.foodId);
     }
 
     public void deleteFavorite(Favorite favorite) {
         favoriteDao.deleteFavorite(favorite);
     }
+
+    public int isExist(int foodId){return favoriteDao.isExist(foodId);}
 }

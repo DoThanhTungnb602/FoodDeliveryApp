@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +22,22 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.entities.Favorite;
+import com.example.fooddeliveryapp.data.db.entities.Food;
+import com.example.fooddeliveryapp.data.db.entities.FoodImage;
+import com.example.fooddeliveryapp.data.db.entities.Restaurant;
+import com.example.fooddeliveryapp.data.db.entities.User;
+import com.example.fooddeliveryapp.data.repositories.FavoriteRepository;
 import com.example.fooddeliveryapp.data.db.entities.Cart;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.db.entities.FoodImage;
 import com.example.fooddeliveryapp.data.repositories.CartRepository;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
+import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import com.example.fooddeliveryapp.databinding.FragmentFoodDetailsBinding;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -43,6 +53,7 @@ public class FoodDetailsFragment extends Fragment {
     private NavController navController;
     private FoodRepository foodRepository;
     private CartRepository cartRepository;
+    private FavoriteRepository favoriteRepository;
     private Cart cart;
     private List<Cart> listCart;
 
@@ -50,6 +61,15 @@ public class FoodDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MainActivity.hideNavView();
+
+
+        AppDatabase database = AppDatabase.getDatabase(requireActivity());
+//        UserRepository userRepository = new UserRepository(database);
+//        FirebaseUser userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+//        String email = userFirebase.getEmail();
+//        User user = userRepository.getUserByEmail(email);
+
+
         binding = FragmentFoodDetailsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -60,10 +80,14 @@ public class FoodDetailsFragment extends Fragment {
         //Tạo các list
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
         cartRepository = new CartRepository(AppDatabase.getDatabase(requireActivity()));
-        listCart = new ArrayList<>();
+        favoriteRepository = new FavoriteRepository(AppDatabase.getDatabase(requireActivity()));
+//        List<Favorite> favoriteList = favoriteRepository.getFavoriteList();
+//        favoriteList
+//        listCart = new ArrayList<>();
 
         // Tạo slide trong food detail
         ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
+        assert getArguments() != null;
         Food food = foodRepository.getFoodById(getArguments().getInt("food_id"));
         List<FoodImage> ListImage = food.getFoodImages();
         for(int i=0; i<ListImage.size(); i++){
@@ -112,8 +136,21 @@ public class FoodDetailsFragment extends Fragment {
             }
             Toast.makeText(this.getContext(), "You added " + food.name + "into your cart successfully!", Toast.LENGTH_SHORT).show();
         });
+        Favorite favorite = new Favorite(food.id, MainActivity.currentUserID);
+        if(favoriteRepository.isExist(food.id)!=0){
+            binding.toggleButton.setChecked(true);
+        }
+        binding.toggleButton.setOnClickListener(v->{
 
+            if(binding.toggleButton.isChecked()){
+                Toast.makeText(getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                favoriteRepository.insertFavorite(favorite);
+//                System.out.println(favoriteRepository.getFavoriteList().get(0).foodId);
+            }else {
+                Toast.makeText(getContext(), "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                favoriteRepository.deleteFavorite(favorite);
+            }
+        });
         return root;
     }
-
 }
