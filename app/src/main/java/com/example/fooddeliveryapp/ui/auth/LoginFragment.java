@@ -1,10 +1,12 @@
 package com.example.fooddeliveryapp.ui.auth;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,9 +36,15 @@ public class LoginFragment extends Fragment {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_auth_to_forgotPasswordFragment);
         });
 
-        binding.btnLogin.setOnClickListener(v ->
-
-                loginAccountInFirebase()
+        binding.btnLogin.setOnClickListener(v ->{
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                View view = getActivity().getCurrentFocus();
+                if (view == null) {
+                    view = new View(getActivity());
+                }
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                loginAccountInFirebase();
+            }
         );
 
 
@@ -63,7 +71,7 @@ public class LoginFragment extends Fragment {
                             Navigation.findNavController(binding.getRoot()).navigate(R.id.auth_to_home);
                             MainActivity.showNavView();
                         }else {
-                            Toast.makeText(getActivity(),task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"Tài khoản hoặc mật khẩu không đúng, vui lòng nhập lại !",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -71,11 +79,11 @@ public class LoginFragment extends Fragment {
     }
     boolean validateData(String email,String password){
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.txtLoginEmail.setError("Email is Invalid");
+            binding.txtLoginEmail.setError("Email không hợp lệ");
             return false;
         };
         if(password.length()<6){
-            binding.txtLoginPassword.setError("Password length is Invalid");
+            binding.txtLoginPassword.setError("Độ dài mật khẩu không hợp lệ");
             return false;
         }
         return true;

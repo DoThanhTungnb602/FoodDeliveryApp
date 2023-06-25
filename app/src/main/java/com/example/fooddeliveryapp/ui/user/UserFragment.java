@@ -40,9 +40,9 @@ public class UserFragment extends Fragment {
         String email = userFirebase.getEmail();
         binding.txtEmailUser.setText(email);
         User user = userRepository.getUserByEmail(email);
-        System.out.println(userRepository.getUserByEmail(email).name);
         binding.txtName.setText(user.name);
         binding.txtAdressUser.setText(user.deliveryAddress);
+        System.out.println(user.image);
         if (user.image == null) {
             binding.imageView8.setImageResource(R.drawable.ic_user);
         } else {
@@ -58,10 +58,7 @@ public class UserFragment extends Fragment {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_user_to_userInformationFragment);
             MainActivity.hideNavView();
         });
-        binding.btnLogout.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.navigation_auth);
-        });
+
         binding.btnUpdatePaymentMethod.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_user_to_paymentMethodFragment);
             MainActivity.hideNavView();

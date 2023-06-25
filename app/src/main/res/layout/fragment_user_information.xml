@@ -8,10 +8,26 @@
     tools:context=".ui.user.UserInformationFragment">
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/bg_primary_button"
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="20dp"
+        android:text="Đăng xuất"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnUpdateUserInfor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="116dp"
         android:background="@drawable/bg_primary_button"
         android:enabled="true"
         android:paddingStart="80dp"
@@ -24,6 +40,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,6 +114,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnCamera"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="-30dp"
@@ -129,7 +147,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="36dp"
             android:layout_marginEnd="30dp"
             android:background="@drawable/bg_user_information_input"
             android:ems="10"
@@ -237,6 +255,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/edtAdress"
             app:layout_constraintEnd_toEndOf="@+id/edtAdress" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

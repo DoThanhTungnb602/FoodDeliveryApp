@@ -35,6 +35,7 @@ public class FakeData {
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         users.add(new User("Nguyễn Đức Thiện", "thien14112002@gmail.com", "123456"));
+        users.add(new User("Nguyen Huy Hoang", "hoang001359@gmail.com", "123456"));
         return users;
     }
 
