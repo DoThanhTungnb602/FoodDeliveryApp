@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -77,6 +79,21 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
+        binding.editTextSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    HomeFragment.openSearch();
+                    if (!binding.editTextSearch.getText().toString().isEmpty()) {
+                        binding.recyclerViewSearch.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.recyclerViewSearch.setVisibility(View.GONE);
+                    }
+                }else{
+                    Toast.makeText(requireContext(), "u are out of focus", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         binding.editTextSearch.setOnClickListener(v -> {
             HomeFragment.openSearch();
             if (!binding.editTextSearch.getText().toString().isEmpty()) {
@@ -87,8 +104,12 @@ public class HomeFragment extends Fragment {
         });
         binding.modalOutside.setOnClickListener(v -> {
             HomeFragment.closeSearch();
-            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            View view = getActivity().getCurrentFocus();
+            if (view == null) {
+                view = new View(getActivity());
+            }
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
 
 
@@ -99,7 +120,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean flag = true;
                 key_search = String.valueOf(s);
                 listFoodSearch = foodRepository.searchFood("%" + key_search + "%");
                 if (key_search.isEmpty()) {
