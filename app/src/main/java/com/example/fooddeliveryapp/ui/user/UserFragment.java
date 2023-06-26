@@ -43,7 +43,7 @@ public class UserFragment extends Fragment {
         if (user.image == null) {
             binding.imageView8.setImageResource(R.drawable.ic_user);
         } else {
-            Glide.with(binding.imageView8.getContext()).load(user.image).into(binding.imageView8);
+            Glide.with(binding.imageView8.getContext()).load(user.image).circleCrop().into(binding.imageView8);
         }
         View root = binding.getRoot();
         binding.btnGoToCart.setOnClickListener(v -> {

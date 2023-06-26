@@ -101,6 +101,7 @@ public class HomeFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean flag = true;
                 key_search = String.valueOf(s);
+                System.out.println(key_search);
                 listFoodSearch = foodRepository.searchFood("%" + key_search + "%");
                 if (key_search.isEmpty()) {
                     listFoodSearch = new ArrayList<>();
