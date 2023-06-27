@@ -1,5 +1,7 @@
 package com.example.fooddeliveryapp.data.repositories;
 
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 
 import com.example.fooddeliveryapp.MainActivity;
@@ -12,7 +14,6 @@ import java.util.List;
 public class CartRepository {
     AppDatabase database;
     CartDao cartDao;
-    private final List<Cart> cart;
 
     /**
      * Khởi tạo đối tượng CartRepository.
@@ -22,7 +23,6 @@ public class CartRepository {
     public CartRepository(AppDatabase database) {
         this.database = database;
         this.cartDao = database.cartDao();
-        this.cart = cartDao.getAllCartByUserID(MainActivity.currentUserID);
     }
 
     /**
@@ -31,7 +31,7 @@ public class CartRepository {
      * @return danh sách các món ăn trong giỏ hàng.
      */
     public List<Cart> getAllCart() {
-        return cart;
+        return cartDao.getAllCartByUserID(MainActivity.currentUserID);
     }
 
     /**
@@ -40,8 +40,7 @@ public class CartRepository {
      * @param foodId   là id của món ăn.
      * @param quantity là số lượng của món ăn.
      */
-    public void insertCart(int foodId, int quantity) {
-        Cart cart = new Cart(MainActivity.currentUserID, foodId, quantity);
+    public void insertCart(Cart cart) {
         cartDao.insertCart(cart);
     }
 
@@ -56,7 +55,7 @@ public class CartRepository {
     public void deleteAllCart() {
         cartDao.deleteAllCart();
     }
-    public int isExist(int foodId){return cartDao.isExist(foodId);}
+    public int isExist(int foodId, int userId){return cartDao.isExist(foodId, userId);}
 
     public Cart getCartByFoodId(int foodId){return cartDao.getCartByFoodId(foodId);}
 

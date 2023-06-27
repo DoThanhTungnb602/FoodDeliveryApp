@@ -74,7 +74,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout13"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -84,7 +84,7 @@
         <TextView
             android:id="@+id/txtFoodDetailsTitle"
             android:layout_width="303dp"
-            android:layout_height="53dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="Sườn xào chua ngọt"
@@ -121,10 +121,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:text="100.000 đ"
             android:textColor="@color/primary_color"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtFoodDetailsTitle" />
 
@@ -132,16 +134,16 @@
             android:id="@+id/toggleButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/toggle_selector"
             android:onClick="onCustomToggleClick"
             android:textOff=""
             android:textOn=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.927"
-            app:layout_constraintStart_toEndOf="@+id/txtFoodDetailsPrice"
-            app:layout_constraintTop_toBottomOf="@+id/txtFoodDetailRating" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

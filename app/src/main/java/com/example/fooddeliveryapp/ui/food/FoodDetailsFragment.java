@@ -90,7 +90,7 @@ public class FoodDetailsFragment extends Fragment {
         assert getArguments() != null;
         Food food = foodRepository.getFoodById(getArguments().getInt("food_id"));
         List<FoodImage> ListImage = food.getFoodImages();
-        for(int i=0; i<ListImage.size(); i++){
+        for (int i = 0; i < ListImage.size(); i++) {
             imageList.add(new SlideModel(ListImage.get(i).imageUrl, ScaleTypes.CENTER_INSIDE));
         }
         ImageSlider imageSlider = binding.imageSlider;
@@ -127,26 +127,27 @@ public class FoodDetailsFragment extends Fragment {
 
         binding.btnAddToCart.setOnClickListener(v -> {
 //            Implement add to cart
-            if(cartRepository.isExist(food.id)==0) {
-                cartRepository.insertCart(food.id, 1);
-            }else {
+            if (cartRepository.isExist(food.id, MainActivity.currentUserID) == 0) {
+                Cart cart = new Cart(MainActivity.currentUserID, food.id, 1);
+                cartRepository.insertCart(cart);
+            } else {
                 cart = cartRepository.getCartByFoodId(food.id);
                 cart.setQuantity(cart.getQuantity() + 1);
                 cartRepository.updateCart(cart);
             }
-            Toast.makeText(this.getContext(), "You added " + food.name + "into your cart successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), "Bạn đã thêm món " + food.name + " vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
         });
         Favorite favorite = new Favorite(food.id, MainActivity.currentUserID);
-        if(favoriteRepository.isExist(food.id)!=0){
+        if (favoriteRepository.isExist(food.id) != 0) {
             binding.toggleButton.setChecked(true);
         }
-        binding.toggleButton.setOnClickListener(v->{
+        binding.toggleButton.setOnClickListener(v -> {
 
-            if(binding.toggleButton.isChecked()){
+            if (binding.toggleButton.isChecked()) {
                 Toast.makeText(getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
                 favoriteRepository.insertFavorite(favorite);
 //                System.out.println(favoriteRepository.getFavoriteList().get(0).foodId);
-            }else {
+            } else {
                 Toast.makeText(getContext(), "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
                 favoriteRepository.deleteFavorite(favorite);
             }

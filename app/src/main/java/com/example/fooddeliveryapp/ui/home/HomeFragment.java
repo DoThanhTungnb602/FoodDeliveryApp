@@ -79,18 +79,13 @@ public class HomeFragment extends Fragment {
             MainActivity.hideNavView();
         });
 
-        binding.editTextSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    HomeFragment.openSearch();
-                    if (!binding.editTextSearch.getText().toString().isEmpty()) {
-                        binding.recyclerViewSearch.setVisibility(View.VISIBLE);
-                    } else {
-                        binding.recyclerViewSearch.setVisibility(View.GONE);
-                    }
-                }else{
-                    Toast.makeText(requireContext(), "u are out of focus", Toast.LENGTH_SHORT).show();
+        binding.editTextSearch.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                HomeFragment.openSearch();
+                if (!binding.editTextSearch.getText().toString().isEmpty()) {
+                    binding.recyclerViewSearch.setVisibility(View.VISIBLE);
+                } else {
+                    binding.recyclerViewSearch.setVisibility(View.GONE);
                 }
             }
         });

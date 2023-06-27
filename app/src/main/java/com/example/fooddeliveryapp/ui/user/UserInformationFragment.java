@@ -50,6 +50,8 @@ public class UserInformationFragment extends Fragment {
     NavController navController;
     FirebaseUser userFirebase = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseStorage storage = FirebaseStorage.getInstance();
+    boolean isChangingAddress = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUserInformationBinding.inflate(inflater, container, false);
@@ -61,19 +63,19 @@ public class UserInformationFragment extends Fragment {
         UserRepository userRepository = new UserRepository(database);
         User user = userRepository.getUserByEmail(email);
         binding.edtUserEmail.setText(email);
-        if (user.deliveryAddress==null){
+        if (user.deliveryAddress == null) {
             binding.edtAdress.setText("Hãy nhập địa chỉ!");
         }
         binding.edtAdress.setText(user.deliveryAddress);
         binding.edtName.setText(user.name);
         // Inflate the layout for this fragment
         binding.btnBack.setOnClickListener(v -> navController.popBackStack());
-        if (user.image==null){
+        if (user.image == null) {
             binding.imgAvatar.setImageResource(R.drawable.ic_user);
-        }else {
+        } else {
             Glide.with(binding.imgAvatar.getContext()).load(user.image).into(binding.imgAvatar);
         }
-        binding.btnCamera.setOnClickListener(v->{
+        binding.btnCamera.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -88,18 +90,22 @@ public class UserInformationFragment extends Fragment {
             navController.navigate(R.id.action_userInformationFragment_to_updatePasswordFragment);
         });
         binding.txtChangeInfor.setOnClickListener(v -> {
-            binding.edtAdress.setEnabled(true);
-            binding.btnUpdateUserInfor.setVisibility(View.VISIBLE);
-            binding.btnUpdateUserInfor.setOnClickListener(v1 -> {
+            if (!isChangingAddress) {
+                binding.txtChangeInfor.setText("Cập nhật");
+                binding.edtAdress.setEnabled(true);
+                isChangingAddress = true;
+            } else {
                 user.setDeliveryAddress(binding.edtAdress.getText().toString());
                 userRepository.updateUser(user);
                 binding.edtAdress.setText(user.deliveryAddress);
-                binding.btnUpdateUserInfor.setVisibility(View.GONE);
                 binding.edtAdress.setEnabled(false);
-            });
+                binding.txtChangeInfor.setText("Thay đổi");
+                isChangingAddress = false;
+            }
         });
         return binding.getRoot();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -107,10 +113,9 @@ public class UserInformationFragment extends Fragment {
         String email = userFirebase.getEmail();
         UserRepository userRepository = new UserRepository(database);
         User user = userRepository.getUserByEmail(email);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
-            StorageReference storageRef = storage.getReference().child("images/user"+email+"Avata.jpg");
+            StorageReference storageRef = storage.getReference().child("images/user" + email + "Avata.jpg");
             UploadTask uploadTask = storageRef.putFile(uri);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override

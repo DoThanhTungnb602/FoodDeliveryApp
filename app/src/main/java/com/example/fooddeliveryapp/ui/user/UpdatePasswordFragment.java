@@ -33,7 +33,7 @@ public class UpdatePasswordFragment extends Fragment {
     NavController navController;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentUpdatePasswordBinding.inflate(inflater, container, false);
         navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);

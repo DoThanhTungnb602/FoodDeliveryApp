@@ -1,14 +1,19 @@
 package com.example.fooddeliveryapp.data.repositories;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.dao.FoodDao;
 import com.example.fooddeliveryapp.data.db.dao.FoodImageDao;
+import com.example.fooddeliveryapp.data.db.dao.PaymentMethodDao;
 import com.example.fooddeliveryapp.data.db.dao.RestaurantDao;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.data.db.entities.FoodImage;
+import com.example.fooddeliveryapp.data.db.entities.PaymentMethod;
 import com.example.fooddeliveryapp.data.db.entities.Restaurant;
+import com.example.fooddeliveryapp.data.db.entities.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,7 +132,6 @@ public class FoodRepository {
                     String json = response.body().string();
                     JSONObject jsonObject = new JSONObject(json);
                     JSONArray jsonArray = jsonObject.getJSONArray("meals");
-
                     int foodID = Integer.parseInt(jsonArray.getJSONObject(0).getString("idMeal"));
                     String foodName = jsonArray.getJSONObject(0).getString("strMeal");
                     String foodDescription = jsonArray.getJSONObject(0).getString("strInstructions");
@@ -135,16 +139,14 @@ public class FoodRepository {
                     boolean foodAvailability = true;
                     int foodDeliveryTime = (int) ((Math.random() * 30) + 10);
                     String foodCategory = jsonArray.getJSONObject(0).getString("strCategory");
-                    float foodAverageRating = (float) Math.round(((Math.random() * 5) + 2) * 10) / 10;
+                    float foodAverageRating = (float) Math.round(((float) 2 + (float) (Math.random() * (5 - 2))) * 10) / 10;
                     int foodRestaurantId = (int) ((Math.random() * 5) + 1);
                     String foodImageUrl = jsonArray.getJSONObject(0).getString("strMealThumb");
-
                     List<FoodImage> foodImages = new ArrayList<>();
                     foodImages.add(new FoodImage(foodImageUrl, foodID));
                     foodImages.add(new FoodImage(foodImageUrl, foodID));
                     foodImages.add(new FoodImage(foodImageUrl, foodID));
                     foodImageDao.insertAll(foodImages);
-
                     Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodAvailability, foodDeliveryTime, foodCategory, foodAverageRating, foodRestaurantId, foodImages);
                     future.complete(food);
                 } catch (JSONException e) {
@@ -185,5 +187,37 @@ public class FoodRepository {
             food.setFoodImages(foodImages);
         }
         return listFoodByName;
+    }
+    public void fetchDataFromServerToDatabase(Context context) {
+        List<Restaurant> restaurants = new ArrayList<>();
+        restaurants.add(new Restaurant("KFC", "12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, Hồ Chí Minh"));
+        restaurants.add(new Restaurant("Pizza Hut", "175 Định Công, Phường Định Công, Quận Hoàng Mai, Hà Nội"));
+        restaurants.add(new Restaurant("Burger King", "Tầng 1, TTTM Vincom Center, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, Hồ Chí Minh"));
+        restaurants.add(new Restaurant("Lotteria", "20 Tây Sơn, Quận Đống Đa, Hà Nội"));
+        restaurants.add(new Restaurant("Jollibee", "Tầng 1, TTTM Vincom Center, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, Hồ Chí Minh"));
+        List<User> users = new ArrayList<>();
+        users.add(new User("Nguyễn Đức Thiện", "thien14112002@gmail.com", "123456"));
+        users.add(new User("Nguyen Huy Hoang", "hoang001359@gmail.com", "123456"));
+        users.add(new User("Đỗ Thanh Tùng", "dothanhtungnb602@gmail.com", "Tung2001"));
+        AppDatabase database = AppDatabase.getDatabase(context);
+        FoodRepository foodRepository = new FoodRepository(database);
+        CategoryRepository categoryRepository = new CategoryRepository(database);
+        RestaurantDao restaurantDao = database.restaurantDao();
+        UserRepository userRepository = new UserRepository(database);
+        PaymentMethodDao paymentMethodDao = database.paymentMethodDao();
+        List<Food> foods = foodRepository.getAllFood();
+        if (foods.size() == 0) {
+            for (int i = 0; i < 100; i++) {
+                foodRepository.getFoodFromServer().thenAccept(foodRepository::insertFood);
+            }
+            categoryRepository.getCategoryFromServer().thenAccept(data -> {
+            });
+            restaurantDao.insertAll(restaurants);
+            userRepository.insertUsers(users);
+            List<User> usersFromDatabase = userRepository.getAllUser();
+            for (User user : usersFromDatabase) {
+                paymentMethodDao.insertPaymentMethod(new PaymentMethod(user.getId(), "Payment on delivery"));
+            }
+        }
     }
 }

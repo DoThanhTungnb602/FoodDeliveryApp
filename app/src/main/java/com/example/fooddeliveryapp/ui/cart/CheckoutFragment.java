@@ -118,11 +118,11 @@ public class CheckoutFragment extends Fragment {
         binding.btnCheckout.setOnClickListener(v -> {
             if (user.getDeliveryAddress() == null) {
                 Toast.makeText(getContext(), "Vui lòng cập nhật địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
-                return;
             } else {
+                int priceWithTax = (int) (finalTotalPrice + (finalTotalPrice * 0.1));
                 Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
                 cartRepository.deleteAllCart();
-                orderRepository.insertOrder("Đang xử lý", finalTotalPrice, cartList);
+                orderRepository.insertOrder("Đang xử lý", priceWithTax, cartList);
                 navController.navigate(R.id.navigation_home);
             }
         });

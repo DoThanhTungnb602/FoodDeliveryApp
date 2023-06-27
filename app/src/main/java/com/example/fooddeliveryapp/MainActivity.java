@@ -2,6 +2,7 @@ package com.example.fooddeliveryapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,10 +15,14 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.fooddeliveryapp.data.db.AppDatabase;
+import com.example.fooddeliveryapp.data.db.entities.User;
 import com.example.fooddeliveryapp.data.repositories.FoodRepository;
+import com.example.fooddeliveryapp.data.repositories.UserRepository;
 import com.example.fooddeliveryapp.databinding.ActivityMainBinding;
 import com.example.fooddeliveryapp.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -27,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private static BottomNavigationView navView;
     private int currentDestinationId;
     FoodRepository foodRepository;
+    UserRepository userRepository;
     private boolean doubleBackToExitPressedOnce = false;
-    public static final int currentUserID = 1;
+    public static int currentUserID = 1;
+    NavHostFragment navHostFragment;
+    NavController navController;
 
 
     @SuppressLint("RestrictedApi")
@@ -37,24 +45,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         database = AppDatabase.getDatabase(this);
         foodRepository = new FoodRepository(database);
-
+        userRepository = new UserRepository(database);
+        foodRepository.fetchDataFromServerToDatabase(this);
         currentDestinationId = R.id.navigation_home;
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Objects.requireNonNull(getSupportActionBar()).hide();
-
         navView = binding.navView;
-
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
-        NavController navController = Objects.requireNonNull(navHostFragment).getNavController();
+        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+        navController = Objects.requireNonNull(navHostFragment).getNavController();
         NavigationUI.setupWithNavController(navView, navController);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             currentDestinationId = destination.getId();
         });
-
-        FakeData fakeData = new FakeData();
-//        fakeData.resetData(this);
-        fakeData.fetchDataFromServerToDatabase(this);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        currentUserID = sharedPreferences.getInt("loggedUserID", 0);
+        if (currentUserID == 0) {
+            navController.navigate(R.id.navigation_auth);
+        }
     }
 
 
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (HomeFragment.isSearching) {
+        if (HomeFragment.isSearching && currentDestinationId == R.id.navigation_home) {
             HomeFragment.closeSearch();
             return;
         }
@@ -86,10 +94,8 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
         } else if (currentDestinationId == R.id.navigation_history || currentDestinationId == R.id.navigation_user) {
             Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigate(R.id.navigation_home);
-
         } else if (currentDestinationId == R.id.navigation_auth) {
             this.finish();
-            return;
         } else {
             super.onBackPressed();
 

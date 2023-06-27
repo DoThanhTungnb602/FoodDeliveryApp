@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,9 +66,11 @@ public class CartFragment extends Fragment {
 
         if (cartListAdapter.getItemCount() == 0) {
             binding.recyclerViewCartList.setVisibility(View.GONE);
+            binding.layoutToCheckout.setVisibility(View.GONE);
             binding.layoutNoCart.setVisibility(View.VISIBLE);
         } else {
             binding.recyclerViewCartList.setVisibility(View.VISIBLE);
+            binding.layoutToCheckout.setVisibility(View.VISIBLE);
             binding.layoutNoCart.setVisibility(View.GONE);
             binding.btnStartOrder.setText("Tiến hành đặt hàng");
         }
@@ -77,7 +80,11 @@ public class CartFragment extends Fragment {
         });
 
         binding.btnStartOrder.setOnClickListener(v -> {
-            navController.navigate(R.id.action_navigation_cart_to_checkoutFragment);
+            if(cartListAdapter.getItemCount() > 0){
+                navController.navigate(R.id.action_navigation_cart_to_checkoutFragment);
+            }else {
+                Toast.makeText(getContext(), "Ô kìa đã có gì trong giỏ đâu!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         updatePrice();

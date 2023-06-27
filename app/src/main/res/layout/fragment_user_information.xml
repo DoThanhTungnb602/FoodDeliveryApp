@@ -23,26 +23,6 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnUpdateUserInfor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="116dp"
-        android:background="@drawable/bg_primary_button"
-        android:enabled="true"
-        android:paddingStart="80dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="80dp"
-        android:paddingBottom="20dp"
-        android:text="Cập nhật thông tin"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout6"
         android:layout_width="0dp"
@@ -74,6 +54,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -252,6 +233,7 @@
             android:layout_marginBottom="10dp"
             android:text="Thay đổi"
             android:textColor="@color/primary_color"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/edtAdress"
             app:layout_constraintEnd_toEndOf="@+id/edtAdress" />

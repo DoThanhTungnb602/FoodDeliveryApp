@@ -87,4 +87,8 @@ public class UserRepository {
     public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
     }
+
+    public List<User> getAllUser() {
+        return userDao.getAllUser();
+    }
 }
