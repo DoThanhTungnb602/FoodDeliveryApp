@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.ui.history;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,20 +40,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtOrderStatus.setText(orderList.get(position).getStatus());
+        holder.txtOrderStatus.setText("Trạng thái: " + orderList.get(position).getStatus());
         holder.txtOrderPrice.setText(currencyFormat.format(orderList.get(position).getTotalCost()));
-        holder.txtOrderDate.setText(orderList.get(position).getOrderDate());
-        holder.txtOrderAddress.setText(orderList.get(position).getAddress());
-        holder.txtOrderPaymentMethod.setText(orderList.get(position).getPaymentMethod());
+        holder.txtOrderDate.setText("Ngày đặt: " + orderList.get(position).getOrderDate());
+        holder.txtOrderAddress.setText("Địa chỉ nhận hàng: " + orderList.get(position).getAddress());
+        holder.txtOrderPaymentMethod.setText("Phương thức thanh toán: " + orderList.get(position).getPaymentMethod());
         List<OrderDetails> orderDetailsList = orderRepository.getOrderDetails(orderList.get(position));
         List<String> orderProductName = new ArrayList<>();
         for (OrderDetails orderDetails : orderDetailsList) {
             Food food = foodRepository.getFoodById(orderDetails.getFoodId());
             orderProductName.add(orderDetails.getQuantity() + "x " + food.getName());
         }
-        holder.txtOrderProducts.setText(String.join(", ", orderProductName));
+        holder.txtOrderProducts.setText("Món ăn: " + String.join(", ", orderProductName));
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.data.db.entities.Food;
 import com.example.fooddeliveryapp.databinding.FragmentFoodListBinding;
 
@@ -30,6 +31,7 @@ public class FoodListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFoodListBinding.inflate(inflater, container, false);
+        MainActivity.hideNavView();
 
         recyclerView = binding.recyclerViewFoodList;
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));

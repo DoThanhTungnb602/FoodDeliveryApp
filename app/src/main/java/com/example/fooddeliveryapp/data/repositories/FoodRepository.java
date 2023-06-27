@@ -180,7 +180,7 @@ public class FoodRepository {
         foodDao.insertAllFoods(foods);
     }
 
-    public List<Food> searchFood(String name){
+    public List<Food> searchFood(String name) {
         List<Food> listFoodByName = foodDao.searchFood(name);
         for (Food food : listFoodByName) {
             List<FoodImage> foodImages = foodImageDao.getFoodImagesByFoodID(food.getId());
@@ -188,6 +188,7 @@ public class FoodRepository {
         }
         return listFoodByName;
     }
+
     public void fetchDataFromServerToDatabase(Context context) {
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(new Restaurant("KFC", "12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, Hồ Chí Minh"));

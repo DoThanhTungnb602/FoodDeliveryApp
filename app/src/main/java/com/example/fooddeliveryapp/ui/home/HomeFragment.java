@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
         });
 
         binding.editTextSearch.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus){
+            if (hasFocus) {
                 HomeFragment.openSearch();
                 if (!binding.editTextSearch.getText().toString().isEmpty()) {
                     binding.recyclerViewSearch.setVisibility(View.VISIBLE);
@@ -139,6 +139,12 @@ public class HomeFragment extends Fragment {
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_navigation_home_to_searchFragment, args);
                 MainActivity.hideNavView();
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                View view = getActivity().getCurrentFocus();
+                if (view == null) {
+                    view = new View(getActivity());
+                }
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 return true;
             }
             return false;

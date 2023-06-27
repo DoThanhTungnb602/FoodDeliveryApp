@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.Cart;
@@ -159,6 +160,8 @@ public class CheckoutFragment extends Fragment {
             holder.txtCheckoutItemTitle.setText(food.getName());
             holder.txtCheckoutItemPrice.setText(currencyFormatter.format(food.getPrice()));
             holder.txtCheckoutItemQuantity.setText("Số lượng: " + cart.getQuantity());
+            String imageUrl = food.getFoodImages().get(0).imageUrl;
+            Glide.with(holder.imgCheckout.getContext()).load(imageUrl).fitCenter().into(holder.imgCheckout);
         }
 
         @Override

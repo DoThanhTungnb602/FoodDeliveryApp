@@ -18,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fooddeliveryapp.MainActivity;
 import com.example.fooddeliveryapp.R;
 import com.example.fooddeliveryapp.data.db.AppDatabase;
 import com.example.fooddeliveryapp.data.db.entities.Food;
@@ -43,12 +44,11 @@ public class CartFragment extends Fragment {
     private CartRepository cartRepository;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
+        MainActivity.hideNavView();
         recyclerView = binding.recyclerViewCartList;
-        navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment_activity_main);
+        navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
         database = AppDatabase.getDatabase(requireActivity());
@@ -80,9 +80,9 @@ public class CartFragment extends Fragment {
         });
 
         binding.btnStartOrder.setOnClickListener(v -> {
-            if(cartListAdapter.getItemCount() > 0){
+            if (cartListAdapter.getItemCount() > 0) {
                 navController.navigate(R.id.action_navigation_cart_to_checkoutFragment);
-            }else {
+            } else {
                 Toast.makeText(getContext(), "Ô kìa đã có gì trong giỏ đâu!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -98,17 +98,17 @@ public class CartFragment extends Fragment {
     }
 
 
-    public void updatePrice(){
+    public void updatePrice() {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         int Sum = 0;
         int quantity = 0;
         int price = 0;
-        for(Cart cart : listCart){
+        for (Cart cart : listCart) {
             quantity = cart.getQuantity();
             price = foodRepository.getFoodById(cart.getFoodId()).price;
-            Sum += quantity*price;
+            Sum += quantity * price;
         }
-        binding.taxPrice.setText(numberFormat.format(Sum*0.1));
-        binding.txtTotal.setText(numberFormat.format(Sum + Sum*0.1));
+        binding.taxPrice.setText(numberFormat.format(Sum * 0.1));
+        binding.txtTotal.setText(numberFormat.format(Sum + Sum * 0.1));
     }
 }
