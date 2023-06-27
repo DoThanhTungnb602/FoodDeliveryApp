@@ -101,6 +101,7 @@ public class CartFragment extends Fragment {
             price = foodRepository.getFoodById(cart.getFoodId()).price;
             Sum += quantity*price;
         }
+        binding.taxPrice.setText(numberFormat.format(Sum*0.1));
         binding.txtTotal.setText(numberFormat.format(Sum + Sum*0.1));
     }
 }

@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -89,8 +90,6 @@ public class HomeFragment extends Fragment {
                     } else {
                         binding.recyclerViewSearch.setVisibility(View.GONE);
                     }
-                }else{
-                    Toast.makeText(requireContext(), "u are out of focus", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -111,7 +110,6 @@ public class HomeFragment extends Fragment {
             }
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
-
 
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
