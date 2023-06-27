@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -106,7 +107,6 @@ public class HomeFragment extends Fragment {
             }
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
-
 
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
