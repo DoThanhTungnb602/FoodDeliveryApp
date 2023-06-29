@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.ui.cart;
+package com.example.fooddeliveryapp.ui.checkout;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

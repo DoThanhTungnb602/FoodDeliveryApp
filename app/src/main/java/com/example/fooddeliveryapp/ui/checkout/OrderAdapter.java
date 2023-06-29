@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.ui.history;
+package com.example.fooddeliveryapp.ui.checkout;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;

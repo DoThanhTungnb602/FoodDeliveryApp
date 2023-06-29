@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.example.fooddeliveryapp.ui.history.HistoryFragment"
+        android:name="com.example.fooddeliveryapp.ui.checkout.HistoryFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_history">
         <action
@@ -185,7 +185,7 @@
         tools:layout="@layout/fragment_payment_method" />
     <fragment
         android:id="@+id/checkoutFragment"
-        android:name="com.example.fooddeliveryapp.ui.cart.CheckoutFragment"
+        android:name="com.example.fooddeliveryapp.ui.checkout.CheckoutFragment"
         android:label="fragment_checkout"
         tools:layout="@layout/fragment_checkout" />
 
