@@ -34,9 +34,12 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity.showNavView();
 
+        // Inflate the layout for this fragment
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        // Gán sự kiện cho nút "Go to Cart"
         binding.btnGoToCart.setOnClickListener(v -> {
+            // Chuyển sang fragment "Cart"
             Navigation.findNavController(binding.getRoot()).navigate(R.id.history_to_cart);
             MainActivity.hideNavView();
         });
@@ -44,13 +47,18 @@ public class HistoryFragment extends Fragment {
         orderRepository = new OrderRepository(AppDatabase.getDatabase(requireActivity()));
         foodRepository = new FoodRepository(AppDatabase.getDatabase(requireActivity()));
         orderList = orderRepository.getOrderList();
+        // Nếu không có order nào thì hiển thị layout "No Order"
         if (orderList.size() == 0) {
+            // Hiển thị layout "No Order"
             binding.layoutNoOrder.setVisibility(View.VISIBLE);
         } else {
+            // Ẩn layout "No Order"
             binding.layoutNoOrder.setVisibility(View.GONE);
+            // Set up RecyclerView
             recyclerView = binding.recyclerViewHistory;
             recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false));
             orderAdapter = new OrderAdapter(orderList, orderRepository, foodRepository);
+            // Set adapter cho RecyclerView
             recyclerView.setAdapter(orderAdapter);
         }
 

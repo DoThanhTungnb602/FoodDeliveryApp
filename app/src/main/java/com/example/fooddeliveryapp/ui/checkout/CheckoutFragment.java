@@ -53,7 +53,9 @@ public class CheckoutFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         binding = FragmentCheckoutBinding.inflate(inflater, container, false);
+        // Khởi tạo các biến
         database = AppDatabase.getDatabase(requireActivity());
         userRepository = new UserRepository(database);
         cartRepository = new CartRepository(database);
@@ -68,9 +70,11 @@ public class CheckoutFragment extends Fragment {
         cartList = cartRepository.getAllCart();
         CheckoutAdapter checkoutAdapter = new CheckoutAdapter(cartList);
         recyclerViewCheckout.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        // Gán adapter cho recycler view
         recyclerViewCheckout.setAdapter(checkoutAdapter);
 
-        // Set up total price
+        // Tính tổng tiền
         int totalPrice = 0;
         user = userRepository.getCurrentUser();
         PaymentMethod paymentMethod = userRepository.getPaymentMethod();
@@ -79,22 +83,26 @@ public class CheckoutFragment extends Fragment {
             totalPrice += food.getPrice() * cart.getQuantity();
         }
 
+        // Gán giá trị tổng tiền
         binding.txtCheckoutTotalPrice.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(totalPrice));
+        // Gán giá trị thuế
         binding.txtCheckoutTax.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(totalPrice * 0.1));
+        // Gán địa chỉ giao hàng
         if (user.deliveryAddress != null) {
             binding.txtCheckoutAddress.setText("Địa chỉ thanh toán: " + user.deliveryAddress);
         }
 
+        // Gán phương thức thanh toán
         if (Objects.equals(paymentMethod.methodType, "Payment on delivery")) {
             binding.btnCheckoutPaymentOnDelivery.setChecked(true);
         } else {
             binding.btnCheckoutPaymentBank.setChecked(true);
         }
-
-        // Set up button
         if (paymentMethod.getBankName() == null) {
             binding.btnCheckoutPaymentBank.setEnabled(false);
         }
+
+        // Xử lý sự kiện khi chọn phương thức thanh toán
         binding.btnCheckoutPaymentOnDelivery.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 paymentMethod.setMethodType("Payment on delivery");
@@ -103,6 +111,7 @@ public class CheckoutFragment extends Fragment {
             }
         });
 
+        // Xử lý sự kiện khi chọn phương thức thanh toán
         binding.btnCheckoutPaymentBank.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 paymentMethod.setMethodType("Bank account");
@@ -111,16 +120,22 @@ public class CheckoutFragment extends Fragment {
             }
         });
 
+        // Xử lý sự kiện khi chọn thay đổi địa chỉ giao hàng
         binding.btnCheckoutChangeAddress.setOnClickListener(v -> {
+            // Chuyển sang màn hình cập nhật thông tin người dùng
             navController.navigate(R.id.userInformationFragment);
         });
 
+        // Xử lý sự kiện khi click vào nút đặt hàng
         int finalTotalPrice = totalPrice;
         binding.btnCheckout.setOnClickListener(v -> {
+            // Kiểm tra xem người dùng đã cập nhật địa chỉ giao hàng chưa
             if (user.getDeliveryAddress() == null) {
                 Toast.makeText(getContext(), "Vui lòng cập nhật địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
             } else {
+                // Tính tổng tiền với thuế
                 int priceWithTax = (int) (finalTotalPrice + (finalTotalPrice * 0.1));
+                // Nếu đã cập nhật địa chỉ giao hàng thì đặt hàng thành công và chuyển về màn hình chính
                 Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
                 cartRepository.deleteAllCart();
                 orderRepository.insertOrder("Đang xử lý", priceWithTax, cartList);
@@ -128,7 +143,7 @@ public class CheckoutFragment extends Fragment {
             }
         });
 
-
+        // Xử lý sự kiện khi click vào nút quay lại
         binding.btnBack.setOnClickListener(v -> {
             navController.popBackStack();
         });
@@ -136,11 +151,15 @@ public class CheckoutFragment extends Fragment {
         return binding.getRoot();
     }
 
+    // Adapter
     private static class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder> {
+        // Danh sách các món ăn trong giỏ hàng
         List<Cart> listCart;
+        // Các repository
         FoodRepository foodRepository = new FoodRepository(AppDatabase.getDatabase(null));
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
+        // Hàm khởi tạo
         public CheckoutAdapter(List<Cart> listCart) {
             this.listCart = listCart;
         }
@@ -148,6 +167,7 @@ public class CheckoutFragment extends Fragment {
         @NonNull
         @Override
         public CheckoutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            // Gán layout cho view
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_checkout, parent, false);
             return new CheckoutViewHolder(view);
         }
@@ -155,12 +175,19 @@ public class CheckoutFragment extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
+            // Lấy ra món ăn tại vị trí position
             Cart cart = listCart.get(position);
+            // Lấy ra món ăn tương ứng với id của món ăn trong giỏ hàng
             Food food = foodRepository.getFoodById(cart.getFoodId());
+            // Gán dữ liệu cho tên món ăn
             holder.txtCheckoutItemTitle.setText(food.getName());
+            // Gán dữ liệu cho giá món ăn
             holder.txtCheckoutItemPrice.setText(currencyFormatter.format(food.getPrice()));
+            // Gán dữ liệu cho số lượng món ăn
             holder.txtCheckoutItemQuantity.setText("Số lượng: " + cart.getQuantity());
+            // Gán dữ liệu cho hình ảnh món ăn
             String imageUrl = food.getFoodImages().get(0).imageUrl;
+            // Load hình ảnh bằng Glide
             Glide.with(holder.imgCheckout.getContext()).load(imageUrl).fitCenter().into(holder.imgCheckout);
         }
 
@@ -177,6 +204,7 @@ public class CheckoutFragment extends Fragment {
 
             public CheckoutViewHolder(@NonNull View itemView) {
                 super(itemView);
+                // Ánh xạ view
                 imgCheckout = itemView.findViewById(R.id.imgCheckoutItem);
                 txtCheckoutItemTitle = itemView.findViewById(R.id.txtCheckoutItemTitle);
                 txtCheckoutItemPrice = itemView.findViewById(R.id.txtCheckoutItemPrice);
