@@ -89,7 +89,7 @@ public class CheckoutFragment extends Fragment {
         binding.txtCheckoutTax.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(totalPrice * 0.1));
         // Gán địa chỉ giao hàng
         if (user.deliveryAddress != null) {
-            binding.txtCheckoutAddress.setText("Địa chỉ thanh toán: " + user.deliveryAddress);
+            binding.txtCheckoutAddress.setText("Địa chỉ giao hàng: " + user.deliveryAddress);
         }
 
         // Gán phương thức thanh toán
